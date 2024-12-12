@@ -1,0 +1,60 @@
+/* h.css */
+
+#app-containery {
+  height: calc(100vh);
+  overflow-y: auto; /* Overflow behavior remains */
+  -ms-overflow-style: none; /* Hide scrollbar in IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+/* Hide scrollbar for Webkit-based browsers (Chrome, Safari, newer versions of Opera) */
+#app-containery::-webkit-scrollbar {
+  display: none;
+}
+
+/* Enable smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  #app-containery {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Optionally: If you still want to hide scrollbars in 'nav', keep this part */
+nav::-webkit-scrollbar {
+  display: none;
+}
+
+nav {
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+/* h.css */
+
+#app-containera {
+  overflow-x: auto; /* Overflow behavior remains */
+  -ms-overflow-style: none; /* Hide scrollbar in IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+/* Hide scrollbar for Webkit-based browsers (Chrome, Safari, newer versions of Opera) */
+#app-containera::-webkit-scrollbar {
+  display: none;
+}
+
+/* Enable smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  #app-containera {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Optionally: If you still want to hide scrollbars in 'nav', keep this part */
+nav::-webkit-scrollbar {
+  display: none;
+}
+
+nav {
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}

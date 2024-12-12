@@ -1,28 +1,32 @@
 import React, { useState, useEffect } from "react";
 import {
-  Code,
   Layout,
   Type,
-  Image,
+  Link,
   List,
-  Eye,
-  EyeOff,
+  Table,
+  FileInput,
   Menu,
   X,
+  Eye,
+  EyeOff,
 } from "lucide-react";
-import "./h.css"; // Agar sizda qo'shimcha CSS bo'lsa, bu yerga qo'shing
+import "./h.css";
 
 const HtmlBasics = () => {
   const [activeTab, setActiveTab] = useState("structure");
   const [showPreview, setShowPreview] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeCode, setActiveCode] = useState(null);
+  const [userCode, setUserCode] = useState("");
 
   const tabs = [
     { id: "structure", title: "Tuzilma", icon: Layout },
     { id: "text", title: "Matn", icon: Type },
+    { id: "linksImages", title: "Havolalar", icon: Link },
     { id: "lists", title: "Ro'yxatlar", icon: List },
-    { id: "links", title: "Havolalar", icon: Code },
-    { id: "images", title: "Rasmlar", icon: Image },
+    { id: "tables", title: "Jadvallar", icon: Table },
+    { id: "forms", title: "Formalar", icon: FileInput },
   ];
 
   const content = {
@@ -51,11 +55,16 @@ const HtmlBasics = () => {
 <h2>Bu ikkinchi darajali sarlavha</h2>
 <p>Bu oddiy paragraf.</p>
 <strong>Bu qalin matn.</strong>
-<em>Bu kursiv matn.</em>
-<br>
-<hr>`,
+<em>Bu kursiv matn.</em>`,
       explanation:
-        "<h1> dan <h6> gacha sarlavhalar. <p> paragraflar uchun. <strong> va <em> matnni ajratib ko'rsatish uchun. <br> qator tashlash, <hr> gorizontal chiziq.",
+        "<h1> dan <h6> gacha sarlavhalar. <p> paragraflar uchun. <strong> va <em> matnni ajratib ko'rsatish uchun.",
+    },
+    linksImages: {
+      title: "Havolalar",
+      description: "Havolalar qo'shish:",
+      code: `<a href="https://www.example.com">Bu havola matni</a>`,
+      explanation:
+        "<a> tegi havolalar uchun ishlatiladi. href atributi havola manzilini ko'rsatadi.",
     },
     lists: {
       title: "Ro'yxatlar",
@@ -71,33 +80,56 @@ const HtmlBasics = () => {
       explanation:
         "<ul> tartibsiz ro'yxat (nuqtalar bilan). <ol> tartibli ro'yxat (raqamlar bilan). Har bir element <li> tegi bilan belgilanadi.",
     },
-    links: {
-      title: "Havolalar",
-      description: "Havolalar <a> tegi yordamida yaratiladi:",
-      code: `<a href="https://www.example.com">Bu havola matni</a>
-<a href="about.html">Ichki sahifaga havola</a>
-<a href="mailto:info@example.com">Elektron pochta havolasi</a>`,
+    tables: {
+      title: "Jadval yaratish",
+      description: "HTML da jadvallar quyidagicha yaratiladi:",
+      code: `<table>
+  <tr>
+    <th>Sarlavha 1</th>
+    <th>Sarlavha 2</th>
+  </tr>
+  <tr>
+    <td>Qator 1, Ustun 1</td>
+    <td>Qator 1, Ustun 2</td>
+  </tr>
+</table>`,
       explanation:
-        "href atributi havola manzilini ko'rsatadi. Bu boshqa veb-saytga, ichki sahifaga yoki hatto elektron pochta manziliga havola bo'lishi mumkin.",
+        "<table> jadvalni, <tr> qatorni, <th> sarlavha katakchani, <td> oddiy katakchani belgilaydi.",
     },
-    images: {
-      title: "Rasmlar",
-      description: "Rasmlar <img> tegi yordamida qo'shiladi:",
-      code: `<img src="/api/placeholder/300/200" alt="Namuna rasm" width="300" height="200">`,
+    forms: {
+      title: "Formalar",
+      description: "HTML da formalar turli kiritish elementlarini o'z ichiga oladi:",
+      code: `<form action="/submit" method="post">
+  <label for="name">Ism:</label>
+  <input type="text" id="name" name="name" required>
+  
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required>
+  
+  <input type="submit" value="Yuborish">
+</form>`,
       explanation:
-        "src - rasm fayli joylashuvi. alt - rasm ko'rsatilmasa chiqadigan matn. width va height rasmning o'lchamlarini belgilaydi.",
+        "<form> tegi forma yaratish uchun. <input> turli kiritish maydonlari uchun. <label> maydon yorlig'i uchun.",
     },
   };
 
   useEffect(() => {
     const codePreview = document.getElementById("codePreview");
-    if (codePreview && showPreview) {
-      codePreview.srcdoc = content[activeTab].code;
+    if (codePreview && activeCode) {
+      codePreview.srcdoc = activeCode;
     }
-  }, [activeTab, showPreview]);
+  }, [activeCode]);
 
-  const togglePreview = () => {
-    setShowPreview(!showPreview);
+  const togglePreview = (code) => {
+    setActiveCode(activeCode === code ? null : code);
+  };
+
+  const handleUserCodeChange = (event) => {
+    setUserCode(event.target.value);
+  };
+
+  const toggleUserCodePreview = () => {
+    setActiveCode(activeCode === userCode ? null : userCode);
   };
 
   const toggleMenu = () => {
@@ -105,7 +137,10 @@ const HtmlBasics = () => {
   };
 
   return (
-    <div id="app-containery" className="w-full md:max-w-4xl mx-auto p-2 md:p-6 bg-white rounded-lg shadow-lg">
+    <div
+      id="app-containery"
+      className="w-full md:max-w-7xl mx-auto p-2 md:p-6 bg-white rounded-lg shadow-lg"
+    >
       {/* Mobile Menu Button */}
       <div className="flex justify-between items-center mb-4 md:hidden">
         <button
@@ -123,10 +158,10 @@ const HtmlBasics = () => {
 
       {/* Menu Tabs */}
       <div
-      id="app-containera"
+        id="app-containera"
         className={`${
           menuOpen ? "block" : "hidden"
-        } md:block md:flex mb-6 bg-gray-100 rounded-lg p-2 overflow-x-auto`}
+        } md:block md:flex md:flex-wrap mb-6 bg-gray-100 rounded-lg p-2 overflow-x-auto`}
       >
         {tabs.map((tab) => (
           <button
@@ -135,20 +170,23 @@ const HtmlBasics = () => {
               setActiveTab(tab.id);
               setMenuOpen(false);
             }}
-            className={`flex items-center px-4 py-2 rounded-md mr-2 mb-2 md:mb-0 transition-colors w-full md:w-auto ${
+            className={`flex items-center justify-center px-4 py-2 rounded-md m-1 transition-colors w-full md:w-auto md:flex-grow ${
               activeTab === tab.id
                 ? "bg-indigo-500 text-white"
                 : "bg-white text-gray-700 hover:bg-indigo-100"
             }`}
           >
             <tab.icon className="mr-2 h-5 w-5" />
-            {tab.title}
+            <span className="whitespace-nowrap">{tab.title}</span>
           </button>
         ))}
       </div>
 
       {/* Content Section */}
-      <div id="app-containery" className="bg-gray-50 rounded-lg p-2 md:p-6 overflow-y-auto max-h-[calc(100vh-200px)]">
+      <div
+        id="app-containery"
+        className="bg-gray-50 rounded-lg p-2 md:p-6 overflow-y-auto max-h-[calc(100vh-200px)]"
+      >
         <h2 className="text-xl md:text-2xl font-semibold mb-3 md:mb-4 text-indigo-700">
           {content[activeTab].title}
         </h2>
@@ -171,19 +209,54 @@ const HtmlBasics = () => {
               Natija
             </h3>
             <button
-              onClick={togglePreview}
+              onClick={() => togglePreview(content[activeTab].code)}
               className="flex items-center px-3 py-1 bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition-colors text-sm md:text-base focus:outline-none"
             >
-              {showPreview ? (
+              {activeCode === content[activeTab].code ? (
                 <EyeOff className="mr-1 h-4 w-4" />
               ) : (
                 <Eye className="mr-1 h-4 w-4" />
               )}
-              {showPreview ? "Yashirish" : "Ko'rsatish"}
+              {activeCode === content[activeTab].code ? "Yashirish" : "Ko'rsatish"}
             </button>
           </div>
-          {showPreview && (
+          {activeCode === content[activeTab].code && (
             <div className="border-2 border-indigo-200 rounded-lg p-2 md:p-4 bg-white overflow-x-auto">
+              <iframe
+                id="codePreview"
+                title="HTML Preview"
+                className="w-full min-h-[150px] md:min-h-[200px] border-none"
+                sandbox="allow-scripts"
+              ></iframe>
+            </div>
+          )}
+        </div>
+
+        {/* User Code Section */}
+        <div className="mb-6">
+          <h3 className="text-lg md:text-xl font-semibold mb-2 text-indigo-600">
+            Foydalanuvchi Kiritgan Kod
+          </h3>
+          <textarea
+            value={userCode}
+            onChange={handleUserCodeChange}
+            className="w-full p-2 md:p-4 bg-gray-800 text-white rounded-lg mb-3 md:mb-4"
+            rows="10"
+            placeholder="Bu yerga HTML kodingizni kiriting..."
+          ></textarea>
+          <button
+            onClick={toggleUserCodePreview}
+            className="flex items-center px-3 py-1 bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition-colors text-sm md:text-base focus:outline-none"
+          >
+            {activeCode === userCode ? (
+              <EyeOff className="mr-1 h-4 w-4" />
+            ) : (
+              <Eye className="mr-1 h-4 w-4" />
+            )}
+            {activeCode === userCode ? "Yashirish" : "Ko'rsatish"}
+          </button>
+          {activeCode === userCode && (
+            <div className="border-2 border-indigo-200 rounded-lg p-2 md:p-4 bg-white overflow-x-auto mt-4">
               <iframe
                 id="codePreview"
                 title="HTML Preview"

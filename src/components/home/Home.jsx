@@ -366,22 +366,22 @@ function Home() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <StatisticCard
-              icon={<FaUsers />}
+              icon={<FaUsers className="m-auto" />}
               number="10,000+"
               text="Faol foydalanuvchilar"
             />
             <StatisticCard
-              icon={<FaProjectDiagram />}
+              icon={<FaProjectDiagram className="m-auto" />}
               number="5,000+"
               text="Yakunlangan loyihalar"
             />
             <StatisticCard
-              icon={<FaGraduationCap />}
+              icon={<FaGraduationCap className="m-auto" />}
               number="50+"
               text="O'rganish yo'nalishlari"
             />
             <StatisticCard
-              icon={<FaClock />}
+              icon={<FaClock className="m-auto" />}
               number="1,000,000+"
               text="O'rganishga sarflangan soatlar"
             />

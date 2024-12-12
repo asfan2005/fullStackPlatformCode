@@ -2,7 +2,18 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { Html, Boshlangich, Orta, Mukammal } from "./components/index.js";
+import {
+  Html,
+  Boshlangich,
+  Orta,
+  Mukammal,
+  Css,
+  CssBoshlangich,
+  CssOrta,
+  CssMukammal,
+  HtmlPractice,
+  CssPractice,
+} from "./components/index.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -10,9 +21,15 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/frontend/html" element={<Html />} />
-        <Route path="/frontend/boshlangich" element={<Boshlangich />} />
-        <Route path="/frontend/orta" element={<Orta />} />
-        <Route path="/frontend/mukammal" element={<Mukammal />} />
+        <Route path="/frontend/css" element={<Css />} />
+        <Route path="/html/boshlangich" element={<Boshlangich />} />
+        <Route path="/html/orta" element={<Orta />} />
+        <Route path="/html/mukammal" element={<Mukammal />} />
+        <Route path="/css/boshlangich" element={<CssBoshlangich />} />
+        <Route path="/css/orta" element={<CssBoshlangich />} />
+        <Route path="/css/mukammal" element={<CssBoshlangich />} />
+        <Route path="/html/practice" element={<HtmlPractice />} />
+        <Route path="/css/practice" element={<CssPractice />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

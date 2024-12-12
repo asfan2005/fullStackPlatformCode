@@ -49,14 +49,14 @@ function Practice() {
       name: "HTML5",
       icon: FaHtml5,
       color: "#E34F26",
-      link: "/frontend/html",
+      link: "/html/practice",
       category: "frontend",
     },
     {
       name: "CSS3",
       icon: FaCss3Alt,
       color: "#1572B6",
-      link: "/frontend/css",
+      link: "/css/practice",
       category: "frontend",
     },
     {

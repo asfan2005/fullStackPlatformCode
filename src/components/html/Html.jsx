@@ -3,12 +3,12 @@ import { Header } from "../index";
 import { FaHtml5 } from "react-icons/fa";
 import { FaBookOpen } from "react-icons/fa"; // Import FaBookOpen icon
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-
+import "../../index.css";
 function Html() {
   const navigate = useNavigate(); // Initialize navigate
 
   return (
-    <div className="bg-gradient-to-b from-blue-100 to-white min-h-screen">
+    <div id="app-container" className="bg-gradient-to-b from-blue-100 to-white min-h-screen">
       <Header />
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col items-center mb-12">
@@ -27,21 +27,21 @@ function Html() {
             description="HTML asoslarini o'yin va qiziqarli mashg'ulotlar orqali o'rganing."
             icon={<FaBookOpen className="text-4xl" />}
             color="bg-green-100"
-            onClick={() => navigate("/frontend/boshlangich")} // Navigate to Boshlangich
+            onClick={() => navigate("/html/boshlangich")} // Navigate to Boshlangich
           />
           <LearningCard
             title="O'rta darajadagilar uchun"
             description="HTML strukturasi va semantikasini chuqurroq o'rganing."
             icon="🧑‍🎓"
             color="bg-blue-100"
-            onClick={() => navigate("/frontend/orta")} // Navigate to Orta
+            onClick={() => navigate("/html/orta")} // Navigate to Orta
           />
           <LearningCard
             title="Tajribali dasturchilar uchun"
             description="Ilg'or HTML texnikalarini va SEO optimizatsiyasini o'rganing."
             icon="👨‍💻"
             color="bg-purple-100"
-            onClick={() => navigate("/frontend/mukammal")} // Navigate to Mukammal
+            onClick={() => navigate("/html/mukammal")} // Navigate to Mukammal
           />
         </div>
       </div>

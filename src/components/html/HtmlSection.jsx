@@ -11,6 +11,12 @@ import {
   HtmlLists,
   HtmlSemantics,
   HtmlTables,
+  HtmlAudioVideo,
+  HtmlBlogInline,
+  HtmlEnties,
+  HtmlMeteTegs,
+  HtmlResponsiveDesign,
+  HtmlVide,
 } from "../index"; // Adjust the import path as needed
 
 function HtmlSection({ currentPage }) {
@@ -39,15 +45,15 @@ function HtmlSection({ currentPage }) {
       case "html-iframes":
         return <HtmlFrames />;
       case "html-audio-video":
-        return <div>Content for HTML Audio & Video</div>;
+        return <HtmlAudioVideo />;
       case "html-block-inline":
-        return <div>Content for HTML Block & Inline Elements</div>;
+        return <HtmlBlogInline />;
       case "html-entities":
-        return <div>Content for HTML Entities</div>;
+        return <HtmlEnties />;
       case "html-meta-tags":
-        return <div>Content for HTML Meta Tags</div>;
+        return <HtmlMeteTegs />;
       case "html-responsive-design":
-        return <div>Content for HTML Responsive Design</div>;
+        return <HtmlResponsiveDesign />;
       case "html5-apis":
         return <div>Content for HTML5 APIs</div>;
       case "html-canvas":
@@ -58,6 +64,8 @@ function HtmlSection({ currentPage }) {
         return <div>Content for HTML Forms Validation</div>;
       case "html-accessibility":
         return <div>Content for HTML Accessibility</div>;
+      case "html-video":
+        return <HtmlVide />;
       default:
         return <div>Select a menu item to see content</div>;
     }
