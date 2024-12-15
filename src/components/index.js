@@ -43,3 +43,6 @@ export { default as CssSection } from "../components/Css/CssSection";
 export { default as HtmlPractice } from "../practicPage/HtmlPractice/HtmlPractice";
 
 export {default as CssPractice} from "../practicPage/CssPractice/CssPractice";
+
+
+export {default as Temurbek} from "../components/html/Temurbek";

@@ -1,11 +1,13 @@
 import React from "react";
 import { Header } from "../index";
 import { FaHtml5 } from "react-icons/fa";
-import { FaBookOpen } from "react-icons/fa"; // Import FaBookOpen icon
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { FaBookOpen } from "react-icons/fa";
+import { FaChild } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "../../index.css";
+
 function Html() {
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   return (
     <div id="app-container" className="bg-gradient-to-b from-blue-100 to-white min-h-screen">
@@ -21,27 +23,34 @@ function Html() {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <LearningCard
+            title="Bolalar uchun HTML"
+            description="4-7 sinf o'quvchilari uchun qiziqarli HTML darslari."
+            icon={<FaChild className="text-4xl text-pink-500" />}
+            color="bg-pink-100"
+            onClick={() => navigate("/html/temurbek")}
+          />
           <LearningCard
             title="Yosh o'rganuvchilar uchun"
             description="HTML asoslarini o'yin va qiziqarli mashg'ulotlar orqali o'rganing."
             icon={<FaBookOpen className="text-4xl" />}
             color="bg-green-100"
-            onClick={() => navigate("/html/boshlangich")} // Navigate to Boshlangich
+            onClick={() => navigate("/html/boshlangich")}
           />
           <LearningCard
             title="O'rta darajadagilar uchun"
             description="HTML strukturasi va semantikasini chuqurroq o'rganing."
             icon="🧑‍🎓"
             color="bg-blue-100"
-            onClick={() => navigate("/html/orta")} // Navigate to Orta
+            onClick={() => navigate("/html/orta")}
           />
           <LearningCard
             title="Tajribali dasturchilar uchun"
             description="Ilg'or HTML texnikalarini va SEO optimizatsiyasini o'rganing."
             icon="👨‍💻"
             color="bg-purple-100"
-            onClick={() => navigate("/html/mukammal")} // Navigate to Mukammal
+            onClick={() => navigate("/html/mukammal")}
           />
         </div>
       </div>
@@ -57,7 +66,7 @@ function LearningCard({ title, description, icon, color, onClick }) {
       <p className="text-gray-700">{description}</p>
       <button 
         className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300"
-        onClick={onClick} // Add onClick handler
+        onClick={onClick}
       >
         Boshlash
       </button>

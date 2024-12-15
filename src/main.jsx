@@ -13,6 +13,7 @@ import {
   CssMukammal,
   HtmlPractice,
   CssPractice,
+  Temurbek,
 } from "./components/index.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 createRoot(document.getElementById("root")).render(
@@ -30,6 +31,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/css/mukammal" element={<CssBoshlangich />} />
         <Route path="/html/practice" element={<HtmlPractice />} />
         <Route path="/css/practice" element={<CssPractice />} />
+        <Route path="/html/temurbek" element={<Temurbek/>}/>
       </Routes>
     </BrowserRouter>
   </StrictMode>
