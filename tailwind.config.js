@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -26,6 +26,15 @@ export default {
           '33%': { backgroundColor: '#10B981' },
           '66%': { backgroundColor: '#EC4899' },
           '100%': { backgroundColor: '#3B82F6' },
+        }
+      },
+      utilities: {
+        '.scrollbar-hide::-webkit-scrollbar': {
+          display: 'none'
+        },
+        '.scrollbar-hide': {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none'
         }
       }
     },
