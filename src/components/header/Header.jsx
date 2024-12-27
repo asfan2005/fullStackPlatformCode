@@ -57,13 +57,7 @@ function Header() {
             </div>
             <div>
               <button 
-                onClick={openLogin}
-                style={{
-                  position: "absolute",
-                  margin: "auto",
-                  right: "30px",
-                  top: "25px"
-                }} 
+                onClick={openLogin} 
                 className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
               >
                 Kirish

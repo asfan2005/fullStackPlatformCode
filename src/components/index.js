@@ -46,3 +46,5 @@ export {default as CssPractice} from "../practicPage/CssPractice/CssPractice";
 
 
 export {default as Temurbek} from "../components/html/Temurbek";
+export {default as HomeJs} from '../ComponentsJs/HomeJs';
+export {default as BoshlangichJs} from "../ComponentsJs/BoshlangichJs";
