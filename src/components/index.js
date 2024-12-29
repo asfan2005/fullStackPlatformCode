@@ -48,3 +48,6 @@ export {default as CssPractice} from "../practicPage/CssPractice/CssPractice";
 export {default as Temurbek} from "../components/html/Temurbek";
 export {default as HomeJs} from '../ComponentsJs/HomeJs';
 export {default as BoshlangichJs} from "../ComponentsJs/BoshlangichJs";
+export {default as Ozgaruvchi} from "../ComponentsJs/pageJs/Ozgaruvchi";
+export {default as MalumotTurlari} from "../ComponentsJs/pageJs/MalumotTurlari";
+export {default as Operator} from "../ComponentsJs/pageJs/Operator";

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup, 
          FaHtml5, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes } from 'react-icons/fa';
+import { MalumotTurlari, Operator, Ozgaruvchi } from "../components/index";
 
 function BoshlangichJs() {
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -193,7 +194,10 @@ console.log("5 yildan keyin:", natija);`}</code>
         </section>
       </div>
     ),
-    // ... other topics content will go here
+    "O'zgaruvchilar": <Ozgaruvchi />,
+    "Ma'lumot Turlari": <MalumotTurlari/>,
+    "Operatorlar":<Operator/>,
+    // Add other topic contents here
   };
 
   return (
