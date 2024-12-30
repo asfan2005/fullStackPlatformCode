@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup, 
          FaHtml5, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes } from 'react-icons/fa';
-import { MalumotTurlari, Operator, Ozgaruvchi } from "../components/index";
+import { ArrayMassiv, ArrayMetod, DataJsDars,  DomBilanIshlash,  ForSkil, Funksiyalar, MalumotTurlari, MathOpyekti, Operator, Ozgaruvchi, ShartOperatorlar, StringMetodlari, SwichCase, WhileSkil } from "../components/index";
 
 function BoshlangichJs() {
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -197,6 +197,17 @@ console.log("5 yildan keyin:", natija);`}</code>
     "O'zgaruvchilar": <Ozgaruvchi />,
     "Ma'lumot Turlari": <MalumotTurlari/>,
     "Operatorlar":<Operator/>,
+    "Shartli Operatorlar": <ShartOperatorlar/>,
+    "Switch Case": <SwichCase/>,
+    "For Sikli": <ForSkil/>,
+    "While Sikli": <WhileSkil/>,
+    "Funksiyalar": <Funksiyalar/>,
+    "Array (Massiv)": <ArrayMassiv/>,
+    "Array Metodlari" : <ArrayMetod/>,
+    "String Metodlari" :<StringMetodlari/>,
+    "Math Obyekti" :<MathOpyekti/>,
+    "Date Obyekti" : <DataJsDars/>,
+    "DOM bilan ishlash" : <DomBilanIshlash/>  
     // Add other topic contents here
   };
 
