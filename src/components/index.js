@@ -62,3 +62,12 @@ export {default as StringMetodlari} from "../ComponentsJs/pageJs/StringMetodlari
 export {default as MathOpyekti} from "../ComponentsJs/pageJs/MathOpyekti";
 export {default as DataJsDars} from "../ComponentsJs/pageJs/DataJsDars";
 export {default as DomBilanIshlash} from "../ComponentsJs/pageJs/DomBilanIshlash";
+export {default as EventsJs} from  "../ComponentsJs/pageJs/EventsJs";
+export {default as Forms} from "../ComponentsJs/pageJs/Forms";
+export {default as LocalStroge} from "../ComponentsJs/pageJs/LocalStroge";
+export {default as JsonDars} from "../ComponentsJs/pageJs/JsonDars";
+export {default as TryCatch} from "../ComponentsJs/pageJs/TryCatch";
+export {default as Asyns} from "../ComponentsJs/pageJs/Asyns";
+export {default as Promise} from "../ComponentsJs/pageJs/Promise";
+export {default as Es6New} from "../ComponentsJs/pageJs/Es6New";
+export {default as ArrowFunk} from "../ComponentsJs/pageJs/ArrowFunk";

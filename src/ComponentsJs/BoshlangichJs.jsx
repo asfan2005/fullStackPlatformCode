@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup, 
          FaHtml5, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes } from 'react-icons/fa';
-import { ArrayMassiv, ArrayMetod, DataJsDars,  DomBilanIshlash,  ForSkil, Funksiyalar, MalumotTurlari, MathOpyekti, Operator, Ozgaruvchi, ShartOperatorlar, StringMetodlari, SwichCase, WhileSkil } from "../components/index";
+import { ArrayMassiv, ArrayMetod, DataJsDars,  DomBilanIshlash,  ForSkil, Funksiyalar, MalumotTurlari, MathOpyekti, Operator, Ozgaruvchi, ShartOperatorlar, StringMetodlari, SwichCase, WhileSkil,EventsJs, Forms, LocalStroge, JsonDars, TryCatch, Asyns, Promise, Es6New, ArrowFunk } from "../components/index";
 
 function BoshlangichJs() {
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -207,7 +207,16 @@ console.log("5 yildan keyin:", natija);`}</code>
     "String Metodlari" :<StringMetodlari/>,
     "Math Obyekti" :<MathOpyekti/>,
     "Date Obyekti" : <DataJsDars/>,
-    "DOM bilan ishlash" : <DomBilanIshlash/>  
+    "DOM bilan ishlash" : <DomBilanIshlash/>,
+    "Events (Hodisalar)" : <EventsJs/>,
+    "Forms bilan ishlash" :<Forms/>,
+    "Local Storage" : <LocalStroge/>,
+    "JSON" : <JsonDars/>,
+    "Try Catch" : <TryCatch/>,
+    "Async/Await" : <Asyns/>,
+    "Promise" : <Promise/>,
+    "ES6 Yangiliklari" : <Es6New/>,
+    "Arrow Functions" : <ArrowFunk/>,
     // Add other topic contents here
   };
 
