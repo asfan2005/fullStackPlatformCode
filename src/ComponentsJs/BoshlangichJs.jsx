@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup, 
          FaHtml5, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes } from 'react-icons/fa';
-import { ArrayMassiv, ArrayMetod, DataJsDars,  DomBilanIshlash,  ForSkil, Funksiyalar, MalumotTurlari, MathOpyekti, Operator, Ozgaruvchi, ShartOperatorlar, StringMetodlari, SwichCase, WhileSkil,EventsJs, Forms, LocalStroge, JsonDars, TryCatch, Asyns, Promise, Es6New, ArrowFunk } from "../components/index";
+import { ArrayMassiv, ArrayMetod, DataJsDars,  DomBilanIshlash,  ForSkil, Funksiyalar, MalumotTurlari, MathOpyekti, Operator, Ozgaruvchi, ShartOperatorlar, StringMetodlari, SwichCase, WhileSkil,EventsJs, Forms, LocalStroge, JsonDars, TryCatch, Asyns, Promise, Es6New, ArrowFunk, Amaliy } from "../components/index";
+import { useNavigate } from 'react-router-dom';
 
 function BoshlangichJs() {
+  const navigate = useNavigate();
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -217,12 +219,23 @@ console.log("5 yildan keyin:", natija);`}</code>
     "Promise" : <Promise/>,
     "ES6 Yangiliklari" : <Es6New/>,
     "Arrow Functions" : <ArrowFunk/>,
+    "Amaliy Mashqlar" : <Amaliy/>
     // Add other topic contents here
   };
 
   return (
     <div className="relative min-h-screen bg-white">
-      {/* Mobile Menu Button - Updated positioning */}
+      {/* Back Button - Updated for all screen sizes */}
+      <div className="fixed top-2 right-2 z-50 w-auto">
+        <button 
+          onClick={() => navigate("/frontend/javascript")}
+          className="p-2.5 rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition-all shadow-md flex items-center gap-2"
+        >
+          <span>Orqaga</span>
+        </button>
+      </div>
+
+      {/* Mobile Menu Button */}
       <div className="lg:hidden fixed top-2 left-2 z-50">
         <button 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

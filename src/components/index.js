@@ -71,3 +71,4 @@ export {default as Asyns} from "../ComponentsJs/pageJs/Asyns";
 export {default as Promise} from "../ComponentsJs/pageJs/Promise";
 export {default as Es6New} from "../ComponentsJs/pageJs/Es6New";
 export {default as ArrowFunk} from "../ComponentsJs/pageJs/ArrowFunk";
+export {default as Amaliy} from "../ComponentsJs/pageJs/Amaliy";
