@@ -63,7 +63,7 @@ function Practice() {
       name: "JavaScript",
       icon: FaJs,
       color: "#F7DF1E",
-      link: "/frontend/javascript",
+      link: "/javascript/practice",
       category: "frontend",
     },
     {

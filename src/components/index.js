@@ -46,6 +46,8 @@ export {default as CssPractice} from "../practicPage/CssPractice/CssPractice";
 
 
 export {default as Temurbek} from "../components/html/Temurbek";
+
+// js pages
 export {default as HomeJs} from '../ComponentsJs/HomeJs';
 export {default as BoshlangichJs} from "../ComponentsJs/BoshlangichJs";
 export {default as Ozgaruvchi} from "../ComponentsJs/pageJs/Ozgaruvchi";
@@ -72,3 +74,6 @@ export {default as Promise} from "../ComponentsJs/pageJs/Promise";
 export {default as Es6New} from "../ComponentsJs/pageJs/Es6New";
 export {default as ArrowFunk} from "../ComponentsJs/pageJs/ArrowFunk";
 export {default as Amaliy} from "../ComponentsJs/pageJs/Amaliy";
+
+// js practice page
+export {default as JsPractice} from "../practicPage/JsPractice/JsPractice";

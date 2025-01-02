@@ -177,11 +177,8 @@ function Frontend() {
   const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [location]);
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="p-2 max-w-7xl mx-auto">
