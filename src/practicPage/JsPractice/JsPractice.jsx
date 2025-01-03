@@ -4,7 +4,8 @@ import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { Dialog, Transition } from '@headlessui/react';
-import {Number} from "../../components/index";
+import { Number } from '../../components/index';
+
 function JsPractice() {
   const [activeLesson, setActiveLesson] = useState(null);
   const [activeSubLesson, setActiveSubLesson] = useState(null);
@@ -215,6 +216,85 @@ function JsPractice() {
     );
   };
 
+  const renderCurrentPage = () => {
+    if (!activeSubLesson) return null;
+
+    switch(activeSubLesson) {
+      case 3: // Numbers
+        return <Number
+          handleSubLessonComplete={handleSubLessonComplete}
+          activeLesson={activeLesson}
+          activeSubLesson={activeSubLesson}
+        />;
+      default:
+        return getCurrentSubLesson() && (
+          <div className="w-full h-full flex flex-col">
+            <div className="flex-1 overflow-y-auto
+              [&::-webkit-scrollbar]:w-2
+              [&::-webkit-scrollbar-track]:bg-gray-100
+              [&::-webkit-scrollbar-thumb]:bg-gray-300
+              [&::-webkit-scrollbar-thumb]:rounded-full
+              hover:[&::-webkit-scrollbar-thumb]:bg-gray-400
+              transition-colors"
+            >
+              <div className="mb-4 md:mb-6">
+                <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
+                  {getCurrentSubLesson().title}
+                </h2>
+                <div className="prose prose-sm md:prose-base max-w-none">
+                  <div className="text-sm md:text-base text-gray-600 mb-4 whitespace-pre-line">
+                    {getCurrentSubLesson().description}
+                  </div>
+                  <div className="text-sm md:text-base text-gray-700 font-medium mb-2 whitespace-pre-line">
+                    {getCurrentSubLesson().challenge.text}
+                  </div>
+                </div>
+                <div className="bg-gray-900 rounded-lg p-2 md:p-4 w-full">
+                  <CodeMirror
+                    value={code}
+                    height="200px"
+                    theme={oneDark}
+                    extensions={[javascript({ jsx: true })]}
+                    onChange={(value) => setCode(value)}
+                    className="rounded-lg overflow-hidden w-full"
+                  />
+                </div>
+              </div>
+
+              <div className="border-t pt-4 md:pt-6 w-full">
+                <h3 className="text-base md:text-lg font-semibold text-gray-800 mb-3 md:mb-4">
+                  Natija
+                </h3>
+                <div className="bg-gray-100 rounded-lg p-3 md:p-4 min-h-[80px] md:min-h-[100px] font-mono text-sm md:text-base w-full">
+                  {output || "Natija bu yerda ko'rsatiladi"}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 md:mt-6 flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0 w-full">
+              <button
+                className="text-blue-500 hover:text-blue-600 text-sm md:text-base"
+                onClick={() => {
+                  const currentLesson = getCurrentSubLesson();
+                  if (currentLesson && currentLesson.hints.length > 0) {
+                    alert(currentLesson.hints[0].content);
+                  }
+                }}
+              >
+                Maslahat olish
+              </button>
+              <button
+                onClick={runCode}
+                className="w-full md:w-auto bg-blue-500 text-white px-4 md:px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm md:text-base"
+              >
+                Kodni ishga tushirish
+              </button>
+            </div>
+          </div>
+        );
+    }
+  };
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
       <button 
@@ -361,68 +441,7 @@ function JsPractice() {
       <div className="flex-1 h-screen overflow-hidden">
         <div className="w-full h-full p-4 md:p-8 mt-16 md:mt-0">
           <div className="w-full h-full bg-white rounded-lg shadow-lg p-4 md:p-6">
-            {getCurrentSubLesson() && (
-              <div className="w-full h-full flex flex-col">
-                {activeSubLesson === 3 ? (
-                  <Number />
-                ) : (
-                  <div className="flex-1 overflow-y-auto">
-                    <div className="mb-4 md:mb-6">
-                      <h2 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
-                        {getCurrentSubLesson().title}
-                      </h2>
-                      <div className="prose prose-sm md:prose-base max-w-none">
-                        <div className="text-sm md:text-base text-gray-600 mb-4 whitespace-pre-line">
-                          {getCurrentSubLesson().description}
-                        </div>
-                        <div className="text-sm md:text-base text-gray-700 font-medium mb-2 whitespace-pre-line">
-                          {getCurrentSubLesson().challenge.text}
-                        </div>
-                      </div>
-                      <div className="bg-gray-900 rounded-lg p-2 md:p-4 w-full">
-                        <CodeMirror
-                          value={code}
-                          height="200px"
-                          theme={oneDark}
-                          extensions={[javascript({ jsx: true })]}
-                          onChange={(value) => setCode(value)}
-                          className="rounded-lg overflow-hidden w-full"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="border-t pt-4 md:pt-6 w-full">
-                      <h3 className="text-base md:text-lg font-semibold text-gray-800 mb-3 md:mb-4">
-                        Natija
-                      </h3>
-                      <div className="bg-gray-100 rounded-lg p-3 md:p-4 min-h-[80px] md:min-h-[100px] font-mono text-sm md:text-base w-full">
-                        {output || "Natija bu yerda ko'rsatiladi"}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <div className="mt-4 md:mt-6 flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0 w-full">
-                  <button
-                    className="text-blue-500 hover:text-blue-600 text-sm md:text-base"
-                    onClick={() => {
-                      const currentLesson = getCurrentSubLesson();
-                      if (currentLesson && currentLesson.hints.length > 0) {
-                        alert(currentLesson.hints[0].content);
-                      }
-                    }}
-                  >
-                    Maslahat olish
-                  </button>
-                  <button
-                    onClick={runCode}
-                    className="w-full md:w-auto bg-blue-500 text-white px-4 md:px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm md:text-base"
-                  >
-                    Kodni ishga tushirish
-                  </button>
-                </div>
-              </div>
-            )}
+            {renderCurrentPage()}
           </div>
         </div>
       </div>
