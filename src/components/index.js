@@ -77,3 +77,4 @@ export {default as Amaliy} from "../ComponentsJs/pageJs/Amaliy";
 
 // js practice page
 export {default as JsPractice} from "../practicPage/JsPractice/JsPractice";
+export {default as Number} from "../practicPage/JsPractice/mapFunction/Number";
