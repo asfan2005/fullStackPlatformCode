@@ -4,7 +4,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { Dialog, Transition } from '@headlessui/react';
-import { Number } from '../../components/index';
+import { Number,AssignDeclar,StringM } from '../../components/index';
 
 function JsPractice() {
   const [activeLesson, setActiveLesson] = useState(null);
@@ -135,15 +135,12 @@ function JsPractice() {
     return Math.round((completedCount / totalSubLessons) * 100);
   };
 
-  const handleSubLessonComplete = (lessonId, subLessonId, isCompleted) => {
-    setCompletedLessons(prev => {
-      const updated = {
-        ...prev,
-        [`${lessonId}-${subLessonId}`]: isCompleted
-      };
-      localStorage.setItem('completedLessons', JSON.stringify(updated));
-      return updated;
-    });
+  const handleSubLessonComplete = (lesson, subLesson, isCompleted) => {
+    try {
+      console.log(`Lesson ${lesson}, SubLesson ${subLesson} completed: ${isCompleted}`);
+    } catch (error) {
+      console.error("Error in handleSubLessonComplete:", error);
+    }
   };
 
   const handleLessonComplete = (lessonId, isCompleted) => {
@@ -225,6 +222,18 @@ function JsPractice() {
           handleSubLessonComplete={handleSubLessonComplete}
           activeLesson={activeLesson}
           activeSubLesson={activeSubLesson}
+        />;
+        case 4: //AssignDeclar
+        return <AssignDeclar
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 5: //String
+        return <StringM
+        handleSubLessonComplete={handleSubLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
         />;
       default:
         return getCurrentSubLesson() && (

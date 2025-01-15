@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import practiceDataNumbers from '../data/dataNumbers';
+import practiceDataAssignDeclar from '../data/dataAssignDeclar';
 
-function Numbers({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
+function AssignDeclar({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   const [currentExerciseIndex, setCurrentExerciseIndex] = React.useState(0);
-  const [code, setCode] = React.useState(practiceDataNumbers[0].initialCode);
+  const [code, setCode] = React.useState(practiceDataAssignDeclar[0].initialCode);
   const [output, setOutput] = React.useState('');
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
 
-  const currentExercise = practiceDataNumbers[currentExerciseIndex];
+  const currentExercise = practiceDataAssignDeclar[currentExerciseIndex];
 
   const runCode = () => {
     try {
@@ -30,12 +30,14 @@ function Numbers({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
 
       if (currentExercise.checkResult(consoleOutput)) {
         handleSubLessonComplete(activeLesson, activeSubLesson, true);
-        if (currentExerciseIndex < practiceDataNumbers.length - 1) {
+        if (currentExerciseIndex < practiceDataAssignDeclar.length - 1) {
           setTimeout(() => {
             setCurrentExerciseIndex(prev => prev + 1);
-            setCode(practiceDataNumbers[currentExerciseIndex + 1].initialCode);
+            setCode(practiceDataAssignDeclar[currentExerciseIndex + 1].initialCode);
             setOutput('');
-          }, 1000);
+          }, 1500);
+        } else {
+          localStorage.setItem(`lesson_${activeLesson}_${activeSubLesson}`, 'completed');
         }
       }
     } catch (error) {
@@ -44,9 +46,9 @@ function Numbers({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   };
 
   const handleNextExercise = () => {
-    if (currentExerciseIndex < practiceDataNumbers.length - 1) {
+    if (currentExerciseIndex < practiceDataAssignDeclar.length - 1) {
       setCurrentExerciseIndex(prev => prev + 1);
-      setCode(practiceDataNumbers[currentExerciseIndex + 1].initialCode);
+      setCode(practiceDataAssignDeclar[currentExerciseIndex + 1].initialCode);
       setOutput('');
     }
   };
@@ -54,7 +56,7 @@ function Numbers({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   const handlePrevExercise = () => {
     if (currentExerciseIndex > 0) {
       setCurrentExerciseIndex(prev => prev - 1);
-      setCode(practiceDataNumbers[currentExerciseIndex - 1].initialCode);
+      setCode(practiceDataAssignDeclar[currentExerciseIndex - 1].initialCode);
       setOutput('');
     }
   };
@@ -162,7 +164,7 @@ function Numbers({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
           )}
         </div>
         <div className="w-full sm:w-auto flex flex-wrap gap-2">
-          {currentExerciseIndex < practiceDataNumbers.length - 1 && (
+          {currentExerciseIndex < practiceDataAssignDeclar.length - 1 && (
             <button
               onClick={handleNextExercise}
               className="w-full sm:w-auto bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
@@ -182,4 +184,4 @@ function Numbers({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   );
 }
 
-export default Numbers;
+export default AssignDeclar;

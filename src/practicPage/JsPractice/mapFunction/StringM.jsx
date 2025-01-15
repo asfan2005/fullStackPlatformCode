@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import practiceDataNumbers from '../data/dataNumbers';
+import practiceDataString from '../data/dataString';
 
-function Numbers({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
+function StringM({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   const [currentExerciseIndex, setCurrentExerciseIndex] = React.useState(0);
-  const [code, setCode] = React.useState(practiceDataNumbers[0].initialCode);
+  const [code, setCode] = React.useState(practiceDataString[0].initialCode);
   const [output, setOutput] = React.useState('');
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
 
-  const currentExercise = practiceDataNumbers[currentExerciseIndex];
+  const currentExercise = practiceDataString[currentExerciseIndex];
 
+  // ... existing runCode function ...
   const runCode = () => {
     try {
       const sandbox = new Function('console', `
@@ -30,23 +31,32 @@ function Numbers({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
 
       if (currentExercise.checkResult(consoleOutput)) {
         handleSubLessonComplete(activeLesson, activeSubLesson, true);
-        if (currentExerciseIndex < practiceDataNumbers.length - 1) {
+        if (currentExerciseIndex < practiceDataString.length - 1) {
+          setOutput(prevOutput => `${prevOutput}\n✅ To'g'ri! Ajoyib natija!`);
           setTimeout(() => {
             setCurrentExerciseIndex(prev => prev + 1);
-            setCode(practiceDataNumbers[currentExerciseIndex + 1].initialCode);
+            setCode(practiceDataString[currentExerciseIndex + 1].initialCode);
             setOutput('');
-          }, 1000);
+          }, 1500);
+        } else {
+          handleSubLessonComplete(activeLesson, activeSubLesson, true);
+          const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '{}');
+          completedLessons['2-5'] = true;
+          localStorage.setItem('completedLessons', JSON.stringify(completedLessons));
+          setOutput(prevOutput => `${prevOutput}\n🎉 Barcha mashqlarni muvaffaqiyatli yakunladingiz!`);
         }
+      } else {
+        setOutput(prevOutput => `${prevOutput}\n❌ Qaytadan urinib ko'ring`);
       }
     } catch (error) {
-      setOutput(`Xatolik: ${error.message}`);
+      setOutput(`Xatolik yuz berdi: ${error.message}`);
     }
   };
 
   const handleNextExercise = () => {
-    if (currentExerciseIndex < practiceDataNumbers.length - 1) {
+    if (currentExerciseIndex < practiceDataString.length - 1) {
       setCurrentExerciseIndex(prev => prev + 1);
-      setCode(practiceDataNumbers[currentExerciseIndex + 1].initialCode);
+      setCode(practiceDataString[currentExerciseIndex + 1].initialCode);
       setOutput('');
     }
   };
@@ -54,11 +64,12 @@ function Numbers({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   const handlePrevExercise = () => {
     if (currentExerciseIndex > 0) {
       setCurrentExerciseIndex(prev => prev - 1);
-      setCode(practiceDataNumbers[currentExerciseIndex - 1].initialCode);
+      setCode(practiceDataString[currentExerciseIndex - 1].initialCode);
       setOutput('');
     }
   };
 
+  // ... rest of the component remains the same ...
   return (
     <div className="w-full h-full flex flex-col">
       <div className="flex-1 overflow-y-auto
@@ -162,7 +173,7 @@ function Numbers({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
           )}
         </div>
         <div className="w-full sm:w-auto flex flex-wrap gap-2">
-          {currentExerciseIndex < practiceDataNumbers.length - 1 && (
+          {currentExerciseIndex < practiceDataString.length - 1 && (
             <button
               onClick={handleNextExercise}
               className="w-full sm:w-auto bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
@@ -182,4 +193,4 @@ function Numbers({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   );
 }
 
-export default Numbers;
+export default StringM;

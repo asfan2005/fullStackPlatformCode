@@ -1,169 +1,93 @@
 const practiceDataNumbers = [
     {
-        title: "Qo'shish amali (+)",
-        description: `JavaScript-da qo'shish amali:
-• Ikki yoki undan ortiq sonlarni qo'shish mumkin
-• O'nlik kasrlar bilan ham ishlaydi
-• Natija aniq hisoblanadi`,
-        challenge: {
-            type: "Boshlang'ich",
-            text: `Vazifa: 
-1. Ikkita o'zgaruvchi yarating: narx = 15000 va chegirma = 3500
-2. Umumiy summani hisoblang (narx + chegirma)
-3. Natijani konsolga chiqaring`,
-            code: `// Kodingizni shu yerda yozing`,
-            expectedOutput: "18500"
-        },
-        solution: {
-            title: "Yechim",
-            code: `let narx = 15000;
-let chegirma = 3500;
-console.log(narx + chegirma);`,
-            explanation: `Tushuntirish:
-• O'zgaruvchilar e'lon qilindi
-• Qo'shish amali (+) orqali hisoblandi
-• Natija 18500 chiqadi`,
-            status: "Hidden"
-        },
-        hints: [
-            {
-                title: "Maslahat",
-                content: "O'zgaruvchilarni oldin e'lon qiling, keyin ularni qo'shing",
-                status: "Hidden"
-            }
-        ]
+      id: 1,
+      title: "Raqamlar (Numbers)",
+      description: "JavaScriptda raqamlar bilan ishlash juda oson. Raqamlarni o'zgaruvchilarga saqlash va ular ustida turli amallar bajarish mumkin.",
+      task: "son o'zgaruvchisini 42 qiymat bilan e'lon qiling va console.log() orqali chiqaring",
+      initialCode: "// Raqamlar bilan ishlash\nlet son = 42;\nconsole.log(son);",
+      hint: "Raqamni console.log() orqali chiqaring",
+      checkResult: (output) => output[0] === '42'
     },
     {
-        title: "Ayirish amali (-)",
-        description: `JavaScript-da ayirish amali:
-• Sonlarni bir-biridan ayirish mumkin
-• Natija manfiy ham bo'lishi mumkin
-• O'nlik kasrlar bilan ishlaydi`,
-        challenge: {
-            type: "Boshlang'ich",
-            text: `Vazifa:
-1. Ikkita son yarating: umumiy = 45000 va tolandi = 28000
-2. Qolgan summani hisoblang (umumiy - tolandi)
-3. Natijani konsolga chiqaring`,
-            code: `// Kodingizni shu yerda yozing`,
-            expectedOutput: "17000"
-        },
-        solution: {
-            title: "Yechim",
-            code: `let umumiy = 45000;
-let tolandi = 28000;
-console.log(umumiy - tolandi);`,
-            explanation: `Tushuntirish:
-• Umumiy summadan to'langan summa ayirildi
-• Natija qolgan summani ko'rsatadi`,
-            status: "Hidden"
-        },
-        hints: [
-            {
-                title: "Maslahat",
-                content: "Ayirish amalida tartib muhim: birinchi sondan ikkinchi son ayiriladi",
-                status: "Hidden"
-            }
-        ]
+      id: 2,
+      title: "Arifmetik amallar",
+      description: "JavaScriptda asosiy arifmetik amallarni bajarish mumkin: qo'shish (+), ayirish (-), ko'paytirish (*), bo'lish (/)",
+      task: "Ikkita son qo'shib, natijani console.log() orqali chiqaring. a=10 va b=20",
+      initialCode: "let a = 10;\nlet b = 20;\n// Yechimni yozing",
+      hint: "console.log(a + b) orqali yechimni chiqaring",
+      checkResult: (output) => output[0] === '30'
     },
     {
-        title: "Ko'paytirish amali (*)",
-        description: `JavaScript-da ko'paytirish amali:
-• Sonlarni ko'paytirish uchun * belgisi ishlatiladi
-• Butun va o'nlik kasrlar bilan ishlaydi
-• Natija aniq hisoblanadi`,
-        challenge: {
-            type: "Boshlang'ich",
-            text: `Vazifa:
-1. Mahsulot narxi (narx = 5000) va soni (soni = 4) berilgan
-2. Umumiy summani hisoblang (narx * soni)
-3. Natijani konsolga chiqaring`,
-            code: `// Kodingizni shu yerda yozing`,
-            expectedOutput: "20000"
-        },
-        solution: {
-            title: "Yechim",
-            code: `let narx = 5000;
-let soni = 4;
-console.log(narx * soni);`,
-            explanation: `Tushuntirish:
-• Narx va sonini ko'paytirib umumiy summa chiqarildi
-• Ko'paytirish uchun * belgisi ishlatildi`,
-            status: "Hidden"
-        },
-        hints: [
-            {
-                title: "Maslahat",
-                content: "Ko'paytirish belgisi (*) tushib qolmasin",
-                status: "Hidden"
-            }
-        ]
+      id: 3,
+      title: "Qoldiqli bo'lish",
+      description: "% operatori orqali sonlarni bo'lganda qoldiqni topish mumkin",
+      task: "17 ni 5 ga bo'lgandagi qoldiqni toping",
+      initialCode: "// Qoldiqli bo'lish\n// Yechimni yozing",
+      hint: "% operatoridan foydalaning",
+      checkResult: (output) => output[0] === '2'
     },
     {
-        title: "Bo'lish amali (/)",
-        description: `JavaScript-da bo'lish amali:
-• Sonlarni bo'lish uchun / belgisi ishlatiladi
-• Natija o'nlik kasr bo'lishi mumkin
-• Nolga bo'lish mumkin emas`,
-        challenge: {
-            type: "Boshlang'ich",
-            text: `Vazifa:
-1. Umumiy summa (summa = 120000) va oylar soni (oylar = 12) berilgan
-2. Bir oylik to'lovni hisoblang (summa / oylar)
-3. Natijani konsolga chiqaring`,
-            code: `// Kodingizni shu yerda yozing`,
-            expectedOutput: "10000"
-        },
-        solution: {
-            title: "Yechim",
-            code: `let summa = 120000;
-let oylar = 12;
-console.log(summa / oylar);`,
-            explanation: `Tushuntirish:
-• Umumiy summa oylar soniga bo'lindi
-• Natija bir oylik to'lovni ko'rsatadi`,
-            status: "Hidden"
-        },
-        hints: [
-            {
-                title: "Maslahat",
-                content: "Bo'lish belgisi (/) va o'zgaruvchilar orasida bo'sh joy bo'lishi shart emas",
-                status: "Hidden"
-            }
-        ]
+      id: 4,
+      title: "Sonlarni taqqoslash",
+      description: "Sonlarni taqqoslash uchun >, <, >=, <=, === operatorlaridan foydalaniladi",
+      task: "a=15 va b=20 sonlarini taqqoslab, natijani console.log() orqali chiqaring",
+      initialCode: "let a = 15;\nlet b = 20;\n// Yechimni yozing",
+      hint: "console.log(a < b) orqali tekshiring",
+      checkResult: (output) => output[0] === 'true'
     },
     {
-        title: "Qoldiqli bo'lish (%)",
-        description: `JavaScript-da qoldiqli bo'lish:
-• % belgisi qoldiqni hisoblash uchun ishlatiladi
-• Butun sonlar bilan ishlashda foydali
-• Doimo butun son qaytaradi`,
-        challenge: {
-            type: "Boshlang'ich",
-            text: `Vazifa:
-1. Ikkita son berilgan: son = 17 va boluvchi = 5
-2. Bo'lish qoldig'ini toping (son % boluvchi)
-3. Natijani konsolga chiqaring`,
-            code: `// Kodingizni shu yerda yozing`,
-            expectedOutput: "2"
-        },
-        solution: {
-            title: "Yechim",
-            code: `let son = 17;
-let boluvchi = 5;
-console.log(son % boluvchi);`,
-            explanation: `Tushuntirish:
-• 17 ni 5 ga bo'lganda qoldiq 2 chiqadi
-• % belgisi qoldiqni hisoblaydi`,
-            status: "Hidden"
-        },
-        hints: [
-            {
-                title: "Maslahat",
-                content: "Qoldiqli bo'lish (%) natijasi har doim bo'luvchidan kichik bo'ladi",
-                status: "Hidden"
-            }
-        ]
+      id: 5,
+      title: "Ko'paytirish",
+      description: "JavaScriptda sonlarni ko'paytirish uchun * operatoridan foydalanamiz",
+      task: "a=8 va b=6 sonlarini ko'paytirib, natijani console.log() orqali chiqaring",
+      initialCode: "let a = 8;\nlet b = 6;\n// Ko'paytmani hisoblang",
+      hint: "console.log(a * b) orqali natijani chiqaring",
+      checkResult: (output) => output[0] === '48'
+    },
+    {
+      id: 6,
+      title: "Bo'lish",
+      description: "Sonlarni bo'lish uchun / operatori ishlatiladi",
+      task: "a=45 va b=5 sonlarini bo'lib, natijani console.log() orqali chiqaring",
+      initialCode: "let a = 45;\nlet b = 5;\n// Bo'lish natijasini hisoblang",
+      hint: "console.log(a / b) orqali natijani chiqaring",
+      checkResult: (output) => output[0] === '9'
+    },
+    {
+      id: 7,
+      title: "Darajaga ko'tarish",
+      description: "Sonni darajaga ko'tarish uchun ** operatoridan foydalanamiz",
+      task: "5 ni 2-darajaga ko'tarib, natijani console.log() orqali chiqaring",
+      initialCode: "// 5 ni kvadratini hisoblang",
+      hint: "console.log(5 ** 2) yoki Math.pow(5, 2) dan foydalaning",
+      checkResult: (output) => output[0] === '25'
+    },
+    {
+      id: 8,
+      title: "Ildiz",
+      description: "Sondan ildiz chiqarish uchun Math.sqrt() metodidan foydalanamiz",
+      task: "81 sonidan kvadrat ildiz chiqarib, natijani console.log() orqali chiqaring",
+      initialCode: "// 81 dan ildiz chiqaring",
+      hint: "Math.sqrt(81) metodidan foydalaning",
+      checkResult: (output) => output[0] === '9'
+    },
+    {
+      id: 9,
+      title: "Yaxlitlash",
+      description: "Sonlarni yaxlitlash uchun Math.round(), Math.floor() va Math.ceil() metodlari mavjud",
+      task: "3.7 sonini butun songacha yaxlitlab, natijani console.log() orqali chiqaring",
+      initialCode: "// 3.7 ni yaxlitlang",
+      hint: "Math.round(3.7) metodidan foydalaning",
+      checkResult: (output) => output[0] === '4'
+    },
+    {
+      id: 10,
+      title: "Kompleks amallar",
+      description: "Bir nechta arifmetik amallarni birgalikda bajarish mumkin",
+      task: "(15 + 5) * 2 ifodani hisoblab, natijani console.log() orqali chiqaring",
+      initialCode: "// Ifodani hisoblang",
+      hint: "Qavslar ichidagi amalni birinchi bajaring",
+      checkResult: (output) => output[0] === '40'
     }
 ];
 
