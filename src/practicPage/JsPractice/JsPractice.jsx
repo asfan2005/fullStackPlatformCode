@@ -4,7 +4,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { Dialog, Transition } from '@headlessui/react';
-import { Number,AssignDeclar,StringM } from '../../components/index';
+import { Number,AssignDeclar,StringM,Boolean,NullAndUndifend, ChallangeOne, DataArifmetikOperators, ArifmetikShouts, ComparisionOperators, EqualityStrict, LogicalOperators, LogicalOperators2, ChallangeTwo, ChallangeThree } from '../../components/index';
 
 function JsPractice() {
   const [activeLesson, setActiveLesson] = useState(null);
@@ -135,11 +135,17 @@ function JsPractice() {
     return Math.round((completedCount / totalSubLessons) * 100);
   };
 
-  const handleSubLessonComplete = (lesson, subLesson, isCompleted) => {
-    try {
-      console.log(`Lesson ${lesson}, SubLesson ${subLesson} completed: ${isCompleted}`);
-    } catch (error) {
-      console.error("Error in handleSubLessonComplete:", error);
+  const handleSubLessonComplete = (lessonId, subLessonId, completed) => {
+    const updatedCompletions = { ...completedLessons };
+    updatedCompletions[`${lessonId}-${subLessonId}`] = completed;
+    
+    setCompletedLessons(updatedCompletions);
+    localStorage.setItem('completedLessons', JSON.stringify(updatedCompletions));
+    
+    // Show success modal if completed
+    if (completed) {
+      setModalMessage("🎉 Tabriklaymiz! Siz vazifani muvaffaqiyatli bajardingiz!");
+      setIsSuccessModalOpen(true);
     }
   };
 
@@ -168,14 +174,12 @@ function JsPractice() {
         log: (...args) => consoleOutput.push(args.join(' '))
       };
 
-      sandbox(mockConsole);
+      const result = sandbox(mockConsole);
       setOutput(consoleOutput.join('\n'));
 
       const currentSubLesson = getCurrentSubLesson();
       if (currentSubLesson && currentSubLesson.challenge.expectedOutput === consoleOutput[0]) {
         handleSubLessonComplete(activeLesson, activeSubLesson, true);
-        setModalMessage("🎉 Tabriklaymiz! Siz vazifani muvaffaqiyatli bajardingiz!");
-        setIsSuccessModalOpen(true);
       } else if (consoleOutput.length > 0) {
         setModalMessage("⚠️ Kod ishladi, lekin kutilgan natija boshqacha. Qayta urinib ko'ring!");
         setIsSuccessModalOpen(true);
@@ -232,6 +236,72 @@ function JsPractice() {
         case 5: //String
         return <StringM
         handleSubLessonComplete={handleSubLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 6 :// Boolean
+        return <Boolean
+        handleSubLessonComplete={handleSubLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 7 :// NullAndUndifend
+        return <NullAndUndifend
+        handleSubLessonComplete={handleSubLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 8 ://challangeOne
+        return <ChallangeOne
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 9: //DataArifmetikOperators
+        return <DataArifmetikOperators
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 10: //ArifmetikShouts
+        return <ArifmetikShouts
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 11: //ComparisionOperators
+        return <ComparisionOperators
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 12: //EqualityStrict
+        return <EqualityStrict
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 13: //LogicalOperators
+        return <LogicalOperators
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 14 ://LogicalOperators2
+        return <LogicalOperators2
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 15 ://ChallangeTwo
+        return <ChallangeTwo
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 16: //ChallangeThree
+        return <ChallangeThree
+        handleLessonComplete={handleLessonComplete}
         activeLesson={activeLesson}
         activeSubLesson={activeSubLesson}
         />;

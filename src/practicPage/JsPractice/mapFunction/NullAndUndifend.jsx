@@ -1,29 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import practiceDataBoolean from '../data/dataBoolean';
+import practiceDataNullUndefined from '../data/dataNullAndUndifend';
 
-function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
-  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
-  const [code, setCode] = useState(practiceDataBoolean[0].initialCode);
-  const [output, setOutput] = useState('');
+function NullAndUndifend({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
+  const [currentExerciseIndex, setCurrentExerciseIndex] = React.useState(0);
+  const [code, setCode] = React.useState(practiceDataNullUndefined[0].initialCode);
+  const [output, setOutput] = React.useState('');
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(false);
 
-  const currentExercise = practiceDataBoolean[currentExerciseIndex];
-
-  useEffect(() => {
-    const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '{}');
-    if (completedLessons['2-6']) {
-      setIsCompleted(true);
-    }
-  }, []);
+  const currentExercise = practiceDataNullUndefined[currentExerciseIndex];
 
   const runCode = () => {
     try {
       const sandbox = new Function('console', `
         let consoleOutput = [];
+        const customConsole = {
+          log: function(...args) {
+            consoleOutput.push(args.join(' '));
+          }
+        };
         ${code}
         return consoleOutput;
       `);
@@ -33,33 +30,13 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
         log: (...args) => consoleOutput.push(args.join(' '))
       };
 
-      sandbox(mockConsole);
-      setOutput(consoleOutput.join('\n'));
+      const result = sandbox(mockConsole);
+      
+      setOutput(result.join('\n'));
 
-      if (currentExercise.checkResult(consoleOutput)) {
-        if (currentExerciseIndex < practiceDataBoolean.length - 1) {
-          setOutput(prevOutput => `${prevOutput}\n✅ To'g'ri! Ajoyib natija!`);
-          setTimeout(() => {
-            setCurrentExerciseIndex(prev => prev + 1);
-            setCode(practiceDataBoolean[currentExerciseIndex + 1].initialCode);
-            setOutput('');
-          }, 1500);
-        } else {
-          setIsCompleted(true);
-          const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '{}');
-          completedLessons['2-6'] = true;
-          localStorage.setItem('completedLessons', JSON.stringify(completedLessons));
-          
-          try {
-            if (typeof handleSubLessonComplete === 'function') {
-              handleSubLessonComplete(activeLesson, activeSubLesson, true);
-            }
-          } catch (error) {
-            console.log('handleSubLessonComplete error:', error);
-          }
-          
-          setOutput(prevOutput => `${prevOutput}\n🎉 Barcha mashqlarni muvaffaqiyatli yakunladingiz!`);
-        }
+      if (currentExercise.checkResult(result)) {
+        handleSubLessonComplete(activeLesson, activeSubLesson, true);
+        setOutput(prevOutput => `${prevOutput}\n✅ To'g'ri! Ajoyib natija!`);
       } else {
         setOutput(prevOutput => `${prevOutput}\n❌ Qaytadan urinib ko'ring`);
       }
@@ -69,9 +46,9 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   };
 
   const handleNextExercise = () => {
-    if (currentExerciseIndex < practiceDataBoolean.length - 1) {
+    if (currentExerciseIndex < practiceDataNullUndefined.length - 1) {
       setCurrentExerciseIndex(prev => prev + 1);
-      setCode(practiceDataBoolean[currentExerciseIndex + 1].initialCode);
+      setCode(practiceDataNullUndefined[currentExerciseIndex + 1].initialCode);
       setOutput('');
     }
   };
@@ -79,7 +56,7 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   const handlePrevExercise = () => {
     if (currentExerciseIndex > 0) {
       setCurrentExerciseIndex(prev => prev - 1);
-      setCode(practiceDataBoolean[currentExerciseIndex - 1].initialCode);
+      setCode(practiceDataNullUndefined[currentExerciseIndex - 1].initialCode);
       setOutput('');
     }
   };
@@ -186,7 +163,7 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
           )}
         </div>
         <div className="w-full sm:w-auto flex flex-wrap gap-2">
-          {currentExerciseIndex < practiceDataBoolean.length - 1 && (
+          {currentExerciseIndex < practiceDataNullUndefined.length - 1 && (
             <button
               onClick={handleNextExercise}
               className="w-full sm:w-auto bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
@@ -206,4 +183,4 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   );
 }
 
-export default Boolean;
+export default NullAndUndifend;

@@ -2,20 +2,21 @@ import React, { useState, useEffect } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import practiceDataBoolean from '../data/dataBoolean';
+import practiceDataChallangeOne from '../data/dataChallangeOne';
 
-function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
+function ChallangeOne({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
-  const [code, setCode] = useState(practiceDataBoolean[0].initialCode);
+  const [code, setCode] = useState(practiceDataChallangeOne[0].initialCode);
   const [output, setOutput] = useState('');
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const currentExercise = practiceDataBoolean[currentExerciseIndex];
+  const currentExercise = practiceDataChallangeOne[currentExerciseIndex];
 
   useEffect(() => {
     const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '{}');
-    if (completedLessons['2-6']) {
+    if (completedLessons['2-1']) {
       setIsCompleted(true);
     }
   }, []);
@@ -37,28 +38,23 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
       setOutput(consoleOutput.join('\n'));
 
       if (currentExercise.checkResult(consoleOutput)) {
-        if (currentExerciseIndex < practiceDataBoolean.length - 1) {
+        if (currentExerciseIndex < practiceDataChallangeOne.length - 1) {
           setOutput(prevOutput => `${prevOutput}\n✅ To'g'ri! Ajoyib natija!`);
           setTimeout(() => {
             setCurrentExerciseIndex(prev => prev + 1);
-            setCode(practiceDataBoolean[currentExerciseIndex + 1].initialCode);
+            setCode(practiceDataChallangeOne[currentExerciseIndex + 1].initialCode);
             setOutput('');
           }, 1500);
         } else {
           setIsCompleted(true);
+          setShowSuccessModal(true);
           const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '{}');
-          completedLessons['2-6'] = true;
+          completedLessons['2-1'] = true;
           localStorage.setItem('completedLessons', JSON.stringify(completedLessons));
           
-          try {
-            if (typeof handleSubLessonComplete === 'function') {
-              handleSubLessonComplete(activeLesson, activeSubLesson, true);
-            }
-          } catch (error) {
-            console.log('handleSubLessonComplete error:', error);
+          if (typeof handleSubLessonComplete === 'function') {
+            handleSubLessonComplete(activeLesson, activeSubLesson, true);
           }
-          
-          setOutput(prevOutput => `${prevOutput}\n🎉 Barcha mashqlarni muvaffaqiyatli yakunladingiz!`);
         }
       } else {
         setOutput(prevOutput => `${prevOutput}\n❌ Qaytadan urinib ko'ring`);
@@ -69,9 +65,9 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   };
 
   const handleNextExercise = () => {
-    if (currentExerciseIndex < practiceDataBoolean.length - 1) {
+    if (currentExerciseIndex < practiceDataChallangeOne.length - 1) {
       setCurrentExerciseIndex(prev => prev + 1);
-      setCode(practiceDataBoolean[currentExerciseIndex + 1].initialCode);
+      setCode(practiceDataChallangeOne[currentExerciseIndex + 1].initialCode);
       setOutput('');
     }
   };
@@ -79,7 +75,7 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   const handlePrevExercise = () => {
     if (currentExerciseIndex > 0) {
       setCurrentExerciseIndex(prev => prev - 1);
-      setCode(practiceDataBoolean[currentExerciseIndex - 1].initialCode);
+      setCode(practiceDataChallangeOne[currentExerciseIndex - 1].initialCode);
       setOutput('');
     }
   };
@@ -168,6 +164,47 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
         </div>
       )}
 
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-6 max-w-md w-[90%] sm:w-[400px] transform transition-all animate-fadeIn">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold text-gray-800">
+                Tabriklaymiz! 🎉
+              </h3>
+              <button
+                onClick={() => setShowSuccessModal(false)}
+                className="text-gray-500 hover:text-gray-700 transition-colors"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div className="text-gray-600 mb-4">
+              Siz ushbu bo'limni muvaffaqiyatli yakunladingiz!
+            </div>
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowSuccessModal(false)}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+              >
+                Yopish
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
         <div className="w-full sm:w-auto flex flex-wrap gap-2">
           <button
@@ -186,7 +223,7 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
           )}
         </div>
         <div className="w-full sm:w-auto flex flex-wrap gap-2">
-          {currentExerciseIndex < practiceDataBoolean.length - 1 && (
+          {currentExerciseIndex < practiceDataChallangeOne.length - 1 && (
             <button
               onClick={handleNextExercise}
               className="w-full sm:w-auto bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
@@ -206,4 +243,4 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   );
 }
 
-export default Boolean;
+export default ChallangeOne;

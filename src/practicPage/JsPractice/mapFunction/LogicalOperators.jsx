@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
-import practiceDataBoolean from '../data/dataBoolean';
+import practiceDataLogicalOperators from '../data/dataLogicalOperators';
 
-function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
+function LogicalOperators({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
-  const [code, setCode] = useState(practiceDataBoolean[0].initialCode);
+  const [code, setCode] = useState(practiceDataLogicalOperators[0].initialCode);
   const [output, setOutput] = useState('');
   const [isHintModalOpen, setIsHintModalOpen] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
 
-  const currentExercise = practiceDataBoolean[currentExerciseIndex];
+  const currentExercise = practiceDataLogicalOperators[currentExerciseIndex];
 
   useEffect(() => {
     const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '{}');
-    if (completedLessons['2-6']) {
+    if (completedLessons['2-7']) {
       setIsCompleted(true);
     }
   }, []);
@@ -36,26 +36,24 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
       sandbox(mockConsole);
       setOutput(consoleOutput.join('\n'));
 
-      if (currentExercise.checkResult(consoleOutput)) {
-        if (currentExerciseIndex < practiceDataBoolean.length - 1) {
+      const result = currentExercise.checkResult(consoleOutput);
+      
+      if (result) {
+        if (currentExerciseIndex < practiceDataLogicalOperators.length - 1) {
           setOutput(prevOutput => `${prevOutput}\n✅ To'g'ri! Ajoyib natija!`);
           setTimeout(() => {
             setCurrentExerciseIndex(prev => prev + 1);
-            setCode(practiceDataBoolean[currentExerciseIndex + 1].initialCode);
+            setCode(practiceDataLogicalOperators[currentExerciseIndex + 1].initialCode);
             setOutput('');
           }, 1500);
         } else {
           setIsCompleted(true);
           const completedLessons = JSON.parse(localStorage.getItem('completedLessons') || '{}');
-          completedLessons['2-6'] = true;
+          completedLessons['2-7'] = true;
           localStorage.setItem('completedLessons', JSON.stringify(completedLessons));
           
-          try {
-            if (typeof handleSubLessonComplete === 'function') {
-              handleSubLessonComplete(activeLesson, activeSubLesson, true);
-            }
-          } catch (error) {
-            console.log('handleSubLessonComplete error:', error);
+          if (typeof handleSubLessonComplete === 'function') {
+            handleSubLessonComplete(activeLesson, activeSubLesson, true);
           }
           
           setOutput(prevOutput => `${prevOutput}\n🎉 Barcha mashqlarni muvaffaqiyatli yakunladingiz!`);
@@ -69,9 +67,9 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   };
 
   const handleNextExercise = () => {
-    if (currentExerciseIndex < practiceDataBoolean.length - 1) {
+    if (currentExerciseIndex < practiceDataLogicalOperators.length - 1) {
       setCurrentExerciseIndex(prev => prev + 1);
-      setCode(practiceDataBoolean[currentExerciseIndex + 1].initialCode);
+      setCode(practiceDataLogicalOperators[currentExerciseIndex + 1].initialCode);
       setOutput('');
     }
   };
@@ -79,7 +77,7 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   const handlePrevExercise = () => {
     if (currentExerciseIndex > 0) {
       setCurrentExerciseIndex(prev => prev - 1);
-      setCode(practiceDataBoolean[currentExerciseIndex - 1].initialCode);
+      setCode(practiceDataLogicalOperators[currentExerciseIndex - 1].initialCode);
       setOutput('');
     }
   };
@@ -186,7 +184,7 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
           )}
         </div>
         <div className="w-full sm:w-auto flex flex-wrap gap-2">
-          {currentExerciseIndex < practiceDataBoolean.length - 1 && (
+          {currentExerciseIndex < practiceDataLogicalOperators.length - 1 && (
             <button
               onClick={handleNextExercise}
               className="w-full sm:w-auto bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors"
@@ -206,4 +204,4 @@ function Boolean({ handleSubLessonComplete, activeLesson, activeSubLesson }) {
   );
 }
 
-export default Boolean;
+export default LogicalOperators;
