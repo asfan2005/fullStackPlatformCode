@@ -1,3 +1,5 @@
+import { PercentDiamond } from "lucide-react";
+
 export { default as Header } from "./header/Header";
 export { default as Main } from "./main/Main";
 export { default as Menu } from "./menu/Menu";
@@ -91,3 +93,27 @@ export {default as LogicalOperators} from "../practicPage/JsPractice/mapFunction
 export {default as LogicalOperators2} from "../practicPage/JsPractice/mapFunction/LogicalOperators2";
 export {default as ChallangeTwo} from "../practicPage/JsPractice/mapFunction/ChallangeTwo";
 export {default as ChallangeThree} from "../practicPage/JsPractice/mapFunction/ChallangeThree";
+export {default as IfStatment} from "../practicPage/JsPractice/mapFunction/IfStatment";
+export {default as IfElse} from "../practicPage/JsPractice/mapFunction/IfElse";
+export {default as SwitchCasePractice} from "../practicPage/JsPractice/mapFunction/SwitchCasePractice";
+export {default as ChallangeFour} from "../practicPage/JsPractice/mapFunction/ChallangeFour";
+export {default as OutputWithVribles} from "../practicPage/JsPractice/mapFunction/OutputWithVribles";
+export {default as Cast} from "../practicPage/JsPractice/mapFunction/Cast";
+export {default as ChallangeFive} from "../practicPage/JsPractice/mapFunction/ChallangeFive";
+export {default as Challange6} from "../practicPage/JsPractice/mapFunction/Challange6";
+export {default as ForLop} from "../practicPage/JsPractice/mapFunction/ForLop";
+export {default as WhileLoop} from "../practicPage/JsPractice/mapFunction/WhileLoop";
+export {default as Break} from "../practicPage/JsPractice/mapFunction/Break";
+export {default as Continu} from "../practicPage/JsPractice/mapFunction/Continu";
+export {default as Challange7} from "../practicPage/JsPractice/mapFunction/Challange7";
+export {default as DeclareFunkcition} from "../practicPage/JsPractice/mapFunction/DeclareFunkcition";
+export {default as Arguments} from "../practicPage/JsPractice/mapFunction/Arguments";
+export {default as Return} from "../practicPage/JsPractice/mapFunction/Return";
+export {default as RecapChallange9} from "../practicPage/JsPractice/mapFunction/RecapChallange9";
+export {default as Challang10} from "../practicPage/JsPractice/mapFunction/Challang10";
+export {default as DeclaringArray} from "../practicPage/JsPractice/mapFunction/DeclaringArray";
+export {default as AccessingArrayElements} from "../practicPage/JsPractice/mapFunction/AccessingArrayElements";
+export {default as ModifyingArrays} from "../practicPage/JsPractice/mapFunction/ModifyingArrays";
+export {default as ArrayMethods} from "../practicPage/JsPractice/mapFunction/ArrayMethods";
+export {default as Challange11} from "../practicPage/JsPractice/mapFunction/Challange11";
+export {default as Challange12} from "../practicPage/JsPractice/mapFunction/Challange12";

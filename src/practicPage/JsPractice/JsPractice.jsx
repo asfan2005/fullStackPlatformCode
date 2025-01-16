@@ -1,10 +1,10 @@
-import React, { useState, Fragment, useEffect } from 'react'
+import React, { useState, Fragment, useEffect, act } from 'react'
 import practiceDataIntroduction from './data/dataIntroduction';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { Dialog, Transition } from '@headlessui/react';
-import { Number,AssignDeclar,StringM,Boolean,NullAndUndifend, ChallangeOne, DataArifmetikOperators, ArifmetikShouts, ComparisionOperators, EqualityStrict, LogicalOperators, LogicalOperators2, ChallangeTwo, ChallangeThree } from '../../components/index';
+import { Number,AssignDeclar,StringM,Boolean,NullAndUndifend, ChallangeOne, DataArifmetikOperators, ArifmetikShouts, ComparisionOperators, EqualityStrict, LogicalOperators, LogicalOperators2, ChallangeTwo, ChallangeThree, IfStatment, IfElse, SwitchCasePractice, ChallangeFour, OutputWithVribles,Cast, ChallangeFive, Challange6, ForLop, WhileLoop, Break, Continu, Challange7, DeclareFunkcition, Arguments, Return, RecapChallange9, Challang10, DeclaringArray, AccessingArrayElements, ModifyingArrays, ArrayMethods, Challange11, Challange12 } from '../../components/index';
 
 function JsPractice() {
   const [activeLesson, setActiveLesson] = useState(null);
@@ -301,6 +301,151 @@ function JsPractice() {
         />;
         case 16: //ChallangeThree
         return <ChallangeThree
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 17: //IfStatment
+        return <IfStatment
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 18: //IfElse
+        return <IfElse
+        handleSubLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 19: //SwitchCase
+        return <SwitchCasePractice
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 20 ://ChallangeFour
+        return <ChallangeFour
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 21 ://OutputWithVribles
+        return <OutputWithVribles
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 22: //Cast
+        return <Cast 
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 23 : //ChallangeFive
+        return <ChallangeFive
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 24 ://Challange6
+        return <Challange6
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 25: //ForLop
+        return <ForLop
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 26 : //whileLoop
+        return <WhileLoop
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 27: //Break
+        return <Break
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 28: //Continu
+        return <Continu
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 29 : //Challange7
+        return <Challange7
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 30 : //DeclareFunkcition
+        return <DeclareFunkcition
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 31: //Arguments
+        return <Arguments
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 32: //Return
+        return <Return
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 33 : //RecapChallange9
+        return <RecapChallange9
+       handleLessonComplete={handleLessonComplete}
+       activeLesson={activeLesson}
+       activeSubLesson={activeSubLesson}
+       />;
+       case 34: //Challang10
+       return <Challang10
+       handleLessonComplete={handleLessonComplete}
+       activeLesson={activeLesson}
+       activeSubLesson={activeSubLesson}
+       />;
+       case 35://DeclaringArray
+       return <DeclaringArray
+       handleLessonComplete={handleLessonComplete}
+       activeLesson={activeLesson}
+       activeSubLesson={activeSubLesson}
+       />;
+
+       case 36 : //AccessingArrayElements
+        return <AccessingArrayElements
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 37: //ModifyingArrays
+        return <ModifyingArrays
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 38: //ArrayMethods
+        return <ArrayMethods
+        handleLessonComplete={handleSubLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 39: //challange11
+        return <Challange11
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 40: //challange12 
+        return <Challange12
         handleLessonComplete={handleLessonComplete}
         activeLesson={activeLesson}
         activeSubLesson={activeSubLesson}
