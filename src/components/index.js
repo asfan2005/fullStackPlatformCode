@@ -117,3 +117,6 @@ export {default as ModifyingArrays} from "../practicPage/JsPractice/mapFunction/
 export {default as ArrayMethods} from "../practicPage/JsPractice/mapFunction/ArrayMethods";
 export {default as Challange11} from "../practicPage/JsPractice/mapFunction/Challange11";
 export {default as Challange12} from "../practicPage/JsPractice/mapFunction/Challange12";
+export {default as AstrikPyramid} from "../practicPage/JsPractice/mapFunction/AstrikPyramid";
+export {default as TransposeArray} from "../practicPage/JsPractice/mapFunction/TransposeArray";
+export {default as GoodConstraction} from "../practicPage/JsPractice/mapFunction/GoodConstraction";

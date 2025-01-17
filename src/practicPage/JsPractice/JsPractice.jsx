@@ -4,7 +4,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { Dialog, Transition } from '@headlessui/react';
-import { Number,AssignDeclar,StringM,Boolean,NullAndUndifend, ChallangeOne, DataArifmetikOperators, ArifmetikShouts, ComparisionOperators, EqualityStrict, LogicalOperators, LogicalOperators2, ChallangeTwo, ChallangeThree, IfStatment, IfElse, SwitchCasePractice, ChallangeFour, OutputWithVribles,Cast, ChallangeFive, Challange6, ForLop, WhileLoop, Break, Continu, Challange7, DeclareFunkcition, Arguments, Return, RecapChallange9, Challang10, DeclaringArray, AccessingArrayElements, ModifyingArrays, ArrayMethods, Challange11, Challange12 } from '../../components/index';
+import { Number,AssignDeclar,StringM,Boolean,NullAndUndifend, ChallangeOne, DataArifmetikOperators, ArifmetikShouts, ComparisionOperators, EqualityStrict, LogicalOperators, LogicalOperators2, ChallangeTwo, ChallangeThree, IfStatment, IfElse, SwitchCasePractice, ChallangeFour, OutputWithVribles,Cast, ChallangeFive, Challange6, ForLop, WhileLoop, Break, Continu, Challange7, DeclareFunkcition, Arguments, Return, RecapChallange9, Challang10, DeclaringArray, AccessingArrayElements, ModifyingArrays, ArrayMethods, Challange11, Challange12, AstrikPyramid, TransposeArray, GoodConstraction } from '../../components/index';
 
 function JsPractice() {
   const [activeLesson, setActiveLesson] = useState(null);
@@ -446,6 +446,24 @@ function JsPractice() {
         />;
         case 40: //challange12 
         return <Challange12
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 41 : //AstrikPyramid
+        return <AstrikPyramid
+        handleLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 42 ://TransposeArray
+        return <TransposeArray
+        handleSubLessonComplete={handleLessonComplete}
+        activeLesson={activeLesson}
+        activeSubLesson={activeSubLesson}
+        />;
+        case 43: //GoodConstraction
+        return <GoodConstraction
         handleLessonComplete={handleLessonComplete}
         activeLesson={activeLesson}
         activeSubLesson={activeSubLesson}
