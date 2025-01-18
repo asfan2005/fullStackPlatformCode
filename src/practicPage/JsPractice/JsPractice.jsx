@@ -571,7 +571,11 @@ function JsPractice() {
         transition-colors
       `}>
         <div className="p-3 md:p-4">
-          <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">JS Practice</h1>
+          <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6">
+            <a href="/" className="hover:text-blue-600 transition-colors">
+              JS Practice
+            </a>
+          </h1>
           
           <div className="space-y-2">
             {lessons.map((lesson) => {
