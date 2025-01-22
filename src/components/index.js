@@ -136,3 +136,8 @@ export {default as TestingDebug} from "../ComponentsJs/pageJsOrta/TestingDebug";
 export {default as Performance} from "../ComponentsJs/pageJsOrta/Performance";
 export {default as SecurityPage} from "../ComponentsJs/pageJsOrta/SecurityPage";
 export {default as DesignPatterns} from "../ComponentsJs/pageJsOrta/DesignPatterns";
+export {default as CleanCode} from "../ComponentsJs/pageJsOrta/CleanCode";
+export {default as TypeScriptAsoslar} from "../ComponentsJs/pageJsOrta/TypeScriptAsoslar";
+export {default as NpmPackageManagement} from "../ComponentsJs/pageJsOrta/NpmPackageManagement"
+export {default as WebpackBundling} from "../ComponentsJs/pageJsOrta/WebpackBundling";
+export {default as GitControl} from "../ComponentsJs/pageJsOrta/GitControl";

@@ -4,7 +4,7 @@ import {
     FaCode, FaLayerGroup, FaBoxes, FaClock, FaDatabase,
     FaProjectDiagram, FaRocket, FaBug, FaBars, FaTimes
 } from 'react-icons/fa';
-import { AmaliyPracePage, Animatsiyalar, ApiBilanIshlash, ArrayObyektlarPro, AsyncJavaScript, DebugKonsol, DomMurrakab, FunksiyalarPro, Modullar, StorageBrowserApi, TestingDebug,Performance, SecurityPage } from "../components/index";
+import { AmaliyPracePage, Animatsiyalar, ApiBilanIshlash, ArrayObyektlarPro, AsyncJavaScript, DebugKonsol, DomMurrakab, FunksiyalarPro, Modullar, StorageBrowserApi, TestingDebug,Performance, SecurityPage, DesignPatterns, CleanCode, TypeScriptAsoslar, NpmPackageManagement, WebpackBundling, GitControl } from "../components/index";
 import Es6Xususiylatlari from './pageJsOrta/Es6Xususiylatlari';
 // Custom scrollbar styles qo'shish uchun CSS
 const scrollbarStyles = `
@@ -130,88 +130,22 @@ function OrtaJs() {
            <SecurityPage/>
         ),
         "Design Patterns": (
-            <div className="space-y-4">
-                <p>JavaScript design patterns:</p>
-                <ul className="list-disc pl-5 space-y-2">
-                    <li>Singleton pattern</li>
-                    <li>Factory pattern</li>
-                    <li>Observer pattern</li>
-                    <li>Module pattern</li>
-                    <li>Decorator pattern</li>
-                    <li>MVC/MVVM patterns</li>
-                    <li>Dependency injection</li>
-                </ul>
-            </div>
+            <DesignPatterns/>
         ),
         "Clean Code": (
-            <div className="space-y-4">
-                <p>Toza kod yozish prinsiplari:</p>
-                <ul className="list-disc pl-5 space-y-2">
-                    <li>SOLID prinsiplari</li>
-                    <li>DRY (Don't Repeat Yourself)</li>
-                    <li>KISS (Keep It Simple, Stupid)</li>
-                    <li>Code refactoring</li>
-                    <li>Code documentation</li>
-                    <li>Naming conventions</li>
-                    <li>Code organization</li>
-                </ul>
-            </div>
+            <CleanCode/>
         ),
         "TypeScript Asoslari": (
-            <div className="space-y-4">
-                <p>TypeScript asosiy tushunchalari:</p>
-                <ul className="list-disc pl-5 space-y-2">
-                    <li>Static typing</li>
-                    <li>Interfaces</li>
-                    <li>Classes va inheritance</li>
-                    <li>Generics</li>
-                    <li>Decorators</li>
-                    <li>Type inference</li>
-                    <li>Configuration</li>
-                </ul>
-            </div>
+           <TypeScriptAsoslar/>
         ),
         "NPM va Package Management": (
-            <div className="space-y-4">
-                <p>NPM va paketlar bilan ishlash:</p>
-                <ul className="list-disc pl-5 space-y-2">
-                    <li>Package.json</li>
-                    <li>Dependencies management</li>
-                    <li>NPM scripts</li>
-                    <li>Version control</li>
-                    <li>Publishing packages</li>
-                    <li>Security audits</li>
-                    <li>NPM alternatives</li>
-                </ul>
-            </div>
+           <NpmPackageManagement/>
         ),
         "Webpack va Bundling": (
-            <div className="space-y-4">
-                <p>Webpack va bundling asoslari:</p>
-                <ul className="list-disc pl-5 space-y-2">
-                    <li>Configuration</li>
-                    <li>Loaders</li>
-                    <li>Plugins</li>
-                    <li>Code splitting</li>
-                    <li>Development server</li>
-                    <li>Production build</li>
-                    <li>Optimization</li>
-                </ul>
-            </div>
+           <WebpackBundling/>
         ),
         "Git va Version Control": (
-            <div className="space-y-4">
-                <p>Git va versiyalarni boshqarish:</p>
-                <ul className="list-disc pl-5 space-y-2">
-                    <li>Basic commands</li>
-                    <li>Branching strategies</li>
-                    <li>Merge vs Rebase</li>
-                    <li>Conflict resolution</li>
-                    <li>Git workflow</li>
-                    <li>GitHub/GitLab</li>
-                    <li>CI/CD integration</li>
-                </ul>
-            </div>
+           <GitControl/>
         )
     };
 

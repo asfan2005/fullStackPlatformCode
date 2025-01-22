@@ -1,9 +1,9 @@
 import React from 'react';
-import dataModullar from '../dataOrta/dataDesignPatterns';
+import dataModullar from '../dataOrta/dataCloneCode';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-function DesignPatterns() {
+function AsynsJavaScript() {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
       {/* Asosiy sarlavha */}
@@ -134,4 +134,4 @@ function DesignPatterns() {
   );
 }
 
-export default DesignPatterns;
+export default AsynsJavaScript;
