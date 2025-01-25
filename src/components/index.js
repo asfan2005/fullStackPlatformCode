@@ -141,3 +141,10 @@ export {default as TypeScriptAsoslar} from "../ComponentsJs/pageJsOrta/TypeScrip
 export {default as NpmPackageManagement} from "../ComponentsJs/pageJsOrta/NpmPackageManagement"
 export {default as WebpackBundling} from "../ComponentsJs/pageJsOrta/WebpackBundling";
 export {default as GitControl} from "../ComponentsJs/pageJsOrta/GitControl";
+export {default as MukammalJs} from "../ComponentsJs/MukammalJs";
+export {default as JavaScriptAsoslarMukammal} from "../ComponentsJs/pagesMukammal/JavaScriptAsoslarMukammal";
+export {default as FunksiyalarScope} from "../ComponentsJs/pagesMukammal/FunksiyalarScope";
+export {default as DomManipulatsiya} from "../ComponentsJs/pagesMukammal/DomManipulatsiya";
+export {default as dataOopJavaScript} from "../ComponentsJs/pagesMukammal/OopJavaScript"
+export {default as Asinxronlik} from "../ComponentsJs/pagesMukammal/Asinxronlik";
+export {default as MahalliyMalumotBaza} from "../ComponentsJs/pagesMukammal/MahalliyMalumotBaza";

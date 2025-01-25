@@ -17,7 +17,8 @@ import {
   HomeJs,
   BoshlangichJs,
   JsPractice,
-  OrtaJs
+  OrtaJs,
+  MukammalJs
 } from "./components/index.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 createRoot(document.getElementById("root")).render(
@@ -40,6 +41,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/javascript/boshlangich"  element={<BoshlangichJs/>} />
         <Route path="/javascript/practice" element={<JsPractice/>}/>
         <Route path="/javascript/orta" element={<OrtaJs/>}/>
+        <Route path="/javascript/mukammal" element={<MukammalJs/>}/>
       </Routes>
     </BrowserRouter>
   </StrictMode>
