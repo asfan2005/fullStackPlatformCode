@@ -154,3 +154,8 @@ export {default as FrameworkAsoslar} from "../ComponentsJs/pagesMukammal/Framewo
 export {default as ApiIntegratsiyasi} from "../ComponentsJs/pagesMukammal/ApiIntegratsiyasi";
 export {default as MalumotlarBilanIshlash} from "../ComponentsJs/pagesMukammal/MalumotlarBilanIshlash";
 export {default as XavfsizlikOptimizatsiya} from "../ComponentsJs/pagesMukammal/XavfsizlikOptimizatsiya";
+export {default as PageTailwandcss} from "../componentsTailwand/PageTailwandcss";
+export {default as TailwandcssBoshlangich} from '../componentsTailwand/TailwandCssBoshlangich';
+export {default as PageTailwandcssOrta} from "../componentsTailwand/PageTailwandcssOrta";
+export {default as PageTailwandcssMukammal} from "../componentsTailwand/PageTailwandcssMukammal";
+export {default as TailwandCssKirish} from "../componentsTailwand/pagesBoshlangich/TailwandCssKirish";
