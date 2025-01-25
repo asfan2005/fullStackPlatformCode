@@ -5,7 +5,7 @@ import {
     FaProjectDiagram, FaRocket, FaBug, FaBars, FaTimes, FaShieldAlt
 } from 'react-icons/fa';
 
-import {Asinxronlik, DomManipulatsiya, FunksiyalarScope, JavaScriptAsoslarMukammal, MahalliyMalumotBaza} from "../components/index"
+import {ApiIntegratsiyasi, Asinxronlik, DomManipulatsiya, FrameworkAsoslar, FunksiyalarScope, JavaScriptAsoslarMukammal, MahalliyMalumotBaza, MalumotlarBilanIshlash, ModullarPaketlar, Testlash, XavfsizlikOptimizatsiya} from "../components/index"
 import OopJavaScript from './pagesMukammal/OopJavaScript';
 // Custom scrollbar styles
 const scrollbarStyles = `
@@ -87,161 +87,22 @@ function MukammalJs() {
            <MahalliyMalumotBaza/>
         ),
         "Modullar va Paketlar": (
-            <div className="space-y-4">
-                <h3 className="text-xl font-semibold">Modullar va Paketlar</h3>
-                <p>JavaScript modullar tizimi va paketlar bilan ishlash.</p>
-                <ul className="list-disc pl-5 space-y-2">
-                    <li>ES Modules</li>
-                    <li>CommonJS</li>
-                    <li>NPM</li>
-                    <li>Package.json</li>
-                    <li>Bundlers</li>
-                </ul>
-            </div>
+           <ModullarPaketlar/>
         ),
         "Testlash": (
-            <div className="space-y-4">
-                <h3 className="text-xl font-semibold">Testlash</h3>
-                <p>JavaScript kodini testlash usullari.</p>
-                <ul className="list-disc pl-5 space-y-2">
-                    <li>Unit Testing</li>
-                    <li>Integration Testing</li>
-                    <li>Jest Framework</li>
-                    <li>Mocha & Chai</li>
-                    <li>Test Driven Development</li>
-                </ul>
-            </div>
+            <Testlash/>
         ),
         "Framework Asoslari": (
-            <div className="space-y-4">
-                <h3 className="text-xl font-semibold">Framework Asoslari</h3>
-                <p>Zamonaviy JavaScript frameworklari.</p>
-                <ul className="list-disc pl-5 space-y-2">
-                    <li>React asoslari</li>
-                    <li>Vue asoslari</li>
-                    <li>Angular asoslari</li>
-                    <li>State management</li>
-                    <li>Routing</li>
-                </ul>
-            </div>
+            <FrameworkAsoslar/>
         ),
         "API Integratsiyasi": (
-            <div className="space-y-4">
-                <h3 className="text-xl font-semibold">API Integratsiyasi</h3>
-                <p>RESTful API va GraphQL bilan ishlash usullari.</p>
-                <div className="space-y-6">
-                    <div>
-                        <h4 className="text-lg font-medium mb-2">REST API</h4>
-                        <ul className="list-disc pl-5 space-y-2">
-                            <li>HTTP so'rovlar (GET, POST, PUT, DELETE)</li>
-                            <li>Fetch API va Axios</li>
-                            <li>API autentifikatsiya (JWT, OAuth)</li>
-                            <li>Error handling va retry mexanizmlari</li>
-                            <li>Rate limiting va caching</li>
-                        </ul>
-                    </div>
-                    
-                    <div>
-                        <h4 className="text-lg font-medium mb-2">GraphQL</h4>
-                        <ul className="list-disc pl-5 space-y-2">
-                            <li>GraphQL so'rovlar va mutatsiyalar</li>
-                            <li>Apollo Client</li>
-                            <li>Schema va Type definitions</li>
-                            <li>Real-time updates (Subscriptions)</li>
-                            <li>Optimistic UI updates</li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4 className="text-lg font-medium mb-2">Amaliy Misollar</h4>
-                        <ul className="list-disc pl-5 space-y-2">
-                            <li>REST API bilan ma'lumotlarni olish va yuborish</li>
-                            <li>GraphQL so'rovlarini yozish</li>
-                            <li>WebSocket va Server-Sent Events</li>
-                            <li>API dokumentatsiyasi bilan ishlash</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <ApiIntegratsiyasi/>
         ),
         "Ma'lumotlar Bilan Ishlash": (
-            <div className="space-y-4">
-                <h3 className="text-xl font-semibold">Ma'lumotlar Bilan Ishlash</h3>
-                <p>Katta hajmdagi ma'lumotlarni samarali boshqarish.</p>
-                <div className="space-y-6">
-                    <div>
-                        <h4 className="text-lg font-medium mb-2">Ma'lumotlarni Qayta Ishlash</h4>
-                        <ul className="list-disc pl-5 space-y-2">
-                            <li>Array metodlari (map, filter, reduce)</li>
-                            <li>Ma'lumotlarni filtrlash va saralash</li>
-                            <li>Ma'lumotlarni agregatsiya qilish</li>
-                            <li>JSON bilan ishlash</li>
-                            <li>CSV va Excel fayllarni qayta ishlash</li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4 className="text-lg font-medium mb-2">State Management</h4>
-                        <ul className="list-disc pl-5 space-y-2">
-                            <li>Redux va Redux Toolkit</li>
-                            <li>Context API</li>
-                            <li>Zustand</li>
-                            <li>Ma'lumotlar normalizatsiyasi</li>
-                            <li>Cache management</li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4 className="text-lg font-medium mb-2">Real-time Ma'lumotlar</h4>
-                        <ul className="list-disc pl-5 space-y-2">
-                            <li>WebSocket integratsiyasi</li>
-                            <li>Server-Sent Events</li>
-                            <li>Real-time ma'lumotlarni vizualizatsiya qilish</li>
-                            <li>Ma'lumotlar sinxronizatsiyasi</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+           <MalumotlarBilanIshlash/>
         ),
         "Xavfsizlik va Optimizatsiya": (
-            <div className="space-y-4">
-                <h3 className="text-xl font-semibold">Xavfsizlik va Optimizatsiya</h3>
-                <p>Xavfsiz va yuqori unumli JavaScript ilovalarini yaratish.</p>
-                <div className="space-y-6">
-                    <div>
-                        <h4 className="text-lg font-medium mb-2">Xavfsizlik</h4>
-                        <ul className="list-disc pl-5 space-y-2">
-                            <li>XSS (Cross-Site Scripting) himoyasi</li>
-                            <li>CSRF (Cross-Site Request Forgery)</li>
-                            <li>Content Security Policy (CSP)</li>
-                            <li>Secure Headers</li>
-                            <li>Input validatsiya va sanitizatsiya</li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4 className="text-lg font-medium mb-2">Performance Optimizatsiya</h4>
-                        <ul className="list-disc pl-5 space-y-2">
-                            <li>Code splitting va lazy loading</li>
-                            <li>Bundle size optimizatsiyasi</li>
-                            <li>Memory leak oldini olish</li>
-                            <li>Virtual DOM optimizatsiyasi</li>
-                            <li>Network requests optimizatsiyasi</li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h4 className="text-lg font-medium mb-2">Monitoring va Debugging</h4>
-                        <ul className="list-disc pl-5 space-y-2">
-                            <li>Performance monitoring</li>
-                            <li>Error tracking va logging</li>
-                            <li>Chrome DevTools bilan ishlash</li>
-                            <li>Lighthouse va WebPageTest</li>
-                            <li>Analytics va user monitoring</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <XavfsizlikOptimizatsiya/>
         )
     };
 

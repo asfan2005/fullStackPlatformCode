@@ -148,3 +148,9 @@ export {default as DomManipulatsiya} from "../ComponentsJs/pagesMukammal/DomMani
 export {default as dataOopJavaScript} from "../ComponentsJs/pagesMukammal/OopJavaScript"
 export {default as Asinxronlik} from "../ComponentsJs/pagesMukammal/Asinxronlik";
 export {default as MahalliyMalumotBaza} from "../ComponentsJs/pagesMukammal/MahalliyMalumotBaza";
+export {default as ModullarPaketlar} from "../ComponentsJs/pagesMukammal/ModullarPaketlar";
+export {default as Testlash} from "../ComponentsJs/pagesMukammal/Testlash";
+export {default as FrameworkAsoslar} from "../ComponentsJs/pagesMukammal/FrameworkAsoslar";
+export {default as ApiIntegratsiyasi} from "../ComponentsJs/pagesMukammal/ApiIntegratsiyasi";
+export {default as MalumotlarBilanIshlash} from "../ComponentsJs/pagesMukammal/MalumotlarBilanIshlash";
+export {default as XavfsizlikOptimizatsiya} from "../ComponentsJs/pagesMukammal/XavfsizlikOptimizatsiya";
