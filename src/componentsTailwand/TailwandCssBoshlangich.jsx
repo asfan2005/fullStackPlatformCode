@@ -14,7 +14,7 @@ import {
   FaBars, 
   FaTimes 
 } from 'react-icons/fa';
-import {TailwandCssKirish} from "../components/index"
+import {BoshliqniTashkil, ChegaralarBurchaklar, FlexboxAsoslar, GridTizimiAsoslar, LoyihagaOrnatish, MatnUsullari, RanglarFonlar, ResponsiveDizayn, TailwandCssKirish, UtilitySinflar} from "../components/index"
 function TailwandCssBoshlangich() {
   const navigate = useNavigate();
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -50,187 +50,40 @@ function TailwandCssBoshlangich() {
     "Tailwind CSS-ga Kirish": (
      <TailwandCssKirish/>
     ),
-
     "Loyihaga Tailwind-ni O'rnatish": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">O'rnatish yo'llari</h3>
-          
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">NPM orqali o'rnatish:</h4>
-            <pre className="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto">
-              <code>npm install -D tailwindcss</code>
-            </pre>
-          </div>
-
-          <div className="bg-green-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-green-800 mb-2">CDN orqali ulash:</h4>
-            <pre className="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto">
-              <code>{`<script src="https://cdn.tailwindcss.com"></script>`}</code>
-            </pre>
-          </div>
-        </section>
-      </div>
+      <LoyihagaOrnatish/>
     ),
 
     "Utility Sinflar Asoslari": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Utility Sinflar</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Tailwind CSS utility sinflar yordamida stillarni to'g'ridan-to'g'ri HTML elementlariga qo'llash imkonini beradi.
-          </p>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Asosiy utility sinflar:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Ranglar (text-color, bg-color)</li>
-              <li>O'lchamlar (width, height)</li>
-              <li>Margin va padding</li>
-              <li>Flexbox va Grid</li>
-              <li>Typography</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+     <UtilitySinflar/>
     ),
 
     "Ranglar va Fonlar": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Ranglar va Fonlar</h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-blue-800 mb-2">Rang sinflari:</h4>
-              <div className="space-y-2">
-                <div className="bg-blue-500 text-white p-2 rounded">bg-blue-500</div>
-                <div className="bg-green-500 text-white p-2 rounded">bg-green-500</div>
-                <div className="bg-red-500 text-white p-2 rounded">bg-red-500</div>
-              </div>
-            </div>
-
-            <div className="bg-green-50 p-4 rounded-lg">
-              <h4 className="font-semibold text-green-800 mb-2">Fon turlari:</h4>
-              <div className="space-y-2">
-                <div className="bg-gradient-to-r from-blue-500 to-green-500 text-white p-2 rounded">
-                  Gradient fon
-                </div>
-                <div className="bg-opacity-50 bg-blue-500 text-white p-2 rounded">
-                  Shaffof fon
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
+      <RanglarFonlar/>
     ),
 
     "Matn Usullari": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Matn Usullari</h3>
-          
-          <div className="space-y-4">
-            <div className="text-sm">Text Small</div>
-            <div className="text-base">Text Base</div>
-            <div className="text-lg">Text Large</div>
-            <div className="text-xl">Text XL</div>
-            <div className="font-bold">Bold Text</div>
-            <div className="italic">Italic Text</div>
-            <div className="underline">Underline Text</div>
-          </div>
-        </section>
-      </div>
+     <MatnUsullari/>
     ),
 
     "Chegaralar va Burchaklar": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Chegaralar va Burchaklar</h3>
-          
-          <div className="grid grid-cols-2 gap-4">
-            <div className="border-2 p-4 rounded">Border-2</div>
-            <div className="border-4 p-4 rounded-lg">Border-4</div>
-            <div className="border-dashed border-2 p-4">Dashed</div>
-            <div className="border-dotted border-2 p-4">Dotted</div>
-          </div>
-        </section>
-      </div>
+     <ChegaralarBurchaklar/>
     ),
 
     "Bo'shliqni Tashkil Qilish": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Margin va Padding</h3>
-          
-          <div className="space-y-4">
-            <div className="bg-blue-100 p-4">Padding-4</div>
-            <div className="bg-green-100 m-4">Margin-4</div>
-            <div className="bg-red-100 px-4 py-2">Padding X/Y</div>
-            <div className="bg-yellow-100 mx-4 my-2">Margin X/Y</div>
-          </div>
-        </section>
-      </div>
+    <BoshliqniTashkil/>
     ),
 
     "Flexbox Asoslari": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Flexbox</h3>
-          
-          <div className="flex space-x-4 mb-4">
-            <div className="bg-blue-500 text-white p-4 rounded">Item 1</div>
-            <div className="bg-blue-500 text-white p-4 rounded">Item 2</div>
-            <div className="bg-blue-500 text-white p-4 rounded">Item 3</div>
-          </div>
-
-          <div className="flex flex-col space-y-4">
-            <div className="bg-green-500 text-white p-4 rounded">Column 1</div>
-            <div className="bg-green-500 text-white p-4 rounded">Column 2</div>
-            <div className="bg-green-500 text-white p-4 rounded">Column 3</div>
-          </div>
-        </section>
-      </div>
+      <FlexboxAsoslar/>
     ),
 
     "Grid Tizimi Asoslari": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Grid Tizimi</h3>
-          
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-purple-500 text-white p-4 rounded">Grid 1</div>
-            <div className="bg-purple-500 text-white p-4 rounded">Grid 2</div>
-            <div className="bg-purple-500 text-white p-4 rounded">Grid 3</div>
-            <div className="bg-purple-500 text-white p-4 rounded">Grid 4</div>
-            <div className="bg-purple-500 text-white p-4 rounded">Grid 5</div>
-            <div className="bg-purple-500 text-white p-4 rounded">Grid 6</div>
-          </div>
-        </section>
-      </div>
+    <GridTizimiAsoslar/>
     ),
 
     "Responsive Dizayn Kirish": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Responsive Dizayn</h3>
-          
-          <div className="space-y-4">
-            <div className="bg-indigo-500 text-white p-4 rounded text-center sm:bg-green-500 md:bg-blue-500 lg:bg-purple-500">
-              Ekran o'lchamiga qarab rang o'zgaradi
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              <div className="bg-indigo-500 text-white p-4 rounded">Item 1</div>
-              <div className="bg-indigo-500 text-white p-4 rounded">Item 2</div>
-              <div className="bg-indigo-500 text-white p-4 rounded">Item 3</div>
-              <div className="bg-indigo-500 text-white p-4 rounded">Item 4</div>
-            </div>
-          </div>
-        </section>
-      </div>
+     <ResponsiveDizayn/>
     )
   };
 

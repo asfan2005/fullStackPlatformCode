@@ -159,3 +159,12 @@ export {default as TailwandcssBoshlangich} from '../componentsTailwand/TailwandC
 export {default as PageTailwandcssOrta} from "../componentsTailwand/PageTailwandcssOrta";
 export {default as PageTailwandcssMukammal} from "../componentsTailwand/PageTailwandcssMukammal";
 export {default as TailwandCssKirish} from "../componentsTailwand/pagesBoshlangich/TailwandCssKirish";
+export {default as LoyihagaOrnatish} from "../componentsTailwand/pagesBoshlangich/LoyihagaOrnatish";
+export {default as UtilitySinflar} from "../componentsTailwand/pagesBoshlangich/UtilitySinflar";
+export {default as RanglarFonlar} from "../componentsTailwand/pagesBoshlangich/RanglarFonlar";
+export {default as MatnUsullari} from "../componentsTailwand/pagesBoshlangich/MatnUsullari";
+export {default as ChegaralarBurchaklar} from "../componentsTailwand/pagesBoshlangich/ChegaralarBurchaklar";
+export {default as BoshliqniTashkil} from "../componentsTailwand/pagesBoshlangich/BoshliqniTashkil";
+export {default as FlexboxAsoslar} from "../componentsTailwand/pagesBoshlangich/FlexboxAsoslar";
+export {default as GridTizimiAsoslar} from "../componentsTailwand/pagesBoshlangich/GridTizimiAsoslar";
+export {default as ResponsiveDizayn} from "../componentsTailwand/pagesBoshlangich/ResponsiveDizayn";
