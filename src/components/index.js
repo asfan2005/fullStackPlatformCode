@@ -168,3 +168,13 @@ export {default as BoshliqniTashkil} from "../componentsTailwand/pagesBoshlangic
 export {default as FlexboxAsoslar} from "../componentsTailwand/pagesBoshlangich/FlexboxAsoslar";
 export {default as GridTizimiAsoslar} from "../componentsTailwand/pagesBoshlangich/GridTizimiAsoslar";
 export {default as ResponsiveDizayn} from "../componentsTailwand/pagesBoshlangich/ResponsiveDizayn";
+export {default as TailwandCssAsoslarOrta} from "../componentsTailwand/pagesOrta/TailwandCssAsoslar";
+export {default as LayoutJoylashuv} from "../componentsTailwand/pagesOrta/LayoutJoylashuv";
+export {default as dataTypographyRuxsatlash} from "../componentsTailwand/dataOrta/dataTypographyRuxsatlash";
+export {default as RanglarTemalar} from "../componentsTailwand/pagesOrta/RanglarTemalar";
+export {default as InteraktivlikAnimatsiyalar} from "../componentsTailwand/pagesOrta/InteraktivlikAnimatsiyalar";
+export {default as Komponentlar} from "../componentsTailwand/pagesOrta/Komponentlar";
+export {default as ResponsiveDizaynTailwind} from "../componentsTailwand/pagesOrta/ResponsiveDizayn";
+export {default as TailwindCssIntegratsiya} from "../componentsTailwand/pagesOrta/TailwindCssIntegratsiya";
+export {default as MaxsusConfogPlugins} from "../componentsTailwand/pagesOrta/MaxsusConfogPlugins";
+export {default as AmaliyTailwandOrta} from "../componentsTailwand/pagesOrta/AmaliyTailwandOrta";
