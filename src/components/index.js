@@ -196,3 +196,4 @@ export {default as DarkModeMukammal} from "../componentsTailwand/pagesMukammal/D
 export {default as PluginsMukammal} from "../componentsTailwand/pagesMukammal/PluginsMukammal";
 export {default as dataBestPracticesMukammal} from "../componentsTailwand/dataMukammal/dataBestPractices";
 export {default as AmaliyMukammal} from "../componentsTailwand/pagesMukammal/AmaliyMukammal";
+export {default as TailwandCssPractice} from "../practicPage/TailwandPractice/TailwandCssPractice";

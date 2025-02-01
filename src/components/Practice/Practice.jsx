@@ -98,7 +98,7 @@ function Practice() {
       name: "Tailwind CSS",
       icon: SiTailwindcss,
       color: "#06B6D4",
-      link: "/frontend/tailwind",
+      link: "/tailwindcss/practice",
       category: "frontend",
     },
     {
