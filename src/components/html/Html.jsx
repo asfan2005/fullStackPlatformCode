@@ -23,33 +23,26 @@ function Html() {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <LearningCard
-            title="Bolalar uchun HTML"
-            description="4-7 sinf o'quvchilari uchun qiziqarli HTML darslari."
-            icon={<FaChild className="text-4xl text-pink-500" />}
-            color="bg-pink-100"
-            onClick={() => navigate("/html/temurbek")}
-          />
-          <LearningCard
-            title="Yosh o'rganuvchilar uchun"
-            description="HTML asoslarini o'yin va qiziqarli mashg'ulotlar orqali o'rganing."
-            icon={<FaBookOpen className="text-4xl" />}
-            color="bg-green-100"
+            title="Boshlang'ich HTML"
+            description="HTML asoslari, teg tushunchasi, asosiy struktura va oddiy sahifalar yaratish."
+            icon={<FaChild className="text-4xl text-green-600" />}
+            color="bg-green-50"
             onClick={() => navigate("/html/boshlangich")}
           />
           <LearningCard
-            title="O'rta darajadagilar uchun"
-            description="HTML strukturasi va semantikasini chuqurroq o'rganing."
-            icon="🧑‍🎓"
-            color="bg-blue-100"
+            title="HTML va SEO"
+            description="Semantik HTML, meta teglar, SEO optimizatsiyasi va zamonaviy standartlar."
+            icon={<FaBookOpen className="text-4xl text-blue-600" />}
+            color="bg-blue-50"
             onClick={() => navigate("/html/orta")}
           />
           <LearningCard
-            title="Tajribali dasturchilar uchun"
-            description="Ilg'or HTML texnikalarini va SEO optimizatsiyasini o'rganing."
-            icon="👨‍💻"
-            color="bg-purple-100"
+            title="Mukammal HTML"
+            description="HTML5 API'lari, formalar, multimedia, canvas va ilg'or xususiyatlar."
+            icon={<FaHtml5 className="text-4xl text-orange-600" />}
+            color="bg-orange-50"
             onClick={() => navigate("/html/mukammal")}
           />
         </div>
