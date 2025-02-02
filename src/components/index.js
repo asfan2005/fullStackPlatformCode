@@ -197,3 +197,7 @@ export {default as PluginsMukammal} from "../componentsTailwand/pagesMukammal/Pl
 export {default as dataBestPracticesMukammal} from "../componentsTailwand/dataMukammal/dataBestPractices";
 export {default as AmaliyMukammal} from "../componentsTailwand/pagesMukammal/AmaliyMukammal";
 export {default as TailwandCssPractice} from "../practicPage/TailwandPractice/TailwandCssPractice";
+export {default as HomePageReact} from "../componentsReact/HomePageReact";
+export {default as BoshlangichReact} from "../componentsReact/BoshlangichReact";
+export {default as OrtaReact} from "../componentsReact/OrtaReact";
+export {default as MukammalReact} from "../componentsReact/MukammalReact";

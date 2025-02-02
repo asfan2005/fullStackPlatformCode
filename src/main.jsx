@@ -23,7 +23,11 @@ import {
   TailwandcssBoshlangich,
   PageTailwandcssOrta,
   PageTailwandcssMukammal,
-  TailwandCssPractice
+  TailwandCssPractice,
+  HomePageReact,
+  BoshlangichReact,
+  OrtaReact,
+  MukammalReact
 } from "./components/index.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 createRoot(document.getElementById("root")).render(
@@ -52,6 +56,10 @@ createRoot(document.getElementById("root")).render(
         <Route path="/tailwindcss/orta" element={<PageTailwandcssOrta/>}/>
         <Route path="/tailwindcss/mukammal" element={<PageTailwandcssMukammal/>}/>
         <Route path="/tailwindcss/practice" element={<TailwandCssPractice/>}/>
+        <Route path="/frontend/react" element={<HomePageReact/>}/>
+        <Route path="/react/boshlangich" element={<BoshlangichReact/>}/>
+        <Route path="/react/orta" element={<OrtaReact/>}/>
+        <Route path="/react/mukammal" element={<MukammalReact/>}/>
       </Routes>
     </BrowserRouter>
   </StrictMode>
