@@ -23,55 +23,372 @@ import {
   FaNodeJs,
   FaTelegramPlane,
   FaInstagram,
+  FaCheck, 
+  FaTimes,
 } from "react-icons/fa";
+import { 
+  Code2, 
+  Database, 
+  Smartphone, 
+  Laptop, 
+  Brain,
+  Terminal,
+  Palette,
+  Globe,
+  Server,
+  AppWindow
+} from 'lucide-react';
+
+// Add testimonials array
+const testimonials = [
+  {
+    id: 1,
+    name: "Aziz Rakhimov",
+    role: "Frontend Developer",
+    text: "Bu platforma orqali dasturlashni o'rganish juda oson va qiziqarli bo'ldi.",
+    image: "https://randomuser.me/api/portraits/men/1.jpg"
+  },
+  {
+    id: 2,
+    name: "Malika Karimova",
+    role: "Backend Developer",
+    text: "Ajoyib o'quv materiallari va amaliy mashg'ulotlar bilan ta'minlangan.",
+    image: "https://randomuser.me/api/portraits/women/1.jpg"
+  },
+  {
+    id: 3,
+    name: "Jamshid Toshmatov",
+    role: "Full Stack Developer",
+    text: "Professional darajadagi kurslar va ajoyib hamjamiyat mavjud.",
+    image: "https://randomuser.me/api/portraits/men/2.jpg"
+  }
+];
+
+
+const levels = [
+  {
+    title: "Boshlang'ich",
+    icon: <FaCode className="text-4xl mb-4 text-blue-500" />,
+    description: "HTML, CSS va JavaScript asoslarini o'rganing",
+    projects: [
+      "Shaxsiy portfolio",
+      "Oddiy kalkulyator",
+      "To-do ro'yxati",
+      "Soat ilovasi",
+      "Ob-havo widget'i",
+      "Oddiy o'yin (Tosh, Qaychi, Qog'oz)",
+      "Forma validatsiyasi",
+      "Responsive landing page",
+    ],
+  },
+  {
+    title: "O'rta",
+    icon: <FaLaptopCode className="text-4xl mb-4 text-green-500" />,
+    description: "React va Node.js bilan tanishing",
+    projects: [
+      "Blog ilovasi",
+      "Ob-havo ma'lumotlari",
+      "Chat dasturi",
+      "Kitoblar kutubxonasi",
+      "Restoran menyu ilovasi",
+      "Valyuta konvertori",
+      "Musiqa pleyeri",
+      "Foydalanuvchi autentifikatsiyasi",
+    ],
+  },
+  {
+    title: "Yuqori",
+    icon: <FaServer className="text-4xl mb-4 text-purple-500" />,
+    description: "Ma'lumotlar bazasi va API'lar bilan ishlashni o'rganing",
+    projects: [
+      "E-commerce platformasi",
+      "Ijtimoiy tarmoq",
+      "Task menejment tizimi",
+      "Real vaqt ma'lumotlar doskasi",
+      "Blog CMS",
+      "Onlayn test platformasi",
+      "Fayl almashish tizimi",
+      "API gateway",
+    ],
+  },
+  {
+    title: "Ekspert",
+    icon: <FaRocket className="text-4xl mb-4 text-red-500" />,
+    description: "Murakkab loyihalar va zamonaviy texnologiyalar",
+    projects: [
+      "Real vaqt ilovasi (Socket.io)",
+      "Machine Learning integratsiyasi",
+      "Blockchain loyihasi",
+      "Mikroservislar arxitekturasi",
+      "GraphQL API",
+      "Katta ma'lumotlar tahlili",
+      "IoT monitoring tizimi",
+      "AR/VR web ilovasi",
+    ],
+  },
+];
+// Categories array
+const categories = [
+  {
+    title: "Frontend Development",
+    icon: <Code2 className="w-12 h-12" />,
+    color: "bg-gradient-to-br from-blue-100 to-blue-200 text-blue-600",
+    description: "Zamonaviy web interfeyslarini React, Vue va Angular texnologiyalari yordamida yarating",
+    features: ["React.js", "Vue.js", "TypeScript", "Responsive Design"]
+  },
+  {
+    title: "Backend Development",
+    icon: <Server className="w-12 h-12" />,
+    color: "bg-gradient-to-br from-green-100 to-green-200 text-green-600",
+    description: "Kuchli va xavfsiz server ilovalarini Node.js va Python texnologiyalari bilan yarating",
+    features: ["Node.js", "Python", "REST API", "GraphQL"]
+  },
+  {
+    title: "Mobile Development",
+    icon: <Smartphone className="w-12 h-12" />,
+    color: "bg-gradient-to-br from-purple-100 to-purple-200 text-purple-600",
+    description: "React Native va Flutter orqali cross-platform mobil ilovalar yarating",
+    features: ["React Native", "Flutter", "iOS", "Android"]
+  },
+  {
+    title: "Database Engineering",
+    icon: <Database className="w-12 h-12" />,
+    color: "bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-600",
+    description: "MongoDB, PostgreSQL va Redis orqali ma'lumotlar bazasini boshqaring",
+    features: ["MongoDB", "PostgreSQL", "Redis", "SQL"]
+  },
+  {
+    title: "Cloud Computing",
+    icon: <Globe className="w-12 h-12" />,
+    color: "bg-gradient-to-br from-indigo-100 to-indigo-200 text-indigo-600",
+    description: "AWS va Google Cloud platformalarida zamonaviy cloud infratuzilmani yarating",
+    features: ["AWS", "Google Cloud", "Azure", "DevOps"]
+  },
+  {
+    title: "DevOps",
+    icon: <Terminal className="w-12 h-12" />,
+    color: "bg-gradient-to-br from-red-100 to-red-200 text-red-600",
+    description: "Docker va Kubernetes orqali avtomatlashtirilgan deployment jarayonlarini sozlang",
+    features: ["Docker", "Kubernetes", "CI/CD", "Jenkins"]
+  },
+  {
+    title: "AI Development",
+    icon: <Brain className="w-12 h-12" />,
+    color: "bg-gradient-to-br from-teal-100 to-teal-200 text-teal-600",
+    description: "TensorFlow va PyTorch orqali sun'iy intellekt loyihalarini yarating",
+    features: ["Machine Learning", "Deep Learning", "NLP", "Computer Vision"]
+  },
+  {
+    title: "System Design",
+    icon: <AppWindow className="w-12 h-12" />,
+    color: "bg-gradient-to-br from-pink-100 to-pink-200 text-pink-600",
+    description: "Masshtabli va yuqori unumli tizimlarni loyihalashtiring",
+    features: ["Architecture", "Scalability", "Performance", "Security"]
+  },
+  {
+    title: "Cyber Security",
+    icon: <Laptop className="w-12 h-12" />,
+    color: "bg-gradient-to-br from-orange-100 to-orange-200 text-orange-600",
+    description: "Zamonaviy xavfsizlik protokollari va himoya tizimlarini o'rganing",
+    features: ["Network Security", "Encryption", "Penetration Testing", "Security Protocols"]
+  }
+];
+
+const plans = [
+  {
+    name: "Oddiy",
+    price: {
+      monthly: "Bepul",
+      yearly: "Bepul"
+    },
+    features: [
+      { name: "Asosiy darslar", included: true },
+      { name: "Cheklangan loyihalar", included: true },
+      { name: "Umumiy forum", included: true },
+      { name: "Jobs ko'rish", included: false },
+      { name: "Mentorlar bilan suhbat", included: false },
+      { name: "Loyihalarda yordam", included: false },
+      { name: "Sertifikat", included: false },
+      { name: "Mock intervyular", included: false },
+      { name: "Mukammal loyihalarda qatnashish", included: false },
+      { name: "Shaxsiy karyera maslahatlari", included: false },
+      { name: "Haftalik live kodlash sessiyalari", included: false },
+      { name: "Maxsus texnik seminarlar", included: false },
+    ]
+  },
+  {
+    name: "Premium",
+    price: {
+      monthly: "50,000 so'm",
+      yearly: "500,000 so'm"
+    },
+    features: [
+      { name: "Barcha darslar", included: true },
+      { name: "Cheksiz loyihalar", included: true },
+      { name: "Maxsus forum", included: true },
+      { name: "Jobs ko'rish", included: true },
+      { name: "Mentorlar bilan suhbat", included: true },
+      { name: "Loyihalarda yordam", included: true },
+      { name: "Sertifikat", included: true },
+      { name: "Mock intervyular", included: true },
+      { name: "Mukammal loyihalarda qatnashish", included: true },
+      { name: "Shaxsiy karyera maslahatlari", included: true },
+      { name: "Haftalik live kodlash sessiyalari", included: true },
+      { name: "Maxsus texnik seminarlar", included: true },
+    ]
+  },
+  {
+    name: "Online kurs",
+    price: {
+      monthly: "300,000 so'm",
+      yearly: "3,000,000 so'm"
+    },
+    features: [
+      { name: "Barcha Premium imkoniyatlar", included: true },
+      { name: "Haftada 3 kun jonli darslar", included: true },
+      { name: "1 haftalik intensiv bootcamp", included: true },
+      { name: "Shaxsiy mentor", included: true },
+      { name: "Kichik guruhlar (maksimum 10 kishi)", included: true },
+      { name: "Real loyihalar ustida ishlash", included: true },
+      { name: "Networking imkoniyatlari", included: true },
+      { name: "Ishga joylashishda yordam", included: true },
+      { name: "24/7 qo'llab-quvvatlash", included: true },
+      { name: "Maxsus mehmon ma'ruzalari", included: true },
+      { name: "Portfolio yaratishda yordam", included: true },
+      { name: "Kafolatlangan natija", included: true },
+    ]
+  }
+];
+
+// Trafik component defined outside Home
+const Trafik = () => {
+  const handleButtonClick = () => {
+    window.open('https://t.me/asfan_001', '_blank');
+  };
+  return null; // Add return statement if needed
+};
+
+// Helper components defined outside Home
+function FeatureCard({ icon, title, description }) {
+  return (
+    <motion.div
+      whileHover={{ y: -5, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}
+      className="bg-white p-8 rounded-2xl shadow-lg text-center transition-all duration-300 border border-gray-100 hover:border-purple-300"
+    >
+      <motion.div
+        className="mb-6 bg-gradient-to-br from-purple-100 to-indigo-100 p-4 rounded-full inline-block"
+        whileHover={{ scale: 1.1, rotate: 5 }}
+      >
+        {icon}
+      </motion.div>
+      <h3 className="text-2xl font-semibold mb-4 text-purple-600">{title}</h3>
+      <p className="text-gray-600">{description}</p>
+    </motion.div>
+  );
+}
+
+function LearningPathStep({ icon, title, description, details }) {
+  return (
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      className="bg-white p-8 rounded-lg shadow-lg text-center transition-all duration-300"
+    >
+      <motion.div
+        className="mb-6 text-5xl text-indigo-500"
+        whileHover={{ scale: 1.1 }}
+      >
+        {icon}
+      </motion.div>
+      <h3 className="text-2xl font-semibold mb-4 text-purple-600">{title}</h3>
+      <p className="text-gray-600 mb-6">{description}</p>
+      <ul className="text-left text-sm">
+        {details.map((detail, index) => (
+          <li key={index} className="mb-3 flex items-start">
+            <FaRocket className="text-indigo-500 mr-2 mt-1 flex-shrink-0" />
+            <span className="text-gray-600">{detail}</span>
+          </li>
+        ))}
+      </ul>
+    </motion.div>
+  );
+}
+
+function StatisticCard({ icon, number, text }) {
+  return (
+    <motion.div
+      whileHover={{ scale: 1.05 }}
+      className="bg-white bg-opacity-10 p-6 rounded-lg text-center"
+    >
+      <div className="text-4xl mb-4 text-yellow-300">{icon}</div>
+      <h3 className="text-3xl font-bold mb-2">{number}</h3>
+      <p className="text-lg">{text}</p>
+    </motion.div>
+  );
+}
+
+function TechnologyBadge({ name, percentage }) {
+  return (
+    <div className="bg-white bg-opacity-10 px-4 py-2 rounded-full">
+      <span className="font-semibold">{name}</span>
+      <span className="ml-2 text-yellow-300">{percentage}%</span>
+    </div>
+  );
+}
+
+function CourseCard({ icon, title, description, level, duration }) {
+  return (
+    <motion.div
+      whileHover={{ y: -5, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}
+      className="bg-white p-6 rounded-xl shadow-lg transition-all duration-300 border border-gray-100 hover:border-purple-300"
+    >
+      <div className="flex items-center mb-4">
+        <div className="mr-4 bg-indigo-100 p-3 rounded-full">{icon}</div>
+        <h3 className="text-xl font-semibold text-purple-600">{title}</h3>
+      </div>
+      <p className="text-gray-600 mb-4">{description}</p>
+      <div className="flex justify-between text-sm text-gray-500">
+        <span>{level}</span>
+        <span>{duration}</span>
+      </div>
+    </motion.div>
+  );
+}
 
 function Home() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [currentCategory, setCurrentCategory] = useState(0);
+  const itemsPerSlide = 3;
+  const totalSlides = Math.ceil(categories.length / itemsPerSlide);
 
-  const testimonials = [
-    {
-      name: "Aziza Soliyeva",
-      role: "Frontend Developer",
-      image: "https://randomuser.me/api/portraits/women/1.jpg",
-      text: "Bu platforma orqali men nafaqat nazariy bilimlarni, balki amaliy ko'nikmalarni ham egalladim. Haqiqiy loyihalar ustida ishlash menga katta tajriba berdi!",
-      rating: 5,
-    },
-    {
-      name: "Bobur Aliyev",
-      role: "Full Stack Developer",
-      image: "https://randomuser.me/api/portraits/men/2.jpg",
-      text: "FullStack Practice Platform menga dasturlash dunyosida o'z o'rnimni topishga yordam berdi. Amaliy mashg'ulotlar va qiziqarli loyihalar tufayli men tez orada ish topdim.",
-      rating: 5,
-    },
-    {
-      name: "Gulnora Karimova",
-      role: "Backend Developer",
-      image: "https://randomuser.me/api/portraits/women/3.jpg",
-      text: "Men bu platformani har bir dasturlashni o'rganmoqchi bo'lganlarga tavsiya qilaman. Bu yerda siz nafaqat kod yozishni, balki muammolarni hal qilishni ham o'rganasiz.",
-      rating: 4,
-    },
-    {
-      name: "Sardor Umarov",
-      role: "Mobile Developer",
-      image: "https://randomuser.me/api/portraits/men/4.jpg",
-      text: "FullStack Practice Platform menga web dasturlashdan tashqari mobile dasturlash sirlarini ham o'rgatdi. Endi men cross-platform ilovalar yarata olaman!",
-      rating: 5,
-    },
-    {
-      name: "Nilufar Rahimova",
-      role: "UX/UI Designer",
-      image: "https://randomuser.me/api/portraits/women/5.jpg",
-      text: "Bu platforma nafaqat dasturlash, balki dizayn sohasida ham juda foydali. Men front-end va UX/UI dizayn integratsiyasini mukammal o'rganib oldim.",
-      rating: 5,
-    },
-  ];
+  // Add handleButtonClick function inside Home component
+  const handleButtonClick = () => {
+    window.open('https://t.me/asfan_001', '_blank');
+  };
 
+  // Categories auto-scroll
   useEffect(() => {
-    const timer = setInterval(() => {
+    const categoryTimer = setInterval(() => {
+      setCurrentCategory((prev) => (prev + 1) % totalSlides);
+    }, 3000);
+    return () => clearInterval(categoryTimer);
+  }, [totalSlides]);
+
+  // Testimonials auto-scroll
+  useEffect(() => {
+    const testimonialTimer = setInterval(() => {
       setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
     }, 5000);
-    return () => clearInterval(timer);
+    return () => clearInterval(testimonialTimer);
   }, []);
+
+
+  // trafik
+
+  // Get current slide items
+  const getCurrentSlideItems = () => {
+    const startIndex = currentCategory * itemsPerSlide;
+    return categories.slice(startIndex, startIndex + itemsPerSlide);
+  };
 
   const nextTestimonial = () => {
     setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
@@ -232,171 +549,66 @@ function Home() {
         </motion.div>
       </header>
 
-      {/* Platform Features */}
-      <section className="py-20 px-4 bg-gradient-to-br from-purple-50 to-indigo-50">
+      {/* Categories Section */}
+      <section className="py-12 md:py-20 px-4 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto">
-          <h2 className="text-4xl lg:text-5xl font-bold text-center mb-8 text-purple-600">
-            Nima uchun{" "}
-            <span className="text-indigo-600">FullStack Practice Platform</span>
-            ?
-          </h2>
-          <p className="text-xl text-center mb-16 text-gray-600 max-w-3xl mx-auto">
-            Oddiy video darslardan farqli o'laroq, bizning platforma 100%
-            amaliyotga asoslangan. Bu yerda siz nafaqat o'rganasiz, balki
-            yaratish orqali o'sib borasiz!
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <FeatureCard
-              icon={<FaCode className="text-6xl text-purple-500" />}
-              title="Jonli Kodlash Tajribasi"
-              description="Har bir mavzu bo'yicha interaktiv kodlash mashqlari. Nazariyani emas, amaliyotni o'rganing!"
-            />
-            <FeatureCard
-              icon={<FaProjectDiagram className="text-6xl text-blue-500" />}
-              title="Real Loyihalar"
-              description="Haqiqiy dunyodagi loyihalar ustida ishlang. Portfolio yarating, tajriba orttiring."
-            />
-            <FeatureCard
-              icon={<FaBrain className="text-6xl text-green-500" />}
-              title="Muammolarni Yechish"
-              description="Kodlash qobiliyatingizni chiniqtiruvchi qiziqarli muammolar va topshiriqlar."
-            />
-            <FeatureCard
-              icon={<FaRocket className="text-6xl text-red-500" />}
-              title="Shaxsiy Rivojlanish"
-              description="Har bir mashq bilan yangi ko'nikmalar egallab, o'sib boring."
-            />
-            <FeatureCard
-              icon={<FaUsers className="text-6xl text-yellow-500" />}
-              title="Hamkorlikdagi O'qish"
-              description="Boshqa dasturchilar bilan birgalikda ishlang, tajriba almashing."
-            />
-            <FeatureCard
-              icon={<FaLaptopCode className="text-6xl text-indigo-500" />}
-              title="Zamonaviy Texnologiyalar"
-              description="Eng so'nggi dasturlash texnologiyalari va asboblarini amalda qo'llang."
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20 px-4 bg-gradient-to-br from-indigo-50 to-purple-50">
-        <div className="container mx-auto">
-          <h2 className="text-4xl lg:text-5xl font-bold text-center mb-16 text-purple-600">
-            Platformamiz Haqida <span className="text-indigo-600">Fikrlar</span>
-          </h2>
-          <div className="relative">
-            <div className="flex overflow-hidden">
-              <AnimatePresence initial={false}>
-                {[0, 1, 2].map((offset) => {
-                  const testimonialIndex =
-                    (currentTestimonial + offset) % testimonials.length;
-                  const testimonial = testimonials[testimonialIndex];
-                  return (
-                    <motion.div
-                      key={testimonialIndex}
-                      className="w-full md:w-1/3 px-4 flex-shrink-0"
-                      initial={{ opacity: 0, x: 100 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -100 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <div className="bg-white p-6 rounded-2xl shadow-lg h-full flex flex-col">
-                        <div className="flex items-center mb-4">
-                          <img
-                            src={testimonial.image}
-                            alt={testimonial.name}
-                            className="w-12 h-12 rounded-full mr-4"
-                          />
-                          <div>
-                            <h3 className="text-lg font-semibold text-purple-600">
-                              {testimonial.name}
-                            </h3>
-                            <p className="text-sm text-gray-600">
-                              {testimonial.role}
-                            </p>
-                          </div>
-                        </div>
-                        <p className="text-gray-700 mb-4 text-sm italic flex-grow">
-                          <FaQuoteLeft className="inline-block mr-2 text-indigo-400" />
-                          {testimonial.text}
-                          <FaQuoteRight className="inline-block ml-2 text-indigo-400" />
-                        </p>
-                        <div className="flex justify-center">
-                          {[...Array(5)].map((_, i) => (
-                            <FaStar
-                              key={i}
-                              className={`text-xl ${
-                                i < testimonial.rating
-                                  ? "text-yellow-400"
-                                  : "text-gray-300"
-                              }`}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
-            </div>
-            <button
-              onClick={prevTestimonial}
-              className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg text-purple-600 hover:text-lg text-purple-600 hover:text-purple-800 focus:outline-none"
+          <div className="text-center max-w-3xl mx-auto mb-12 md:mb-20 px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
             >
-              <FaChevronLeft className="text-xl" />
-            </button>
-            <button
-              onClick={nextTestimonial}
-              className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg text-purple-600 hover:text-purple-800 focus:outline-none"
-            >
-              <FaChevronRight className="text-xl" />
-            </button>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                Dasturlash Yo'nalishlari
+              </h2>
+              <p className="text-base md:text-xl text-gray-600 leading-relaxed px-4">
+                Zamonaviy dasturlash sohasining eng istiqbolli yo'nalishlarini o'rganing va 
+                o'z karyerangizni boshlang. Har bir yo'nalish bo'yicha professional mentorlar 
+                va amaliy loyihalar sizni kutmoqda.
+              </p>
+            </motion.div>
           </div>
-        </div>
-      </section>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {categories.map((category, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                className={`${category.color} rounded-xl p-6 md:p-8 shadow-md hover:shadow-xl transition-all duration-300`}
+              >
+                <div className="flex flex-col h-full">
+                  {/* Icon Container */}
+                  <div className="bg-white/80 rounded-xl p-4 w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 flex items-center justify-center shadow-inner">
+                    {category.icon}
+                  </div>
 
-      {/* Platform Statistics */}
-      <section className="py-20 px-4 bg-gradient-to-br from-purple-600 to-indigo-700 text-white">
-        <div className="container mx-auto">
-          <h2 className="text-4xl lg:text-5xl font-bold text-center mb-16">
-            Platformadagi{" "}
-            <span className="text-yellow-300">Muvaffaqiyatlar</span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <StatisticCard
-              icon={<FaUsers className="m-auto" />}
-              number="10,000+"
-              text="Faol foydalanuvchilar"
-            />
-            <StatisticCard
-              icon={<FaProjectDiagram className="m-auto" />}
-              number="5,000+"
-              text="Yakunlangan loyihalar"
-            />
-            <StatisticCard
-              icon={<FaGraduationCap className="m-auto" />}
-              number="50+"
-              text="O'rganish yo'nalishlari"
-            />
-            <StatisticCard
-              icon={<FaClock className="m-auto" />}
-              number="1,000,000+"
-              text="O'rganishga sarflangan soatlar"
-            />
-          </div>
-          <div className="mt-16">
-            <h3 className="text-2xl font-semibold text-center mb-8">
-              Eng Mashhur Texnologiyalar
-            </h3>
-            <div className="flex flex-wrap justify-center gap-4">
-              <TechnologyBadge name="JavaScript" percentage={85} />
-              <TechnologyBadge name="React" percentage={70} />
-              <TechnologyBadge name="Node.js" percentage={65} />
-              <TechnologyBadge name="Java" percentage={60} />
-              <TechnologyBadge name="SQL" percentage={55} />
-            </div>
+                  {/* Content */}
+                  <div className="text-center flex-grow">
+                    <h3 className="font-bold text-lg md:text-xl mb-3">
+                      {category.title}
+                    </h3>
+                    <p className="text-sm md:text-base mb-6 opacity-90 line-clamp-3">
+                      {category.description}
+                    </p>
+                  </div>
+
+                  {/* Features */}
+                  <div className="flex flex-wrap gap-2 justify-center mt-auto">
+                    {category.features.map((feature, i) => (
+                      <span
+                        key={i}
+                        className="bg-white/50 px-3 py-1 rounded-full text-xs md:text-sm font-medium"
+                      >
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -454,57 +666,238 @@ function Home() {
         </div>
       </section>
 
-      {/* Learning Path */}
-      <section className="py-20 px-4 bg-gray-100">
-        <div className="container mx-auto">
-          <h2 className="text-4xl lg:text-5xl font-bold text-center mb-16 text-purple-600">
-            Full Stack <span className="text-indigo-600">Qahramoniga</span>{" "}
-            Aylanish Yo'li
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <LearningPathStep
-              icon={<FaCode />}
-              title="1. Koding Poydevori"
-              description="HTML, CSS va JavaScript sirlarini ochib, web olamiga ilk qadamingizni qo'ying."
-              details={[
-                "Web sahifalar arxitekturasini yarating",
-                "JavaScript sehri bilan tanishing",
-                "Responsive dizayn san'atini o'rganing",
-              ]}
-            />
-            <LearningPathStep
-              icon={<FaLaptopCode />}
-              title="2. Front-end Sarguzashtlari"
-              description="Zamonaviy front-end texnologiyalari bilan tanishib, foydalanuvchi interfeyslarini yarating."
-              details={[
-                "React yoki Vue kabi freymvorklar bilan do'stlashing",
-                "Komponentlar va state boshqaruvi sirlarini o'rganing",
-                "SPA (Single Page Application) yaratish san'atini egallang",
-              ]}
-            />
-            <LearningPathStep
-              icon={<FaServer />}
-              title="3. Back-end Sehrgarlik"
-              description="Server tomonidagi dasturlash orqali loyihangizga kuch va aql baxsh eting."
-              details={[
-                "Node.js va Express.js bilan tanishing",
-                "RESTful API yaratish san'atini o'rganing",
-                "Ma'lumotlar bazalari bilan ishlash sirlarini kashf eting",
-              ]}
-            />
-            <LearningPathStep
-              icon={<FaProjectDiagram />}
-              title="4. Full Stack Qahramonlik"
-              description="Front-end va back-end bilimlaringizni birlashtirb, to'liq web ilovalar yarating."
-              details={[
-                "Front-end va back-end integratsiyasini amalga oshiring",
-                "Xavfsizlik va autentifikatsiya tizimlarini yarating",
-                "Loyihangizni dunyoga taqdim etish va rivojlantirish sirlarini o'rganing",
-              ]}
-            />
+
+      <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-6">
+              Har bir bosqichda o'sib boring
+            </h2>
+            <p className="text-lg text-gray-600">
+              Dasturlash sayohatingizda bosqichma-bosqich rivojlaning va professional darajaga ko'tariling
+            </p>
+          </motion.div>
+
+          {/* Grid container with max 2 items per row */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {levels.map((level, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100"
+              >
+                {/* Header with improved gradient */}
+                <div className="relative p-8 text-center bg-gradient-to-br from-gray-50 via-white to-gray-50">
+                  <div className="absolute inset-0 opacity-10 bg-grid-pattern"></div>
+                  <div className="relative">
+                    <div className="inline-flex p-4 rounded-xl bg-white shadow-md mb-6 transform transition-transform group-hover:scale-110 ring-2 ring-purple-100">
+                      {level.icon}
+                    </div>
+                    <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                      {level.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm md:text-base">{level.description}</p>
+                  </div>
+                </div>
+
+                {/* Projects List with improved styling */}
+                <div className="p-6 bg-white">
+                  <div className="space-y-3">
+                    {level.projects.map((project, idx) => (
+                      <motion.div
+                        key={idx}
+                        whileHover={{ x: 4 }}
+                        className="flex items-center group"
+                      >
+                        <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-indigo-50 group-hover:bg-indigo-100 transition-colors duration-200">
+                          <svg 
+                            className="w-5 h-5 text-indigo-600" 
+                            fill="none" 
+                            viewBox="0 0 24 24" 
+                            stroke="currentColor"
+                          >
+                            <path 
+                              strokeLinecap="round" 
+                              strokeLinejoin="round" 
+                              strokeWidth={2} 
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" 
+                            />
+                          </svg>
+                        </div>
+                        <span className="ml-3 text-sm text-gray-600 group-hover:text-gray-900 transition-colors duration-200">
+                          {project}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Improved Action Button */}
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="mt-8 w-full px-6 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium 
+                      shadow-lg hover:shadow-xl transition-all duration-300 hover:from-purple-700 hover:to-indigo-700
+                      focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2
+                      text-sm md:text-base tracking-wide uppercase"
+                  >
+                    Boshlash
+                  </motion.button>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
+
+
+      <section className="py-24 bg-gradient-to-br from-gray-50 to-purple-50">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
+              <span className="bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                Tariflar
+              </span>
+            </h2>
+            <p className="text-lg text-gray-600">
+              O'zingizga mos tarifni tanlang va dasturlash sayohatingizni boshlang
+            </p>
+          </motion.div>
+
+          <div className="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto">
+            {plans.map((plan, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                className={`relative w-full md:w-96 bg-white rounded-2xl shadow-xl overflow-hidden ${
+                  plan.name === "Online kurs" 
+                    ? "border-2 border-green-500" 
+                    : plan.name === "Premium" 
+                    ? "border-2 border-indigo-500" 
+                    : ""
+                }`}
+              >
+                {plan.name === "Premium" && (
+                  <div className="absolute top-0 right-0">
+                    <div className="bg-indigo-500 text-white text-sm px-4 py-1 rounded-bl-lg">
+                      Eng mashhur
+                    </div>
+                  </div>
+                )}
+
+                {plan.name === "Online kurs" && (
+                  <div className="absolute top-0 right-0">
+                    <div className="bg-green-500 text-white text-sm px-4 py-1 rounded-bl-lg">
+                      Maxsus taklif
+                    </div>
+                  </div>
+                )}
+
+                <div className="p-8">
+                  <div className="text-center mb-8">
+                    <h3 className={`text-2xl font-bold mb-4 ${
+                      plan.name === "Online kurs" 
+                        ? "text-green-600" 
+                        : plan.name === "Premium" 
+                        ? "text-indigo-600" 
+                        : "text-gray-800"
+                    }`}>
+                      {plan.name}
+                    </h3>
+                    
+                    <div className="mb-4">
+                      <div className="flex items-center justify-center">
+                        <span className="text-4xl font-bold text-gray-900">
+                          {plan.price.monthly}
+                        </span>
+                      </div>
+                      <p className="text-gray-500 text-sm">oyiga</p>
+                      
+                      <div className="mt-2 text-lg font-semibold text-gray-700">
+                        {plan.price.yearly}
+                        <span className="text-sm text-gray-500 block">yiliga</span>
+                      </div>
+                    </div>
+
+                    <div className={`w-16 h-1 mx-auto rounded-full ${
+                      plan.name === "Online kurs" 
+                        ? "bg-gradient-to-r from-green-400 to-green-600" 
+                        : plan.name === "Premium" 
+                        ? "bg-gradient-to-r from-indigo-400 to-indigo-600" 
+                        : "bg-gradient-to-r from-gray-300 to-gray-500"
+                    }`} />
+                  </div>
+
+                  <ul className="space-y-4 mb-8">
+                    {plan.features.map((feature, idx) => (
+                      <motion.li
+                        key={idx}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.1 }}
+                        className="flex items-center space-x-3"
+                      >
+                        {feature.included ? (
+                          <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center">
+                            <FaCheck className="text-green-500 w-3 h-3" />
+                          </div>
+                        ) : (
+                          <div className="flex-shrink-0 w-5 h-5 rounded-full bg-red-100 flex items-center justify-center">
+                            <FaTimes className="text-red-500 w-3 h-3" />
+                          </div>
+                        )}
+                        <span className={`text-sm ${feature.included ? "text-gray-800" : "text-gray-400"}`}>
+                          {feature.name}
+                        </span>
+                        {(plan.name === "Premium" && !plans[0].features[idx]?.included) || 
+                         (plan.name === "Online kurs" && idx > 0) ? (
+                          <FaStar className="text-yellow-400 w-4 h-4 ml-auto" />
+                        ) : null}
+                      </motion.li>
+                    ))}
+                  </ul>
+
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={handleButtonClick}
+                    className={`w-full py-3 px-6 rounded-xl text-white font-semibold transition-all duration-200 shadow-lg ${
+                      plan.name === "Online kurs" 
+                        ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-green-200" 
+                        : plan.name === "Premium"
+                        ? "bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 shadow-indigo-200"
+                        : "bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 shadow-gray-200"
+                    }`}
+                  >
+                    {plan.name === "Online kurs" 
+                      ? "Kursga yozilish" 
+                      : plan.name === "Premium" 
+                      ? "Premium ga o'tish" 
+                      : "Boshlash"}
+                  </motion.button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+      
+
       <footer className="bg-gray-800 text-white py-4 rounded">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center">
@@ -545,91 +938,6 @@ function Home() {
         </div>
       </footer>
     </div>
-  );
-}
-
-function FeatureCard({ icon, title, description }) {
-  return (
-    <motion.div
-      whileHover={{ y: -5, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}
-      className="bg-white p-8 rounded-2xl shadow-lg text-center transition-all duration-300 border border-gray-100 hover:border-purple-300"
-    >
-      <motion.div
-        className="mb-6 bg-gradient-to-br from-purple-100 to-indigo-100 p-4 rounded-full inline-block"
-        whileHover={{ scale: 1.1, rotate: 5 }}
-      >
-        {icon}
-      </motion.div>
-      <h3 className="text-2xl font-semibold mb-4 text-purple-600">{title}</h3>
-      <p className="text-gray-600">{description}</p>
-    </motion.div>
-  );
-}
-
-function LearningPathStep({ icon, title, description, details }) {
-  return (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      className="bg-white p-8 rounded-lg shadow-lg text-center transition-all duration-300"
-    >
-      <motion.div
-        className="mb-6 text-5xl text-indigo-500"
-        whileHover={{ scale: 1.1 }}
-      >
-        {icon}
-      </motion.div>
-      <h3 className="text-2xl font-semibold mb-4 text-purple-600">{title}</h3>
-      <p className="text-gray-600 mb-6">{description}</p>
-      <ul className="text-left text-sm">
-        {details.map((detail, index) => (
-          <li key={index} className="mb-3 flex items-start">
-            <FaRocket className="text-indigo-500 mr-2 mt-1 flex-shrink-0" />
-            <span className="text-gray-600">{detail}</span>
-          </li>
-        ))}
-      </ul>
-    </motion.div>
-  );
-}
-
-function StatisticCard({ icon, number, text }) {
-  return (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      className="bg-white bg-opacity-10 p-6 rounded-lg text-center"
-    >
-      <div className="text-4xl mb-4 text-yellow-300">{icon}</div>
-      <h3 className="text-3xl font-bold mb-2">{number}</h3>
-      <p className="text-lg">{text}</p>
-    </motion.div>
-  );
-}
-
-function TechnologyBadge({ name, percentage }) {
-  return (
-    <div className="bg-white bg-opacity-10 px-4 py-2 rounded-full">
-      <span className="font-semibold">{name}</span>
-      <span className="ml-2 text-yellow-300">{percentage}%</span>
-    </div>
-  );
-}
-
-function CourseCard({ icon, title, description, level, duration }) {
-  return (
-    <motion.div
-      whileHover={{ y: -5, boxShadow: "0 10px 20px rgba(0,0,0,0.1)" }}
-      className="bg-white p-6 rounded-xl shadow-lg transition-all duration-300 border border-gray-100 hover:border-purple-300"
-    >
-      <div className="flex items-center mb-4">
-        <div className="mr-4 bg-indigo-100 p-3 rounded-full">{icon}</div>
-        <h3 className="text-xl font-semibold text-purple-600">{title}</h3>
-      </div>
-      <p className="text-gray-600 mb-4">{description}</p>
-      <div className="flex justify-between text-sm text-gray-500">
-        <span>{level}</span>
-        <span>{duration}</span>
-      </div>
-    </motion.div>
   );
 }
 
