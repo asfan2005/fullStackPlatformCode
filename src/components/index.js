@@ -201,3 +201,6 @@ export {default as HomePageReact} from "../componentsReact/HomePageReact";
 export {default as BoshlangichReact} from "../componentsReact/BoshlangichReact";
 export {default as OrtaReact} from "../componentsReact/OrtaReact";
 export {default as MukammalReact} from "../componentsReact/MukammalReact";
+export {default as ReactBoshlagichKirish} from "../componentsReact/pageBoshlangichReact/ReactBoshlagichKirish";
+export {default as JsxAsoslarBoshlangich} from "../componentsReact/pageBoshlangichReact/JsxAsoslarBoshlangich";
+export {default as ReactComponentsBosh} from "../componentsReact/pageBoshlangichReact/ReactComponentsBosh";

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup, 
          FaReact, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-
+import {JsxAsoslarBoshlangich, ReactBoshlagichKirish, ReactComponentsBosh} from "../components/index"
 function BoshlangichReact() {
   const navigate = useNavigate();
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -56,156 +56,15 @@ function BoshlangichReact() {
 
   const topicContent = {
     "React Kirish": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">React Framework</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            React — Facebook tomonidan yaratilgan JavaScript kutubxonasi bo'lib, 
-            zamonaviy web-ilovalarni yaratish uchun eng mashhur va keng qo'llaniladigan 
-            frameworklardan biridir.
-          </p>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">React afzalliklari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Virtual DOM orqali yuqori samaradorlik</li>
-              <li>Komponentlarga asoslangan arxitektura</li>
-              <li>Bir yo'nalishli ma'lumotlar oqimi</li>
-              <li>Katta hamjamiyat va boy ekotizim</li>
-              <li>Qayta ishlatiluvchi UI komponentlar</li>
-              <li>SEO-do'stona ilovalar yaratish imkoniyati</li>
-            </ul>
-          </div>
-
-          <div className="bg-green-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-green-800 mb-2">React ekotizimi:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Create React App - Loyihani boshlash uchun</li>
-              <li>React Router - Routing uchun</li>
-              <li>Redux - State management uchun</li>
-              <li>Material-UI - UI komponentlar kutubxonasi</li>
-              <li>React Query - Server state management</li>
-              <li>Jest - Testing uchun</li>
-            </ul>
-          </div>
-
-          <div className="bg-purple-50 p-4 rounded-lg">
-            <h4 className="font-semibold text-purple-800 mb-2">React o'rganish yo'l xaritasi:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>JavaScript asoslarini o'rganish</li>
-              <li>React asosiy tushunchalarini o'zlashtirish</li>
-              <li>Hooks va State management</li>
-              <li>Routing va API integratsiya</li>
-              <li>Testing va Performance optimization</li>
-              <li>Real loyihalar ustida ishlash</li>
-            </ul>
-          </div>
-        </section>
-
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Birinchi React komponenti</h3>
-          
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`import React from 'react';
-
-function Welcome() {
-  return (
-    <div>
-      <h1>Salom, React!</h1>
-      <p>Bu mening birinchi React komponentim.</p>
-    </div>
-  );
-}
-
-export default Welcome;`}</code>
-            </pre>
-          </div>
-
-          <p className="text-gray-600 mb-4">
-            Bu oddiy React komponenti. Komponentlar React ilovaning asosiy qurilish 
-            bloklari hisoblanadi.
-          </p>
-        </section>
-      </div>
+      <ReactBoshlagichKirish/>
     ),
 
     "JSX Asoslari": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">JSX nima?</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            JSX (JavaScript XML) - bu JavaScript kengaytmasi bo'lib, React elementlarini 
-            yaratish uchun ishlatiladi. U HTML ga o'xshash sintaksisga ega, lekin 
-            JavaScript kuchini to'liq qo'llay oladi.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// JSX misoli
-const element = (
-  <div className="greeting">
-    <h1>Salom, {name}!</h1>
-    <p>Hozirgi vaqt: {new Date().toLocaleTimeString()}</p>
-  </div>
-);`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">JSX qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Har bir JSX elementi yopilishi kerak</li>
-              <li>class o'rniga className ishlatiladi</li>
-              <li>JavaScript ifodalarni {} ichida yozish mumkin</li>
-              <li>Atributlar camelCase da yoziladi</li>
-              <li>Shartli renderingda ternary operator ishlatiladi</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <JsxAsoslarBoshlangich/>
     ),
 
     "React Componentlar": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">React Komponentlari</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Komponentlar - React ilovalarining asosiy qurilish bloklari. Ular 
-            qayta ishlatiluvchi, mustaqil UI qismlarini yaratish imkonini beradi.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Funksional komponent
-function Welcome(props) {
-  return <h1>Salom, {props.name}</h1>;
-}
-
-// Class komponent
-class Welcome extends React.Component {
-  render() {
-    return <h1>Salom, {this.props.name}</h1>;
-  }
-}`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Komponent turlari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Funksional komponentlar</li>
-              <li>Class komponentlar</li>
-              <li>Pure komponentlar</li>
-              <li>Higher-Order Components (HOC)</li>
-              <li>Controlled va Uncontrolled komponentlar</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+    <ReactComponentsBosh/>
     ),
 
     "Props va State": (
