@@ -1,48 +1,49 @@
 const dataReactComponentlar = [
     {
-        id: 4,
-        title: "React Komponentlar",
-        level: "Boshlang'ich",
-        description: "React komponentlari - zamonaviy UI yaratishning asosiy bloklari",
+        id: 1,
+        title: "React Komponentlari",
+        description: "React komponentlari - zamonaviy web ilovalar yaratishning asosiy building blocklari",
         image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070",
         mainTopics: {
             introduction: {
-                title: "React Komponentlari Nima?",
+                title: "React Komponentlari Haqida",
                 points: [
                     "Komponentlar - qayta ishlatiluvchi UI bloklari",
-                    "Mustaqil va izolyatsiya qilingan kod bo'laklari",
                     "Props orqali ma'lumot almashish imkoniyati",
                     "Har bir komponent o'z state'iga ega bo'lishi mumkin",
-                    "Kichik komponentlardan katta ilovalar yaratish imkoniyati"
+                    "Komponentlar bir-biri bilan ierarxik bog'lanishi mumkin",
+                    "Lifecycle metodlari orqali boshqarish imkoniyati"
                 ]
             },
             componentTypes: {
                 title: "Komponent Turlari",
                 types: [
                     {
-                        name: "Function Komponentlar",
-                        description: "Zamonaviy React da eng ko'p ishlatiladigan komponent turi",
+                        name: "Function Components",
+                        description: "Zamonaviy React-da eng ko'p ishlatiladigan komponent turi. Hooks bilan ishlash imkoniyati mavjud.",
                         example: `function Welcome(props) {
     return <h1>Salom, {props.name}</h1>;
 }`,
                         features: [
-                            "Hooks bilan ishlash imkoniyati",
                             "Sodda va tushunarli sintaksis",
-                            "Yengil va samarali"
+                            "Hooks bilan ishlash imkoniyati",
+                            "Yengil va tez ishlashi",
+                            "Props va state bilan ishlash oson"
                         ]
                     },
                     {
-                        name: "Class Komponentlar",
-                        description: "OOP paradigmasiga asoslangan komponentlar",
+                        name: "Class Components",
+                        description: "OOP prinsiplariga asoslangan, to'liq funksionalli komponentlar.",
                         example: `class Welcome extends React.Component {
     render() {
         return <h1>Salom, {this.props.name}</h1>;
     }
 }`,
                         features: [
-                            "Lifecycle metodlari",
-                            "this konteksti",
-                            "State boshqaruvi"
+                            "Lifecycle metodlariga to'liq kirish",
+                            "this kontekstidan foydalanish",
+                            "State va Props bilan ishlash",
+                            "Legacy kodlar bilan moslik"
                         ]
                     }
                 ]
@@ -82,25 +83,33 @@ const dataReactComponentlar = [
                 hooksList: [
                     {
                         name: "useState",
-                        description: "State boshqarish uchun",
-                        example: `const [count, setCount] = useState(0);`
+                        description: "Komponentda state boshqarish uchun eng asosiy hook",
+                        example: `const [count, setCount] = useState(0);
+// Ishlatilishi
+<button onClick={() => setCount(count + 1)}>
+  Count: {count}
+</button>`
                     },
                     {
                         name: "useEffect",
-                        description: "Side effect'larni boshqarish",
+                        description: "Side-effectlarni boshqarish uchun hook",
                         example: `useEffect(() => {
-    document.title = 'Yangi sarlavha';
-}, []);`
+  document.title = \`Count: \${count}\`;
+}, [count]); // count o'zgarganda ishlaydi`
                     },
                     {
                         name: "useContext",
-                        description: "Context'dan ma'lumot olish",
-                        example: `const value = useContext(MyContext);`
+                        description: "Context API bilan ishlash uchun hook",
+                        example: `const theme = useContext(ThemeContext);
+// Ishlatilishi
+<div style={{ background: theme.background }}>`
                     },
                     {
                         name: "useRef",
-                        description: "DOM elementlariga murojaat",
-                        example: `const inputRef = useRef();`
+                        description: "DOM elementlariga to'g'ridan-to'g'ri murojaat qilish",
+                        example: `const inputRef = useRef();
+// Ishlatilishi
+<input ref={inputRef} />`
                     }
                 ]
             },
@@ -134,35 +143,76 @@ const dataReactComponentlar = [
             title: "Amaliy Misollar",
             examples: [
                 {
-                    name: "Oddiy Komponent",
-                    code: `function Welcome() {
-    return <h1>Salom Dunyo!</h1>;
+                    name: "To'liq Komponent Misoli",
+                    code: `import React, { useState, useEffect } from 'react';
+
+function UserProfile({ userId }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchUser() {
+      try {
+        const response = await fetch(\`/api/users/\${userId}\`);
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        console.error("Xatolik:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchUser();
+  }, [userId]);
+
+  if (loading) return <div>Yuklanmoqda...</div>;
+  if (!user) return <div>Foydalanuvchi topilmadi</div>;
+
+  return (
+    <div className="user-profile">
+      <h2>{user.name}</h2>
+      <p>{user.email}</p>
+      <div className="user-stats">
+        <span>Posts: {user.posts}</span>
+        <span>Followers: {user.followers}</span>
+      </div>
+    </div>
+  );
 }`
                 },
                 {
-                    name: "Props bilan Komponent",
-                    code: `function UserProfile({ name, avatar }) {
-    return (
-        <div className="profile">
-            <img src={avatar} alt={name} />
-            <h2>{name}</h2>
-        </div>
-    );
-}`
-                },
-                {
-                    name: "State bilan Komponent",
-                    code: `function Counter() {
-    const [count, setCount] = useState(0);
-    
-    return (
-        <div>
-            <p>Siz {count} marta bosdingiz</p>
-            <button onClick={() => setCount(count + 1)}>
-                Bosing
-            </button>
-        </div>
-    );
+                    name: "Custom Hook Yaratish",
+                    code: `import { useState, useEffect } from 'react';
+
+function useWindowSize() {
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowSize;
+}
+
+// Ishlatilishi
+function App() {
+  const { width, height } = useWindowSize();
+  return (
+    <div>
+      Oyna o'lchami: {width} x {height}
+    </div>
+  );
 }`
                 }
             ]
@@ -248,6 +298,139 @@ const dataReactComponentlar = [
     render(<Welcome name="John" />);
     expect(screen.getByText(/Hello, John/i)).toBeInTheDocument();
 });`
+                }
+            ]
+        },
+        basicComponents: {
+            title: "Asosiy React Komponentlari",
+            components: [
+                {
+                    name: "Button",
+                    description: "Foydalanuvchi bilan o'zaro aloqa uchun asosiy element",
+                    example: `function CustomButton({ onClick, children, variant = 'primary' }) {
+    return (
+        <button 
+            onClick={onClick}
+            className={\`btn btn-\${variant}\`}
+        >
+            {children}
+        </button>
+    );
+}`,
+                    props: ["onClick - hodisa funksiyasi", "children - tugma matni", "variant - tugma turi"]
+                },
+                {
+                    name: "Input",
+                    description: "Foydalanuvchidan ma'lumot qabul qilish uchun komponent",
+                    example: `function CustomInput({ value, onChange, type = 'text', placeholder }) {
+    return (
+        <input
+            type={type}
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            className="form-input"
+        />
+    );
+}`,
+                    props: ["value - input qiymati", "onChange - o'zgarish hodisasi", "type - input turi", "placeholder - ko'rsatma matni"]
+                },
+                {
+                    name: "Form",
+                    description: "Ma'lumotlarni yuborish uchun forma komponenti",
+                    example: `function LoginForm({ onSubmit }) {
+    const [formData, setFormData] = useState({
+        username: '',
+        password: ''
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onSubmit(formData);
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input
+                value={formData.username}
+                onChange={(e) => setFormData({
+                    ...formData,
+                    username: e.target.value
+                })}
+            />
+            <button type="submit">Yuborish</button>
+        </form>
+    );
+}`,
+                    props: ["onSubmit - forma yuborilganda ishga tushuvchi funksiya"]
+                },
+                {
+                    name: "Modal",
+                    description: "Modal oyna komponenti",
+                    example: `function Modal({ isOpen, onClose, children }) {
+    if (!isOpen) return null;
+
+    return (
+        <div className="modal-overlay">
+            <div className="modal-content">
+                <button onClick={onClose}>✕</button>
+                {children}
+            </div>
+        </div>
+    );
+}`,
+                    props: ["isOpen - modal holatini boshqarish", "onClose - yopish funksiyasi", "children - modal tarkibi"]
+                }
+            ]
+        },
+        additionalLibraries: {
+            title: "Foydali React Kutubxonalari",
+            libraries: [
+                {
+                    name: "React Router",
+                    description: "Sahifalar o'rtasida navigatsiya uchun kutubxona",
+                    example: `import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+function App() {
+    return (
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/" component={Home} />
+                <Route path="/about" component={About} />
+            </Switch>
+        </BrowserRouter>
+    );
+}`
+                },
+                {
+                    name: "Redux Toolkit",
+                    description: "Global holatni boshqarish uchun zamonaviy yechim",
+                    example: `import { createSlice } from '@reduxjs/toolkit';
+
+const counterSlice = createSlice({
+    name: 'counter',
+    initialState: { value: 0 },
+    reducers: {
+        increment: state => { state.value += 1 },
+        decrement: state => { state.value -= 1 }
+    }
+});`
+                },
+                {
+                    name: "React Query",
+                    description: "Server ma'lumotlarini boshqarish uchun kutubxona",
+                    example: `import { useQuery } from 'react-query';
+
+function UserData() {
+    const { data, isLoading } = useQuery('users', 
+        () => fetch('/api/users').then(res => res.json())
+    );
+
+    if (isLoading) return 'Yuklanmoqda...';
+    return <div>{data.map(user => (
+        <div key={user.id}>{user.name}</div>
+    ))}</div>;
+}`
                 }
             ]
         }
