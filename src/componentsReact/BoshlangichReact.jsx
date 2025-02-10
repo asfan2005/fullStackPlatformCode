@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup, 
          FaReact, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import {JsxAsoslarBoshlangich, ReactBoshlagichKirish, ReactComponentsBosh, ReactHooksAsoslar, ReactPropsState, UseEffectHook} from "../components/index"
+import {JsxAsoslarBoshlangich, ReactBoshlagichKirish, ReactComponentsBosh, ReactEvents, ReactHooksAsoslar, ReactPropsState, UseEffectHook} from "../components/index"
+import ReactCustomHooks from './pageBoshlangichReact/ReactCustomHooks';
 function BoshlangichReact() {
   const navigate = useNavigate();
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -80,83 +81,11 @@ function BoshlangichReact() {
     ),
 
     "Custom Hooks": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Custom Hooks</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Custom Hooks - yangi xususiyatlar yaratish uchun ishlatiladigan funksiyalar.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Custom Hook
-function useCounter(initialValue) {
-  const [count, setCount] = useState(initialValue);
-
-  const increment = () => setCount(count + 1);
-  const decrement = () => setCount(count - 1);
-
-  return { count, increment, decrement };
-}
-
-// Custom Hookdan foydalanish
-const { count, increment, decrement } = useCounter(0);`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Custom Hooks qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Yangi xususiyatlar yaratish</li>
-              <li>Komponentlar ichida holat va funktsional komponentlar uchun yangi xususiyatlar yaratish</li>
-              <li>Xususiyatlar yaratish uchun ishlatiladi</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <ReactCustomHooks/>
     ),
 
     "React Events": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">React Events</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            React events - React ilovalari ichida ishlatiladigan interaktivlik uchun ishlatiladigan xususiyatlar.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Event misoli
-function Welcome() {
-  const handleClick = () => {
-    console.log('Salom, React!');
-  };
-
-  return (
-    <div>
-      <button onClick={handleClick}>Salomlash</button>
-    </div>
-  );
-}
-
-export default Welcome;`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Asosiy Eventlar:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>onClick</li>
-              <li>onChange</li>
-              <li>onSubmit</li>
-              <li>onMouseEnter</li>
-              <li>onMouseLeave</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+    <ReactEvents/>
     ),
 
     "Forms va Validatsiya": (

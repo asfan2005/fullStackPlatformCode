@@ -207,3 +207,5 @@ export {default as ReactComponentsBosh} from "../componentsReact/pageBoshlangich
 export {default as ReactPropsState} from "../componentsReact/pageBoshlangichReact/ReactPropsState";
 export {default as ReactHooksAsoslar} from "../componentsReact/pageBoshlangichReact/ReactHooksAsoslar";
 export {default as UseEffectHook}from "../componentsReact/pageBoshlangichReact/UseEffectHook";
+export {default as ReactCustomHooks} from "../componentsReact/pageBoshlangichReact/ReactCustomHooks";
+export {default as ReactEvents}from "../componentsReact/pageBoshlangichReact/ReactEvents";
