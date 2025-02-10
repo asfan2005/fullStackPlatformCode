@@ -204,3 +204,6 @@ export {default as MukammalReact} from "../componentsReact/MukammalReact";
 export {default as ReactBoshlagichKirish} from "../componentsReact/pageBoshlangichReact/ReactBoshlagichKirish";
 export {default as JsxAsoslarBoshlangich} from "../componentsReact/pageBoshlangichReact/JsxAsoslarBoshlangich";
 export {default as ReactComponentsBosh} from "../componentsReact/pageBoshlangichReact/ReactComponentsBosh";
+export {default as ReactPropsState} from "../componentsReact/pageBoshlangichReact/ReactPropsState";
+export {default as ReactHooksAsoslar} from "../componentsReact/pageBoshlangichReact/ReactHooksAsoslar";
+export {default as UseEffectHook}from "../componentsReact/pageBoshlangichReact/UseEffectHook";

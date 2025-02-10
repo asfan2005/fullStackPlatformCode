@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup, 
          FaReact, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import {JsxAsoslarBoshlangich, ReactBoshlagichKirish, ReactComponentsBosh} from "../components/index"
+import {JsxAsoslarBoshlangich, ReactBoshlagichKirish, ReactComponentsBosh, ReactHooksAsoslar, ReactPropsState, UseEffectHook} from "../components/index"
 function BoshlangichReact() {
   const navigate = useNavigate();
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -68,120 +68,15 @@ function BoshlangichReact() {
     ),
 
     "Props va State": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Props va State</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Props va State - React komponentlarida ma'lumotlar va holatni boshqarish uchun 
-            ishlatiladigan asosiy tushunchalar.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Props misoli
-function Welcome(props) {
-  return <h1>Salom, {props.name}</h1>;
-}
-
-// State misoli
-class Welcome extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { name: 'React' };
-  }
-
-  render() {
-    return <h1>Salom, {this.state.name}</h1>;
-  }
-}`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Props va State qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Props - komponentga kiruvchi ma'lumotlar</li>
-              <li>State - komponentdagi holat</li>
-              <li>State o'zgarishi komponent qayta ishlashini ta'minlaydi</li>
-              <li>Props o'zgarishi komponent qayta ishlashini ta'minlamaydi</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <ReactPropsState/>
     ),
 
     "Hooks Asoslari": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Hooks Asoslari</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Hooks - React 16.8 versiyasida qo'shilgan yangi xususiyatlar. Ular 
-            komponentlar ichida holat va funktsional komponentlar uchun yangi xususiyatlar yaratish imkonini beradi.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// useEffect Hook
-useEffect(() => {
-  // Component yaratilgandan keyin ishlaydigan kod
-  return () => {
-    // Component yozib ketgandan keyin ishlaydigan kod
-  };
-}, []);
-
-// useState Hook
-const [count, setCount] = useState(0);`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Asosiy Hooklar:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>useState</li>
-              <li>useEffect</li>
-              <li>useContext</li>
-              <li>useReducer</li>
-              <li>useCallback</li>
-              <li>useMemo</li>
-              <li>useRef</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+    <ReactHooksAsoslar/>
     ),
 
     "useEffect Hook": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">useEffect Hook</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            useEffect - komponent yaratilgandan keyin va yozib ketgandan keyin ishlaydigan kodni boshqarish uchun ishlatiladi.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`useEffect(() => {
-  // Component yaratilgandan keyin ishlaydigan kod
-  return () => {
-    // Component yozib ketgandan keyin ishlaydigan kod
-  };
-}, []);`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">useEffect qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Komponent yaratilgandan keyin ishlaydigan kod</li>
-              <li>Komponent yozib ketgandan keyin ishlaydigan kod</li>
-              <li>Komponent yozib ketgandan keyin ishlaydigan kod</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <UseEffectHook/>
     ),
 
     "Custom Hooks": (
