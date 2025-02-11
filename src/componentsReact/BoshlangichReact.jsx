@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup, 
          FaReact, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import {FormsValidatsiya, JsxAsoslarBoshlangich, ReactBoshlagichKirish, ReactComponentsBosh, ReactContextApi, ReactEvents, ReactHooksAsoslar, ReactPropsState, ReactRouterBoshlangich, ReduxAsoslariBoshlangich, ReduxToolkitBoshlangich, UseEffectHook} from "../components/index"
+import {FormsValidatsiya, JsxAsoslarBoshlangich, ReactApiIntegration, ReactBoshlagichKirish, ReactComponentsBosh, ReactContextApi, ReactEvents, ReactHooksAsoslar, ReactPerformanceBosh, ReactPropsState, ReactRouterBoshlangich, ReactTestingBoshlangich, ReduxAsoslariBoshlangich, ReduxToolkitBoshlangich, UseEffectHook} from "../components/index"
 import ReactCustomHooks from './pageBoshlangichReact/ReactCustomHooks';
 function BoshlangichReact() {
   const navigate = useNavigate();
@@ -109,142 +109,15 @@ function BoshlangichReact() {
     ),
 
     "API Integration": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">API Integration</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            API Integration - React ilovalari ichida server bilan aloqa uchun ishlatiladigan xususiyat.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// API misoli
-import React, { useEffect, useState } from 'react';
-
-function App() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const response = await fetch('/api/data');
-    const data = await response.json();
-    setData(data);
-  };
-
-  return (
-    <div>
-      {/* API data ishlatish */}
-    </div>
-  );
-}
-
-export default App;`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">API qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>API bilan aloqa</li>
-              <li>Data yuklash</li>
-              <li>Data saqlash</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+     <ReactApiIntegration/>
     ),
 
     "React Testing": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">React Testing</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            React Testing - React ilovalari ichida testlar yaratish uchun ishlatiladigan xususiyat.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Testing misoli
-import React from 'react';
-
-function Welcome() {
-  return (
-    <div>
-      <h1>Salom, React!</h1>
-      <p>Bu mening birinchi React komponentim.</p>
-    </div>
-  );
-}
-
-export default Welcome;`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Testing qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Test yaratish</li>
-              <li>Test ishlatish</li>
-              <li>Test natijalarini tekshirish</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <ReactTestingBoshlangich/>
     ),
 
     "Performance": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Performance</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Performance - React ilovalari ichida performance optimization uchun ishlatiladigan xususiyat.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Performance misoli
-import React, { useEffect, useState } from 'react';
-
-function Welcome() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const response = await fetch('/api/data');
-    const data = await response.json();
-    setData(data);
-  };
-
-  return (
-    <div>
-      {/* Performance ishlatish */}
-    </div>
-  );
-}
-
-export default Welcome;`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Performance qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Performance optimization</li>
-              <li>Memory management</li>
-              <li>Code splitting</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+     <ReactPerformanceBosh/>
     ),
 
     "Security": (

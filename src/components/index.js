@@ -214,3 +214,6 @@ export {default as ReactRouterBoshlangich} from "../componentsReact/pageBoshlang
 export {default as ReactContextApi} from "../componentsReact/pageBoshlangichReact/ReactContextApi";
 export {default as ReduxAsoslariBoshlangich} from "../componentsReact/pageBoshlangichReact/ReduxAsoslariBoshlangich";
 export {default as ReduxToolkitBoshlangich} from "../componentsReact/pageBoshlangichReact/ReduxToolkitBoshlangich";
+export {default as ReactApiIntegration} from "../componentsReact/pageBoshlangichReact/ReactApiIntegration";
+export {default as ReactTestingBoshlangich} from "../componentsReact/pageBoshlangichReact/ReactTestingBoshlangich";
+export {default as ReactPerformanceBosh} from "../componentsReact/pageBoshlangichReact/ReactPerformanceBosh";
