@@ -209,3 +209,8 @@ export {default as ReactHooksAsoslar} from "../componentsReact/pageBoshlangichRe
 export {default as UseEffectHook}from "../componentsReact/pageBoshlangichReact/UseEffectHook";
 export {default as ReactCustomHooks} from "../componentsReact/pageBoshlangichReact/ReactCustomHooks";
 export {default as ReactEvents}from "../componentsReact/pageBoshlangichReact/ReactEvents";
+export {default as FormsValidatsiya} from "../componentsReact/pageBoshlangichReact/FormsValidatsiya";
+export {default as ReactRouterBoshlangich} from "../componentsReact/pageBoshlangichReact/ReactRouterBoshlangich";
+export {default as ReactContextApi} from "../componentsReact/pageBoshlangichReact/ReactContextApi";
+export {default as ReduxAsoslariBoshlangich} from "../componentsReact/pageBoshlangichReact/ReduxAsoslariBoshlangich";
+export {default as ReduxToolkitBoshlangich} from "../componentsReact/pageBoshlangichReact/ReduxToolkitBoshlangich";

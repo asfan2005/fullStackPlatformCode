@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup, 
          FaReact, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import {JsxAsoslarBoshlangich, ReactBoshlagichKirish, ReactComponentsBosh, ReactEvents, ReactHooksAsoslar, ReactPropsState, UseEffectHook} from "../components/index"
+import {FormsValidatsiya, JsxAsoslarBoshlangich, ReactBoshlagichKirish, ReactComponentsBosh, ReactContextApi, ReactEvents, ReactHooksAsoslar, ReactPropsState, ReactRouterBoshlangich, ReduxAsoslariBoshlangich, ReduxToolkitBoshlangich, UseEffectHook} from "../components/index"
 import ReactCustomHooks from './pageBoshlangichReact/ReactCustomHooks';
 function BoshlangichReact() {
   const navigate = useNavigate();
@@ -89,219 +89,23 @@ function BoshlangichReact() {
     ),
 
     "Forms va Validatsiya": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Forms va Validatsiya</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Forms va Validatsiya - React ilovalari ichida foydalanish uchun ishlatiladigan xususiyatlar.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Form misoli
-function Welcome() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('Form yuborildi');
-  };
-
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        {/* Form elementlari */}
-      </form>
-    </div>
-  );
-}
-
-export default Welcome;`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Forms qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Form elementlarini yaratish</li>
-              <li>Form yuborilganda kod ishlatish</li>
-              <li>Validatsiya qilish</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <FormsValidatsiya/>
     ),
 
     "React Router": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">React Router</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            React Router - React ilovalari ichida routing uchun ishlatiladigan xususiyat.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Router misoli
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-    </Router>
-  );
-}
-
-export default App;`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Router qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Router yaratish</li>
-              <li>Route yaratish</li>
-              <li>Routes yaratish</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <ReactRouterBoshlangich/>
     ),
 
     "Context API": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Context API</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Context API - React komponentlarida ma'lumotlar va holatni boshqarish uchun ishlatiladigan xususiyat.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Context misoli
-import React, { createContext, useContext, useState } from 'react';
-
-const MyContext = createContext();
-
-function MyProvider({ children }) {
-  const [value, setValue] = useState('Hello, World!');
-
-  return (
-    <MyContext.Provider value={{ value, setValue }}>
-      {children}
-    </MyContext.Provider>
-  );
-}
-
-function useMyContext() {
-  const context = useContext(MyContext);
-  if (context === undefined) {
-    throw new Error('useMyContext must be used within an MyProvider');
-  }
-  return context;
-}
-
-export { MyProvider, useMyContext };`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Context qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Context yaratish</li>
-              <li>Contextni boshqarish</li>
-              <li>Contextni ishlatish</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <ReactContextApi/>
     ),
 
     "Redux Asoslari": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Redux Asoslari</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Redux - React ilovalari ichida state management uchun ishlatiladigan xususiyat.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Redux misoli
-import { createStore } from 'redux';
-
-const initialState = { count: 0 };
-
-function reducer(state = initialState, action) {
-  switch (action.type) {
-    case 'increment':
-      return { count: state.count + 1 };
-    case 'decrement':
-      return { count: state.count - 1 };
-    default:
-      return state;
-  }
-}
-
-const store = createStore(reducer);
-
-export default store;`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Redux qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Store yaratish</li>
-              <li>Reducer yaratish</li>
-              <li>Action yaratish</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <ReduxAsoslariBoshlangich/>
     ),
 
     "Redux Toolkit": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Redux Toolkit</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Redux Toolkit - Redux state management uchun ishlatiladigan xususiyat.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Redux Toolkit misoli
-import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from './features/counterSlice';
-
-const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-  },
-});
-
-export default store;`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Redux Toolkit qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Store yaratish</li>
-              <li>Reducer yaratish</li>
-              <li>Slice yaratish</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <ReduxToolkitBoshlangich/>
     ),
 
     "API Integration": (
