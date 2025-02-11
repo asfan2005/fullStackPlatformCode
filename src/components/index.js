@@ -217,3 +217,7 @@ export {default as ReduxToolkitBoshlangich} from "../componentsReact/pageBoshlan
 export {default as ReactApiIntegration} from "../componentsReact/pageBoshlangichReact/ReactApiIntegration";
 export {default as ReactTestingBoshlangich} from "../componentsReact/pageBoshlangichReact/ReactTestingBoshlangich";
 export {default as ReactPerformanceBosh} from "../componentsReact/pageBoshlangichReact/ReactPerformanceBosh";
+export {default as ReactSecurityBosh}from "../componentsReact/pageBoshlangichReact/ReactSecurityBosh";
+export {default as ReactBestPracticesBosh} from "../componentsReact/pageBoshlangichReact/ReactBestPracticesBosh";
+export {default as ReactDeploymentBosh} from "../componentsReact/pageBoshlangichReact/ReactDeploymentBosh";
+export {default as ReactAmaliyMashqlarBosh} from "../componentsReact/pageBoshlangichReact/ReactAmaliyMashqlarBosh";

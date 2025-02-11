@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup, 
          FaReact, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import {FormsValidatsiya, JsxAsoslarBoshlangich, ReactApiIntegration, ReactBoshlagichKirish, ReactComponentsBosh, ReactContextApi, ReactEvents, ReactHooksAsoslar, ReactPerformanceBosh, ReactPropsState, ReactRouterBoshlangich, ReactTestingBoshlangich, ReduxAsoslariBoshlangich, ReduxToolkitBoshlangich, UseEffectHook} from "../components/index"
+import {FormsValidatsiya, JsxAsoslarBoshlangich, ReactAmaliyMashqlarBosh, ReactApiIntegration, ReactBestPracticesBosh, ReactBoshlagichKirish, ReactComponentsBosh, ReactContextApi, ReactDeploymentBosh, ReactEvents, ReactHooksAsoslar, ReactPerformanceBosh, ReactPropsState, ReactRouterBoshlangich, ReactSecurityBosh, ReactTestingBoshlangich, ReduxAsoslariBoshlangich, ReduxToolkitBoshlangich, UseEffectHook} from "../components/index"
 import ReactCustomHooks from './pageBoshlangichReact/ReactCustomHooks';
 function BoshlangichReact() {
   const navigate = useNavigate();
@@ -121,203 +121,19 @@ function BoshlangichReact() {
     ),
 
     "Security": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Security</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Security - React ilovalari ichida security uchun ishlatiladigan xususiyat.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Security misoli
-import React, { useEffect, useState } from 'react';
-
-function Welcome() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const response = await fetch('/api/data');
-    const data = await response.json();
-    setData(data);
-  };
-
-  return (
-    <div>
-      {/* Security ishlatish */}
-    </div>
-  );
-}
-
-export default Welcome;`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Security qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Security implementation</li>
-              <li>Data protection</li>
-              <li>Authentication</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <ReactSecurityBosh/>
     ),
 
     "Best Practices": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Best Practices</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Best Practices - React ilovalari ichida ishlash uchun eng mashhur qoidalar.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Best Practices misoli
-import React, { useEffect, useState } from 'react';
-
-function Welcome() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const response = await fetch('/api/data');
-    const data = await response.json();
-    setData(data);
-  };
-
-  return (
-    <div>
-      {/* Best Practices ishlatish */}
-    </div>
-  );
-}
-
-export default Welcome;`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Best Practices qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Code readability</li>
-              <li>Component reusability</li>
-              <li>State management</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <ReactBestPracticesBosh/>
     ),
 
     "Deployment": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Deployment</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Deployment - React ilovalari ichida ilova yuborish uchun ishlatiladigan xususiyat.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Deployment misoli
-import React, { useEffect, useState } from 'react';
-
-function Welcome() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const response = await fetch('/api/data');
-    const data = await response.json();
-    setData(data);
-  };
-
-  return (
-    <div>
-      {/* Deployment ishlatish */}
-    </div>
-  );
-}
-
-export default Welcome;`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Deployment qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Deployment process</li>
-              <li>Server configuration</li>
-              <li>Environment variables</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+      <ReactDeploymentBosh/>
     ),
 
     "Amaliy Mashqlar": (
-      <div className="space-y-6 max-h-[calc(100vh-120px)]">
-        <section className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Amaliy Mashqlar</h3>
-          
-          <p className="text-gray-600 leading-relaxed mb-4">
-            Amaliy Mashqlar - React ilovalari ichida amaliy mashqlar yaratish uchun ishlatiladigan xususiyat.
-          </p>
-
-          <div className="bg-gray-800 text-white p-4 rounded-lg mb-4">
-            <pre className="text-sm">
-              <code>{`// Amaliy Mashq misoli
-import React, { useEffect, useState } from 'react';
-
-function Welcome() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const response = await fetch('/api/data');
-    const data = await response.json();
-    setData(data);
-  };
-
-  return (
-    <div>
-      {/* Amaliy Mashq ishlatish */}
-    </div>
-  );
-}
-
-export default Welcome;`}</code>
-            </pre>
-          </div>
-
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <h4 className="font-semibold text-blue-800 mb-2">Amaliy Mashq qoidalari:</h4>
-            <ul className="list-disc list-inside text-gray-700 space-y-2">
-              <li>Mashq yaratish</li>
-              <li>Mashq ishlatish</li>
-              <li>Mashq natijalarini tekshirish</li>
-            </ul>
-          </div>
-        </section>
-      </div>
+     <ReactAmaliyMashqlarBosh/>
     ),
   };
 
