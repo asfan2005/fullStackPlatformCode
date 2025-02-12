@@ -4,7 +4,7 @@ import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup,
          FaMobile, FaGlobe, FaRocket, FaPlug } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-import {ReactAdvancedHooksOrta, ReactOrtaReactOptimization, ReactReactPattersOrta, ReactStateManagementOrta} from "../components/index"
+import {ReactAdvancedHooksOrta, ReactAdvancedRouting, ReactOrtaReactOptimization, ReactReactPattersOrta, ReactReactTestingOrta, ReactServerStateOrta, ReactStateManagementOrta} from "../components/index"
 
 function OrtaReact() {
   const navigate = useNavigate();
@@ -71,89 +71,13 @@ function OrtaReact() {
       <ReactStateManagementOrta/>
     ),
     "Advanced Routing": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Advanced React Routing</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Nested Routes</li>
-          <li>Dynamic Routing</li>
-          <li>Protected Routes</li>
-          <li>Route Guards</li>
-          <li>Custom Route Hooks</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`const ProtectedRoute = ({ children }) => {
-  const auth = useAuth();
-  return auth ? children : <Navigate to="/login" />;
-};
-
-const Router = () => (
-  <Routes>
-    <Route path="/dashboard" element={
-      <ProtectedRoute>
-        <Dashboard />
-      </ProtectedRoute>
-    } />
-  </Routes>
-);`}
-          </pre>
-        </div>
-      </div>
+      <ReactAdvancedRouting/>
     ),
     "React Testing": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Testing in React</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Jest va React Testing Library</li>
-          <li>Component Testing</li>
-          <li>Integration Tests</li>
-          <li>E2E Testing with Cypress</li>
-          <li>Mock Service Worker</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`import { render, screen, fireEvent } from '@testing-library/react';
-
-test('button click increments counter', () => {
-  render(<Counter />);
-  const button = screen.getByText('Increment');
-  fireEvent.click(button);
-  expect(screen.getByText('Count: 1')).toBeInTheDocument();
-});`}
-          </pre>
-        </div>
-      </div>
+    <ReactReactTestingOrta/>
     ),
     "Server State": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Server State Management</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>React Query</li>
-          <li>SWR</li>
-          <li>Apollo Client</li>
-          <li>Cache Management</li>
-          <li>Real-time Updates</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`import { useQuery } from 'react-query';
-
-function TodoList() {
-  const { data, isLoading } = useQuery('todos', fetchTodos);
-  
-  if (isLoading) return 'Loading...';
-  return (
-    <ul>{data.map(todo => (
-      <li key={todo.id}>{todo.title}</li>
-    ))}</ul>
-  );
-}`}
-          </pre>
-        </div>
-      </div>
+      <ReactServerStateOrta/>
     ),
     "React Architecture": (
       <div className="space-y-4">
