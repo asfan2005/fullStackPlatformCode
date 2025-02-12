@@ -4,6 +4,8 @@ import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup,
          FaMobile, FaGlobe, FaRocket, FaPlug } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
+import {ReactAdvancedHooksOrta, ReactOrtaReactOptimization, ReactReactPattersOrta, ReactStateManagementOrta} from "../components/index"
+
 function OrtaReact() {
   const navigate = useNavigate();
   const [selectedTopic, setSelectedTopic] = useState(null);
@@ -57,100 +59,16 @@ function OrtaReact() {
 
   const topicContent = {
     "React Optimization": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">React Performance Optimization</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>useMemo va useCallback hooklaridan to'g'ri foydalanish</li>
-          <li>React.memo orqali komponentlarni memoization qilish</li>
-          <li>Virtual DOM va reconciliation jarayonini optimizatsiya qilish</li>
-          <li>Code splitting va lazy loading</li>
-          <li>Bundle size optimizatsiyasi</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`const MemoizedComponent = React.memo(({ data }) => {
-  return <div>{data}</div>
-});
-
-const Parent = () => {
-  const [count, setCount] = useState(0);
-  const expensiveValue = useMemo(() => computeExpensive(count), [count]);
-  
-  return <MemoizedComponent data={expensiveValue} />;
-}`}
-          </pre>
-        </div>
-      </div>
+      <ReactOrtaReactOptimization/>
     ),
     "Advanced Hooks": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Advanced React Hooks</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>useReducer hook va complex state management</li>
-          <li>useRef va forwardRef</li>
-          <li>useImperativeHandle</li>
-          <li>useLayoutEffect vs useEffect</li>
-          <li>Custom hooklarni yaratish</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`const useCustomHook = (initialValue) => {
-  const [state, dispatch] = useReducer(reducer, initialValue);
-  
-  useEffect(() => {
-    // Side effects
-  }, [state]);
-
-  return [state, dispatch];
-}`}
-          </pre>
-        </div>
-      </div>
+      <ReactAdvancedHooksOrta/>
     ),
     "React Patterns": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">React Design Patterns</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Compound Components</li>
-          <li>Render Props Pattern</li>
-          <li>Higher-Order Components (HOC)</li>
-          <li>Custom Hook Pattern</li>
-          <li>Provider Pattern</li>
-        </ul>
-      </div>
+      <ReactReactPattersOrta/>
     ),
     "State Management": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">State Management in React</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux va Redux Toolkit</li>
-          <li>Zustand</li>
-          <li>MobX</li>
-          <li>Recoil</li>
-          <li>Jotai va global state</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`import { createSlice, configureStore } from '@reduxjs/toolkit';
-
-const counterSlice = createSlice({
-  name: 'counter',
-  initialState: { value: 0 },
-  reducers: {
-    increment: state => { state.value += 1 },
-    decrement: state => { state.value -= 1 }
-  }
-});
-
-const store = configureStore({
-  reducer: counterSlice.reducer
-});`}
-          </pre>
-        </div>
-      </div>
+      <ReactStateManagementOrta/>
     ),
     "Advanced Routing": (
       <div className="space-y-4">

@@ -221,3 +221,10 @@ export {default as ReactSecurityBosh}from "../componentsReact/pageBoshlangichRea
 export {default as ReactBestPracticesBosh} from "../componentsReact/pageBoshlangichReact/ReactBestPracticesBosh";
 export {default as ReactDeploymentBosh} from "../componentsReact/pageBoshlangichReact/ReactDeploymentBosh";
 export {default as ReactAmaliyMashqlarBosh} from "../componentsReact/pageBoshlangichReact/ReactAmaliyMashqlarBosh";
+
+
+// react orta pages
+export {default as ReactOrtaReactOptimization} from "../componentsReact/pageOrtaReact/ReactOrtaReactOptimization";
+export {default as ReactAdvancedHooksOrta} from "../componentsReact/pageOrtaReact/ReactAdvancedHooksOrta";
+export {default as ReactReactPattersOrta} from "../componentsReact/pageOrtaReact/ReactReactPattersOrta";
+export {default as ReactStateManagementOrta} from "../componentsReact/pageOrtaReact/ReactStateManagementOrta";
