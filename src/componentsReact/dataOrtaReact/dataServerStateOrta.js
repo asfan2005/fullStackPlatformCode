@@ -1,10 +1,9 @@
-
 const dataServerStateOrta = [
     {
         id: 1,
         title: "React Server State Management",
         description: "React ilovalarida server state boshqaruvi bo'yicha to'liq qo'llanma",
-        image: "https://react-query.tanstack.com/_next/static/images/emblem-light-628080660fddb35787ff6c77e97ca43e.svg",
+        image: "https://solguruz.com/wp-content/uploads/2023/01/Different-ways-of-State-management-in-React.png",
         mainTopics: {
             introduction: {
                 title: "Server State Asoslari",
@@ -173,6 +172,197 @@ function RealTimeData() {
     });
 
     return <div>{JSON.stringify(data)}</div>;
+}`
+                    },
+                    {
+                        name: "6. Automatic Background Updates",
+                        description: "Avtomatik orqa fon yangilanishlari",
+                        code: `
+import { useQuery } from 'react-query';
+
+function AutoUpdateComponent() {
+    const { data } = useQuery(
+        'backgroundData',
+        async () => {
+            const response = await fetch('https://api.example.com/data');
+            return response.json();
+        },
+        {
+            // Har 10 sekundda yangilanadi
+            refetchInterval: 10000,
+            // Sahifa fokusda bo'lganda yangilanadi
+            refetchOnWindowFocus: true,
+            // Internet qayta ulanganda yangilanadi
+            refetchOnReconnect: true
+        }
+    );
+
+    return <div>{JSON.stringify(data)}</div>;
+}`
+                    },
+                    {
+                        name: "7. Advanced Cache Management",
+                        description: "Keshni kengaytirilgan boshqaruvi",
+                        code: `
+import { useQuery, useQueryClient } from 'react-query';
+
+function CacheManager() {
+    const queryClient = useQueryClient();
+
+    const { data } = useQuery(
+        'cachedData',
+        async () => {
+            const response = await fetch('https://api.example.com/data');
+            return response.json();
+        },
+        {
+            staleTime: 5 * 60 * 1000, // 5 daqiqa
+            cacheTime: 30 * 60 * 1000, // 30 daqiqa
+            onSuccess: (data) => {
+                // Muvaffaqiyatli so'rovdan keyin keshni yangilash
+                queryClient.setQueryData('cachedData', data);
+            }
+        }
+    );
+
+    const clearCache = () => {
+        queryClient.removeQueries('cachedData');
+    };
+
+    return (
+        <div>
+            <button onClick={clearCache}>Clear Cache</button>
+            <div>{JSON.stringify(data)}</div>
+        </div>
+    );
+}`
+                    },
+                    {
+                        name: "8. Enhanced Error Handling",
+                        description: "Kengaytirilgan xatolarni boshqarish",
+                        code: `
+import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
+
+function ErrorHandlingComponent() {
+    const { data, error, isError, refetch } = useQuery(
+        'errorData',
+        async () => {
+            try {
+                const response = await fetch('https://api.example.com/data');
+                if (!response.ok) {
+                    throw new Error(\`Status: \${response.status}\`);
+                }
+                return response.json();
+            } catch (error) {
+                throw new Error(\`Network error: \${error.message}\`);
+            }
+        },
+        {
+            retry: 3,
+            retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+            onError: (error) => {
+                toast.error(\`Error: \${error.message}\`);
+            }
+        }
+    );
+
+    if (isError) {
+        return (
+            <div>
+                <p>Error: {error.message}</p>
+                <button onClick={() => refetch()}>Retry</button>
+            </div>
+        );
+    }
+
+    return <div>{JSON.stringify(data)}</div>;
+}`
+                    },
+                    {
+                        name: "9. Infinite Queries",
+                        description: "Cheksiz so'rovlar",
+                        code: `
+import { useInfiniteQuery } from 'react-query';
+
+function InfiniteList() {
+    const {
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage
+    } = useInfiniteQuery(
+        'infiniteData',
+        async ({ pageParam = 1 }) => {
+            const response = await fetch(
+                \`https://api.example.com/data?page=\${pageParam}&limit=10\`
+            );
+            return response.json();
+        },
+        {
+            getNextPageParam: (lastPage, pages) => {
+                return lastPage.hasMore ? pages.length + 1 : undefined;
+            }
+        }
+    );
+
+    return (
+        <div>
+            {data?.pages.map((group, i) => (
+                <div key={i}>
+                    {group.items.map(item => (
+                        <div key={item.id}>{item.name}</div>
+                    ))}
+                </div>
+            ))}
+            <button
+                onClick={() => fetchNextPage()}
+                disabled={!hasNextPage || isFetchingNextPage}
+            >
+                {isFetchingNextPage
+                    ? 'Loading more...'
+                    : hasNextPage
+                    ? 'Load More'
+                    : 'Nothing more to load'}
+            </button>
+        </div>
+    );
+}`
+                    },
+                    {
+                        name: "10. Parallel Queries",
+                        description: "Parallel so'rovlar",
+                        code: `
+import { useQueries } from 'react-query';
+
+function ParallelQueries({ userIds }) {
+    const userQueries = useQueries(
+        userIds.map(id => ({
+            queryKey: ['user', id],
+            queryFn: async () => {
+                const response = await fetch(\`https://api.example.com/users/\${id}\`);
+                return response.json();
+            },
+            staleTime: 5 * 60 * 1000
+        }))
+    );
+
+    const isLoading = userQueries.some(query => query.isLoading);
+    const isError = userQueries.some(query => query.isError);
+
+    if (isLoading) return <div>Loading...</div>;
+    if (isError) return <div>Error loading users</div>;
+
+    return (
+        <div>
+            {userQueries.map(({ data }, index) => (
+                <div key={userIds[index]}>
+                    <h3>{data.name}</h3>
+                    <p>{data.email}</p>
+                </div>
+            ))}
+        </div>
+    );
 }`
                     }
                 ],

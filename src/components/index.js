@@ -231,3 +231,7 @@ export {default as ReactStateManagementOrta} from "../componentsReact/pageOrtaRe
 export {default as ReactAdvancedRouting} from "../componentsReact/pageOrtaReact/ReactAdvancedRouting";
 export {default as ReactReactTestingOrta} from "../componentsReact/pageOrtaReact/ReactReactTestingOrta";
 export {default as ReactServerStateOrta} from "../componentsReact/pageOrtaReact/ReactServerStateOrta";
+export {default as ReactReactArchitectureOrta} from "../componentsReact/pageOrtaReact/ReactReactArchitectureOrta";
+export {default as ReactPerformanceTuning} from "../componentsReact/pageOrtaReact/ReactPerformanceTuning";
+export {default as ReactSecurityBestPractices} from "../componentsReact/pageOrtaReact/ReactSecurityBestPractices";
+export {default as ReactComponentLifecycle} from "../componentsReact/pageOrtaReact/ReactComponentLifecycle";

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup, 
-         FaReact, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes, FaShieldAlt, FaLayerGroup, FaTools, FaSpinner, FaDatabase, 
-         FaMobile, FaGlobe, FaRocket, FaPlug } from 'react-icons/fa';
+import {
+  FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup,
+  FaReact, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes, FaShieldAlt, FaLayerGroup, FaTools, FaSpinner, FaDatabase,
+  FaMobile, FaGlobe, FaRocket, FaPlug
+} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-import {ReactAdvancedHooksOrta, ReactAdvancedRouting, ReactOrtaReactOptimization, ReactReactPattersOrta, ReactReactTestingOrta, ReactServerStateOrta, ReactStateManagementOrta} from "../components/index"
+import { ReactAdvancedHooksOrta, ReactAdvancedRouting, ReactComponentLifecycle, ReactOrtaReactOptimization, ReactPerformanceTuning, ReactReactArchitectureOrta, ReactReactPattersOrta, ReactReactTestingOrta, ReactSecurityBestPractices, ReactServerStateOrta, ReactStateManagementOrta } from "../components/index"
 
 function OrtaReact() {
   const navigate = useNavigate();
@@ -59,138 +61,37 @@ function OrtaReact() {
 
   const topicContent = {
     "React Optimization": (
-      <ReactOrtaReactOptimization/>
+      <ReactOrtaReactOptimization />
     ),
     "Advanced Hooks": (
-      <ReactAdvancedHooksOrta/>
+      <ReactAdvancedHooksOrta />
     ),
     "React Patterns": (
-      <ReactReactPattersOrta/>
+      <ReactReactPattersOrta />
     ),
     "State Management": (
-      <ReactStateManagementOrta/>
+      <ReactStateManagementOrta />
     ),
     "Advanced Routing": (
-      <ReactAdvancedRouting/>
+      <ReactAdvancedRouting />
     ),
     "React Testing": (
-    <ReactReactTestingOrta/>
+      <ReactReactTestingOrta />
     ),
     "Server State": (
-      <ReactServerStateOrta/>
+      <ReactServerStateOrta />
     ),
     "React Architecture": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">React Architecture Patterns</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Clean Architecture</li>
-          <li>Atomic Design</li>
-          <li>Feature-based Structure</li>
-          <li>Micro Frontends</li>
-          <li>Monorepo Setup</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`// Feature-based structure
-/src
-  /features
-    /auth
-      /components
-      /hooks
-      /services
-      /store
-    /dashboard
-      /components
-      /hooks
-      /services
-      /store`}
-          </pre>
-        </div>
-      </div>
+      <ReactReactArchitectureOrta />
     ),
     "Performance Tuning": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">React Performance Optimization</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Profiling va Performance Monitoring</li>
-          <li>Code Splitting Strategies</li>
-          <li>Memory Leaks Prevention</li>
-          <li>Network Optimization</li>
-          <li>Rendering Optimization</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`// Code splitting with React.lazy
-const HeavyComponent = React.lazy(() => 
-  import('./HeavyComponent')
-);
-
-function App() {
-  return (
-    <Suspense fallback={<Loader />}>
-      <HeavyComponent />
-    </Suspense>
-  );
-}`}
-          </pre>
-        </div>
-      </div>
+      <ReactPerformanceTuning />
     ),
     "Security Best Practices": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">React Security</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>XSS Prevention</li>
-          <li>CSRF Protection</li>
-          <li>Secure Authentication</li>
-          <li>Input Sanitization</li>
-          <li>Security Headers</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`// Input sanitization example
-import DOMPurify from 'dompurify';
-
-function SafeHTML({ html }) {
-  return (
-    <div dangerouslySetInnerHTML={{
-      __html: DOMPurify.sanitize(html)
-    }} />
-  );
-}`}
-          </pre>
-        </div>
-      </div>
+      <ReactSecurityBestPractices/>
     ),
     "Component Lifecycle": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Component Lifecycle in React</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Mounting Phase</li>
-          <li>Updating Phase</li>
-          <li>Unmounting Phase</li>
-          <li>Error Handling</li>
-          <li>Lifecycle Methods vs Hooks</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`function LifecycleComponent() {
-  useEffect(() => {
-    // Mounting
-    console.log('Component mounted');
-    return () => {
-      // Unmounting
-      console.log('Component will unmount');
-    };
-  }, []);
-}`}
-          </pre>
-        </div>
-      </div>
+      <ReactComponentLifecycle/>
     ),
     "Error Boundaries": (
       <div className="space-y-4">
@@ -410,7 +311,7 @@ const FormComponent = () => {
     <div className="relative min-h-screen bg-white">
       {/* Back Button */}
       <div className="fixed top-2 right-2 z-50 w-auto">
-        <button 
+        <button
           onClick={() => navigate("/frontend/react")}
           className="p-2.5 rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition-all shadow-md flex items-center gap-2"
         >
@@ -420,7 +321,7 @@ const FormComponent = () => {
 
       {/* Mobile Menu Button */}
       <div className="lg:hidden fixed top-2 left-2 z-50">
-        <button 
+        <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="p-2.5 rounded-lg bg-gray-100 hover:bg-gray-200 transition-all shadow-md"
         >
@@ -445,7 +346,7 @@ const FormComponent = () => {
             <div className="overflow-y-auto flex-1 pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
               <ul className="space-y-1.5 sm:space-y-2">
                 {menu.map((item, index) => (
-                  <li 
+                  <li
                     key={index}
                     className={`
                       p-2.5 sm:p-3
@@ -510,7 +411,7 @@ const FormComponent = () => {
 
         {/* Overlay */}
         {isMobileMenuOpen && (
-          <div 
+          <div
             className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 lg:hidden transition-opacity duration-300"
             onClick={() => setIsMobileMenuOpen(false)}
           />

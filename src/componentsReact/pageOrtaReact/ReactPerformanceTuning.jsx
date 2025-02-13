@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import dataServerStateOrta from '../dataOrtaReact/dataServerStateOrta';
+import dataPerformanceTuningOrta from '../dataOrtaReact/dataPerformanceTuningOrta';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -32,11 +32,11 @@ const FeatureItem = memo(({ children }) => (
   </li>
 ));
 
-function ReactServerStateOrta() {
+function ReactPerformanceTuning() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       <div className="container mx-auto px-4 py-16 max-w-7xl">
-        {dataServerStateOrta.map((section) => (
+        {dataPerformanceTuningOrta.map((section) => (
           <div key={section.id} className="mb-20">
             {/* Header Section */}
             <div className="text-center space-y-8 mb-12">
@@ -51,7 +51,7 @@ function ReactServerStateOrta() {
                   <img
                     src={section.image}
                     alt={section.title}
-                    className="h-64 object-contain"
+                    className="h-auto max-h-96 w-auto object-contain rounded-xl shadow-lg"
                   />
                 </div>
               )}
@@ -93,14 +93,19 @@ function ReactServerStateOrta() {
 
             {/* Features Section */}
             <div className="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 mb-12">
-              <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                Asosiy Xususiyatlar
-              </h2>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {section.mainTopics.codeExamples.features.map((feature, index) => (
-                  <FeatureItem key={index}>{feature}</FeatureItem>
-                ))}
-              </ul>
+              <h2 className="text-3xl font-bold text-gray-800 mb-6">Features</h2>
+              {section.mainTopics.codeExamples.features.map((feature, index) => (
+                <div key={index} className="mb-8">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-4">{feature.title}</h3>
+                  <p className="text-gray-700 mb-4">{feature.description}</p>
+                  <ul className="space-y-2">
+                    {feature.details.map((detail, idx) => (
+                      <FeatureItem key={idx}>{detail}</FeatureItem>
+                    ))}
+                  </ul>
+                  <p className="mt-4 text-gray-600 italic">{feature.importance}</p>
+                </div>
+              ))}
             </div>
 
             {/* Best Practices Section */}
@@ -111,13 +116,13 @@ function ReactServerStateOrta() {
               <div className="grid grid-cols-1 gap-8">
                 {section.mainTopics.codeExamples.bestPractices.practices.map((practice, index) => (
                   <div key={index} className="space-y-4">
-                    <h3 className="text-2xl font-bold text-gray-800">
-                      {practice.name}
-                    </h3>
-                    <p className="text-gray-700">
-                      {practice.description}
-                    </p>
-                    <CodeBlock code={practice.example} />
+                    <h3 className="text-2xl font-bold text-gray-800">{practice.name}</h3>
+                    <p className="text-gray-700">{practice.description}</p>
+                    <ul className="space-y-2">
+                      {practice.tips.map((tip, idx) => (
+                        <FeatureItem key={idx}>{tip}</FeatureItem>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>
@@ -152,4 +157,4 @@ function ReactServerStateOrta() {
   );
 }
 
-export default memo(ReactServerStateOrta);
+export default memo(ReactPerformanceTuning);
