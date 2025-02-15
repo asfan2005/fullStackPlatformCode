@@ -235,3 +235,5 @@ export {default as ReactReactArchitectureOrta} from "../componentsReact/pageOrta
 export {default as ReactPerformanceTuning} from "../componentsReact/pageOrtaReact/ReactPerformanceTuning";
 export {default as ReactSecurityBestPractices} from "../componentsReact/pageOrtaReact/ReactSecurityBestPractices";
 export {default as ReactComponentLifecycle} from "../componentsReact/pageOrtaReact/ReactComponentLifecycle";
+export {default as ReactErrorBoundaries} from '../componentsReact/pageOrtaReact/ReactErrorBoundaries';
+export {default as ReactContentApiOrta} from "../componentsReact/pageOrtaReact/ReactContentApiOrta";

@@ -6,7 +6,7 @@ import {
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-import { ReactAdvancedHooksOrta, ReactAdvancedRouting, ReactComponentLifecycle, ReactOrtaReactOptimization, ReactPerformanceTuning, ReactReactArchitectureOrta, ReactReactPattersOrta, ReactReactTestingOrta, ReactSecurityBestPractices, ReactServerStateOrta, ReactStateManagementOrta } from "../components/index"
+import { ReactAdvancedHooksOrta, ReactAdvancedRouting, ReactComponentLifecycle, ReactContentApiOrta, ReactErrorBoundaries, ReactOrtaReactOptimization, ReactPerformanceTuning, ReactReactArchitectureOrta, ReactReactPattersOrta, ReactReactTestingOrta, ReactSecurityBestPractices, ReactServerStateOrta, ReactStateManagementOrta } from "../components/index"
 
 function OrtaReact() {
   const navigate = useNavigate();
@@ -94,62 +94,10 @@ function OrtaReact() {
       <ReactComponentLifecycle/>
     ),
     "Error Boundaries": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Error Handling with Boundaries</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Custom Error Boundaries</li>
-          <li>Fallback UI</li>
-          <li>Error Reporting</li>
-          <li>Recovery Patterns</li>
-          <li>Error Monitoring</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`class ErrorBoundary extends React.Component {
-  state = { hasError: false };
-  
-  static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-  
-  render() {
-    if (this.state.hasError) {
-      return <FallbackUI />;
-    }
-    return this.props.children;
-  }
-}`}
-          </pre>
-        </div>
-      </div>
+     <ReactErrorBoundaries/>
     ),
     "React Context API": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Context API Usage</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Context Creation</li>
-          <li>Provider Pattern</li>
-          <li>Consumer Components</li>
-          <li>Performance Considerations</li>
-          <li>Context vs State Management</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`const ThemeContext = React.createContext();
-
-function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('light');
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
-}`}
-          </pre>
-        </div>
-      </div>
+    <ReactContentApiOrta/>
     ),
     "Custom Hooks": (
       <div className="space-y-4">
