@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import dataReactContentApi from '../dataOrtaReact/dataReactContentApi';
+import dataReactAnimationsOrta from '../dataOrtaReact/dataReactAnimationsOrta';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
@@ -32,44 +32,37 @@ const FeatureItem = memo(({ children }) => (
   </li>
 ));
 
-const SectionHeader = memo(({ title, description, image }) => (
-  <div className="text-center space-y-8 mb-12">
-    <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 hover:from-purple-600 hover:to-blue-600 transition-all duration-300 md:text-6xl">
-      {title}
-    </h1>
-    <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-      {description}
-    </p>
-    {image && (
-      <div className="flex justify-center">
-        <img
-          src={image}
-          alt={title}
-          className="h-auto max-h-96 w-auto object-contain rounded-xl shadow-lg"
-          loading="lazy"
-        />
-      </div>
-    )}
-  </div>
-));
-
 const ContentCard = memo(({ children, className = "" }) => (
   <div className={`bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all duration-300 ${className}`}>
     {children}
   </div>
 ));
 
-function ReactContentApiOrta() {
+function ReactReactAnimationsOrta() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       <div className="container mx-auto px-4 py-16 max-w-7xl">
-        {dataReactContentApi.map((section) => (
+        {dataReactAnimationsOrta.map((section) => (
           <div key={section.id} className="mb-20">
-            <SectionHeader 
-              title={section.title}
-              description={section.description}
-              image={section.image}
-            />
+            {/* Header Section */}
+            <div className="text-center space-y-8 mb-12">
+              <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 hover:from-purple-600 hover:to-blue-600 transition-all duration-300 md:text-6xl">
+                {section.title}
+              </h1>
+              <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                {section.description}
+              </p>
+              {section.image && (
+                <div className="flex justify-center">
+                  <img
+                    src={section.image}
+                    alt={section.title}
+                    className="h-auto max-h-96 w-auto object-contain rounded-xl shadow-lg"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+            </div>
 
             {/* Introduction Section */}
             <ContentCard className="mb-12">
@@ -83,7 +76,7 @@ function ReactContentApiOrta() {
               </ul>
             </ContentCard>
 
-            {/* Introduction Examples Section */}
+            {/* Basic Examples Section */}
             <div className="space-y-8 mb-12">
               {section.mainTopics.introduction.examples.map((example, index) => (
                 <ContentCard key={index}>
@@ -98,22 +91,17 @@ function ReactContentApiOrta() {
               ))}
             </div>
 
-            {/* Main Code Examples Section */}
+            {/* Advanced Examples Section */}
             <div className="space-y-8 mb-12">
               <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                {section.mainTopics.codeExamples.title}
+                {section.mainTopics.advancedExamples.title}
               </h2>
               <div className="grid grid-cols-1 gap-8">
-                {section.mainTopics.codeExamples.components.map((component, index) => (
+                {section.mainTopics.advancedExamples.components.map((component, index) => (
                   <ContentCard key={index} className="transition-all duration-300 hover:scale-[1.02]">
-                    <div className="flex items-center mb-4">
-                      <span className="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">
-                        {index + 1}
-                      </span>
-                      <h3 className="text-2xl font-bold text-gray-800">
-                        {component.name}
-                      </h3>
-                    </div>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                      {component.name}
+                    </h3>
                     <p className="text-gray-700 mb-6">
                       {component.description}
                     </p>
@@ -123,27 +111,29 @@ function ReactContentApiOrta() {
               </div>
             </div>
 
-            {/* Features Section */}
-            <ContentCard className="mb-12 bg-gradient-to-r from-blue-50 to-purple-50">
+            {/* Practical Usage Section */}
+            <div className="space-y-8 mb-12">
               <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                {section.mainTopics.codeExamples.features[0].title}
+                {section.mainTopics.practicalUsage.title}
               </h2>
-              <p className="text-gray-700 mb-6">
-                {section.mainTopics.codeExamples.features[0].description}
-              </p>
-              <ul className="space-y-4">
-                {section.mainTopics.codeExamples.features[0].details.map((detail, index) => (
-                  <FeatureItem key={index}>{detail}</FeatureItem>
+              <div className="grid grid-cols-1 gap-8">
+                {section.mainTopics.practicalUsage.examples.map((example, index) => (
+                  <ContentCard key={index}>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                      {example.name}
+                    </h3>
+                    <CodeBlock code={example.code} />
+                  </ContentCard>
                 ))}
-              </ul>
-            </ContentCard>
+              </div>
+            </div>
 
             {/* Best Practices Section */}
-            <ContentCard className="mb-12 bg-gradient-to-r from-green-50 to-blue-50">
+            <ContentCard className="mb-12 bg-gradient-to-r from-blue-50 to-purple-50">
               <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                {section.mainTopics.codeExamples.bestPractices.title}
+                {section.mainTopics.bestPractices.title}
               </h2>
-              {section.mainTopics.codeExamples.bestPractices.practices.map((practice, index) => (
+              {section.mainTopics.bestPractices.practices.map((practice, index) => (
                 <div key={index} className="mb-8 last:mb-0">
                   <h3 className="text-2xl font-bold text-gray-800 mb-4">
                     {practice.name}
@@ -188,4 +178,4 @@ function ReactContentApiOrta() {
   );
 }
 
-export default memo(ReactContentApiOrta);
+export default memo(ReactReactAnimationsOrta);

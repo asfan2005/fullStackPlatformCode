@@ -237,3 +237,9 @@ export {default as ReactSecurityBestPractices} from "../componentsReact/pageOrta
 export {default as ReactComponentLifecycle} from "../componentsReact/pageOrtaReact/ReactComponentLifecycle";
 export {default as ReactErrorBoundaries} from '../componentsReact/pageOrtaReact/ReactErrorBoundaries';
 export {default as ReactContentApiOrta} from "../componentsReact/pageOrtaReact/ReactContentApiOrta";
+export {default as ReactCustomHooksOrta} from "../componentsReact/pageOrtaReact/ReactCustomHooksOrta";
+export {default as ReactReactSuspenseOrta} from "../componentsReact/pageOrtaReact/ReactReactSuspenseOrta";
+export {default as ReactReactFormsOrta} from "../componentsReact/pageOrtaReact/ReactReactFormsOrta";
+export {default as ReactMobileOrta} from "../componentsReact/pageOrtaReact/ReactMobileOrta";
+export {default as ReactInternationalizationOrta} from "../componentsReact/pageOrtaReact/ReactInternationalizationOrta";
+export {default as ReactReactPluginsOrta} from "../componentsReact/pageOrtaReact/ReactReactPluginsOrta";

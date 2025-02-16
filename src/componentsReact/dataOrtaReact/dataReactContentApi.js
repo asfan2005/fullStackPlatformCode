@@ -3,7 +3,7 @@ const dataReactContentApi = [
         id: 1,
         title: "React Context API",
         description: "React ilovalarida global state boshqarish va props drilling muammosini hal qilish usuli",
-        image: "https://raw.githubusercontent.com/facebook/react/main/fixtures/art/react-logo-primary.png",
+        image: "https://media2.dev.to/dynamic/image/width=1000,height=500,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fcp1yfm15dbc523p9613b.png",
         mainTopics: {
             introduction: {
                 title: "Context API Asoslari",
@@ -199,6 +199,222 @@ export function useUser() {
     }
     return context;
 }`
+                    },
+                    {
+                        name: "4. API Context with Fetch",
+                        description: "Context yordamida API so'rovlarini boshqarish",
+                        code: `
+// ApiContext.js
+import React, { createContext, useContext, useState } from 'react';
+
+const ApiContext = createContext();
+
+export function ApiProvider({ children }) {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const fetchData = async (url, options = {}) => {
+        try {
+            setLoading(true);
+            setError(null);
+            const response = await fetch(url, options);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+            return data;
+        } catch (err) {
+            setError(err.message);
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const api = {
+        // GET so'rovi
+        get: (url) => fetchData(url),
+
+        // POST so'rovi
+        post: (url, data) => fetchData(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }),
+
+        // PUT so'rovi
+        put: (url, data) => fetchData(url, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }),
+
+        // DELETE so'rovi
+        delete: (url) => fetchData(url, { method: 'DELETE' })
+    };
+
+    return (
+        <ApiContext.Provider value={{ api, loading, error }}>
+            {children}
+        </ApiContext.Provider>
+    );
+}
+
+export const useApi = () => useContext(ApiContext);`
+                    },
+                    {
+                        name: "5. API Usage Example",
+                        description: "API Context-dan foydalanish namunasi",
+                        code: `
+// UserManager.js
+import React from 'react';
+import { useApi } from './ApiContext';
+
+function UserManager() {
+    const { api, loading, error } = useApi();
+    const [users, setUsers] = useState([]);
+
+    // Foydalanuvchilarni olish
+    const fetchUsers = async () => {
+        try {
+            const data = await api.get('https://api.example.com/users');
+            setUsers(data);
+        } catch (err) {
+            console.error('Failed to fetch users:', err);
+        }
+    };
+
+    // Yangi foydalanuvchi qo'shish
+    const addUser = async (userData) => {
+        try {
+            const newUser = await api.post('https://api.example.com/users', userData);
+            setUsers(prev => [...prev, newUser]);
+        } catch (err) {
+            console.error('Failed to add user:', err);
+        }
+    };
+
+    // Foydalanuvchini yangilash
+    const updateUser = async (id, userData) => {
+        try {
+            const updatedUser = await api.put(\`https://api.example.com/users/\${id}\`, userData);
+            setUsers(prev => prev.map(user => 
+                user.id === id ? updatedUser : user
+            ));
+        } catch (err) {
+            console.error('Failed to update user:', err);
+        }
+    };
+
+    // Foydalanuvchini o'chirish
+    const deleteUser = async (id) => {
+        try {
+            await api.delete(\`https://api.example.com/users/\${id}\`);
+            setUsers(prev => prev.filter(user => user.id !== id));
+        } catch (err) {
+            console.error('Failed to delete user:', err);
+        }
+    };
+
+    return (
+        <div>
+            {loading && <div>Loading...</div>}
+            {error && <div>Error: {error}</div>}
+            <button onClick={fetchUsers}>Load Users</button>
+            {users.map(user => (
+                <div key={user.id}>
+                    {user.name}
+                    <button onClick={() => updateUser(user.id, { ...user, name: 'Updated' })}>
+                        Update
+                    </button>
+                    <button onClick={() => deleteUser(user.id)}>Delete</button>
+                </div>
+            ))}
+        </div>
+    );`
+                    },
+                    {
+                        name: "6. Advanced API Context with Authentication",
+                        description: "Autentifikatsiya bilan API Context",
+                        code: `
+// AuthApiContext.js
+import React, { createContext, useContext, useState } from 'react';
+
+const AuthApiContext = createContext();
+
+export function AuthApiProvider({ children }) {
+    const [token, setToken] = useState(localStorage.getItem('token'));
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const api = {
+        login: async (credentials) => {
+            try {
+                setLoading(true);
+                const response = await fetch('https://api.example.com/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(credentials)
+                });
+                
+                if (!response.ok) throw new Error('Login failed');
+                
+                const data = await response.json();
+                setToken(data.token);
+                localStorage.setItem('token', data.token);
+                return data;
+            } catch (err) {
+                setError(err.message);
+                throw err;
+            } finally {
+                setLoading(false);
+            }
+        },
+
+        logout: () => {
+            setToken(null);
+            localStorage.removeItem('token');
+        },
+
+        authenticatedRequest: async (url, options = {}) => {
+            if (!token) throw new Error('No authentication token');
+
+            try {
+                setLoading(true);
+                const response = await fetch(url, {
+                    ...options,
+                    headers: {
+                        ...options.headers,
+                        'Authorization': \`Bearer \${token}\`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        setToken(null);
+                        localStorage.removeItem('token');
+                        throw new Error('Token expired');
+                    }
+                    throw new Error('Request failed');
+                }
+
+                return await response.json();
+            } catch (err) {
+                setError(err.message);
+                throw err;
+            } finally {
+                setLoading(false);
+            }
+        }
+    };
+
+    return (
+        <AuthApiContext.Provider value={{ api, token, loading, error }}>
+            {children}
+        </AuthApiContext.Provider>
+    );
+}
+
+export const useAuthApi = () => useContext(AuthApiContext);`
                     }
                 ],
                 features: [

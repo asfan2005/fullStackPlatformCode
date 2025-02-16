@@ -6,7 +6,8 @@ import {
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-import { ReactAdvancedHooksOrta, ReactAdvancedRouting, ReactComponentLifecycle, ReactContentApiOrta, ReactErrorBoundaries, ReactOrtaReactOptimization, ReactPerformanceTuning, ReactReactArchitectureOrta, ReactReactPattersOrta, ReactReactTestingOrta, ReactSecurityBestPractices, ReactServerStateOrta, ReactStateManagementOrta } from "../components/index"
+import { ReactAdvancedHooksOrta, ReactAdvancedRouting, ReactComponentLifecycle, ReactContentApiOrta, ReactCustomHooks, ReactCustomHooksOrta, ReactErrorBoundaries, ReactInternationalizationOrta, ReactMobileOrta, ReactOrtaReactOptimization, ReactPerformanceTuning, ReactReactArchitectureOrta, ReactReactFormsOrta, ReactReactPattersOrta, ReactReactPluginsOrta, ReactReactSuspenseOrta, ReactReactTestingOrta, ReactSecurityBestPractices, ReactServerStateOrta, ReactStateManagementOrta } from "../components/index"
+import ReactReactAnimationsOrta from './pageOrtaReact/ReactReactAnimationsOrta';
 
 function OrtaReact() {
   const navigate = useNavigate();
@@ -100,158 +101,25 @@ function OrtaReact() {
     <ReactContentApiOrta/>
     ),
     "Custom Hooks": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Building Custom Hooks</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Hook Design Patterns</li>
-          <li>Reusable Logic</li>
-          <li>Hook Composition</li>
-          <li>Testing Hooks</li>
-          <li>Hook Libraries</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`function useLocalStorage(key, initialValue) {
-  const [value, setValue] = useState(() => {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : initialValue;
-  });
-
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
-
-  return [value, setValue];
-}`}
-          </pre>
-        </div>
-      </div>
+      <ReactCustomHooksOrta/>
     ),
     "React Suspense": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Using React Suspense</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Lazy Loading</li>
-          <li>Data Fetching</li>
-          <li>Suspense Boundaries</li>
-          <li>Error Handling</li>
-          <li>Loading States</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`const LazyComponent = React.lazy(() => 
-  import('./LazyComponent')
-);
-
-function App() {
-  return (
-    <Suspense fallback={<Loading />}>
-      <LazyComponent />
-    </Suspense>
-  );
-}`}
-          </pre>
-        </div>
-      </div>
+      <ReactReactSuspenseOrta/>
     ),
     "React Animations": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">React Animation Techniques</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>React Transition Group</li>
-          <li>Framer Motion kutubxonasi</li>
-          <li>CSS Transitions va Animations</li>
-          <li>React Spring</li>
-          <li>GSAP bilan animatsiyalar</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`import { motion } from 'framer-motion';
-
-const AnimatedComponent = () => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
-  >
-    Animated Content
-  </motion.div>
-)`}
-          </pre>
-        </div>
-      </div>
+    <ReactReactAnimationsOrta/>
     ),
     "React Forms": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Advanced Form Handling</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>React Hook Form</li>
-          <li>Formik va Yup validatsiya</li>
-          <li>Custom Form Hooks</li>
-          <li>Form State Management</li>
-          <li>File Upload va handling</li>
-        </ul>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h4 className="font-medium mb-2">Kod namunasi:</h4>
-          <pre className="bg-gray-800 text-white p-3 rounded">
-            {`import { useForm } from 'react-hook-form';
-
-const FormComponent = () => {
-  const { register, handleSubmit, errors } = useForm();
-  
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input {...register("email", { required: true })} />
-      {errors.email && <span>Email majburiy</span>}
-    </form>
-  );
-}`}
-          </pre>
-        </div>
-      </div>
+     <ReactReactFormsOrta/>
     ),
     "React Mobile": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Mobile Development with React</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>React Native asoslari</li>
-          <li>Progressive Web Apps (PWA)</li>
-          <li>Responsive Design patterns</li>
-          <li>Touch Events handling</li>
-          <li>Mobile-first yondashuv</li>
-        </ul>
-      </div>
+     <ReactMobileOrta/>
     ),
     "Internationalization": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">React Internationalization</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>React-i18next</li>
-          <li>Multiple language support</li>
-          <li>RTL va LTR support</li>
-          <li>Dynamic content translation</li>
-          <li>Date va number formatlash</li>
-        </ul>
-      </div>
+      <ReactInternationalizationOrta/>
     ),
     "React Plugins": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Essential React Plugins</h3>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux Toolkit</li>
-          <li>React Query</li>
-          <li>React Router v6</li>
-          <li>Styled Components</li>
-          <li>Material-UI va Tailwind</li>
-        </ul>
-      </div>
+      <ReactReactPluginsOrta/>
     )
   };
 
