@@ -243,3 +243,7 @@ export {default as ReactReactFormsOrta} from "../componentsReact/pageOrtaReact/R
 export {default as ReactMobileOrta} from "../componentsReact/pageOrtaReact/ReactMobileOrta";
 export {default as ReactInternationalizationOrta} from "../componentsReact/pageOrtaReact/ReactInternationalizationOrta";
 export {default as ReactReactPluginsOrta} from "../componentsReact/pageOrtaReact/ReactReactPluginsOrta";
+
+
+// react mukammal pages
+export {default as KirishMuhitiMukammal} from "../componentsReact/pageMukammalReact/KirishMuhitiMukammal";
