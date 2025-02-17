@@ -6,6 +6,7 @@ import {
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import ReactAdvancedComponentPatterns from './pageMukammalReact/ReactAdvancedComponentPatterns';
+import ReactPerformanceOptimizationPro from './pageMukammalReact/ReactPerformanceOptimizationPro';
 
 function MukammalReact() {
   const navigate = useNavigate();
@@ -103,15 +104,7 @@ function MukammalReact() {
      <ReactAdvancedComponentPatterns/>
     ),
     "Performance Optimization Pro": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Performance Optimization Pro</h3>
-        <p>Advanced performance optimization techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>useMemo va useCallback hooks</li>
-          <li>React.memo strategiyalari</li>
-          <li>Virtual DOM optimizatsiyasi</li>
-        </ul>
-      </div>
+     <ReactPerformanceOptimizationPro/>
     ),
     "Custom Hooks Engineering": (
       <div className="space-y-4">
