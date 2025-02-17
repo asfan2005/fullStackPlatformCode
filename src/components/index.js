@@ -246,4 +246,4 @@ export {default as ReactReactPluginsOrta} from "../componentsReact/pageOrtaReact
 
 
 // react mukammal pages
-export {default as KirishMuhitiMukammal} from "../componentsReact/pageMukammalReact/KirishMuhitiMukammal";
+export {default as ReactAdvancedComponentPatterns} from "../componentsReact/pageMukammalReact/ReactAdvancedComponentPatterns";

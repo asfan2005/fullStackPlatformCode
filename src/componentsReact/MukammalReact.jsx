@@ -5,6 +5,7 @@ import {
   FaMobile, FaGlobe, FaRocket, FaPlug, FaCheck, FaServer, FaCogs, FaPuzzlePiece, FaUniversalAccess, FaCloud
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import ReactAdvancedComponentPatterns from './pageMukammalReact/ReactAdvancedComponentPatterns';
 
 function MukammalReact() {
   const navigate = useNavigate();
@@ -99,56 +100,7 @@ function MukammalReact() {
 
   const topicContent = {
     "Advanced Component Patterns": (
-      <div className="space-y-6 p-4">
-        <h3 className="text-2xl font-bold text-gray-800 mb-4">Advanced Component Patterns</h3>
-        <div className="bg-blue-50 p-4 rounded-lg">
-          <p className="text-gray-700 leading-relaxed">
-            React komponentlarining murakkab arxitekturasi va patterns
-          </p>
-        </div>
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h4 className="text-xl font-semibold text-gray-800 mb-4">
-              <FaLayerGroup className="inline-block mr-2 text-blue-500" />
-              Compound Components
-            </h4>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>Implicit State Sharing</span>
-              </li>
-              <li className="flex items-start">
-                <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>Flexible Composition</span>
-              </li>
-              <li className="flex items-start">
-                <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>Control Props Pattern</span>
-              </li>
-            </ul>
-          </div>
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h4 className="text-xl font-semibold text-gray-800 mb-4">
-              <FaCode className="inline-block mr-2 text-blue-500" />
-              Render Props & HOCs
-            </h4>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>Advanced Composition</span>
-              </li>
-              <li className="flex items-start">
-                <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>Cross-Cutting Concerns</span>
-              </li>
-              <li className="flex items-start">
-                <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>Prop Collections & Getters</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+     <ReactAdvancedComponentPatterns/>
     ),
     "Performance Optimization Pro": (
       <div className="space-y-4">
