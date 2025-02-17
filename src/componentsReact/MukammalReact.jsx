@@ -12,120 +12,147 @@ function MukammalReact() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const menuIcons = {
-    "Component Architecture": <FaObjectGroup className="text-blue-500" />,
-    "State Management Pro": <FaBoxes className="text-green-500" />,
-    "Performance Mastery": <FaSync className="text-purple-500" />,
-    "Advanced Hooks Deep Dive": <FaWrench className="text-orange-500" />,
-    "Testing Strategies": <FaList className="text-red-500" />,
-    "Data Fetching Patterns": <FaDatabase className="text-indigo-500" />,
-    "Authentication & Security": <FaShieldAlt className="text-yellow-500" />,
-    "Form Management": <FaCheck className="text-pink-500" />,
-    "Routing & Navigation": <FaProjectDiagram className="text-teal-500" />,
-    "Code Splitting": <FaCode className="text-cyan-500" />,
-    "Server-Side Rendering": <FaServer className="text-emerald-500" />,
-    "State Machines": <FaCogs className="text-red-600" />,
-    "Micro-Frontends": <FaPuzzlePiece className="text-violet-500" />,
-    "Design Patterns": <FaLayerGroup className="text-amber-500" />,
-    "Animation Systems": <FaRocket className="text-fuchsia-500" />,
-    "Accessibility (a11y)": <FaUniversalAccess className="text-rose-500" />,
-    "TypeScript Integration": <FaCode className="text-lime-500" />,
-    "GraphQL Integration": <FaDatabase className="text-sky-500" />,
-    "Deployment Strategies": <FaCloud className="text-indigo-600" />,
-    "Developer Tools": <FaTools className="text-orange-600" />
+    "Advanced Component Patterns": <FaObjectGroup className="text-blue-500" />,
+    "Performance Optimization Pro": <FaSync className="text-green-500" />,
+    "Custom Hooks Engineering": <FaWrench className="text-purple-500" />,
+    "State Management Architecture": <FaBoxes className="text-orange-500" />,
+    "Advanced React Patterns": <FaLayerGroup className="text-red-500" />,
+    "Testing & Debug Mastery": <FaList className="text-indigo-500" />,
+    "React Internals Deep Dive": <FaReact className="text-yellow-500" />,
+    "Advanced Data Patterns": <FaDatabase className="text-pink-500" />,
+    "Security & Authentication": <FaShieldAlt className="text-teal-500" />,
+    "Complex Form Systems": <FaCheck className="text-cyan-500" />,
+    "Advanced Routing Patterns": <FaProjectDiagram className="text-emerald-500" />,
+    "Code Splitting Strategies": <FaCode className="text-red-600" />,
+    "SSR & SSG Mastery": <FaServer className="text-violet-500" />,
+    "State Machines & XState": <FaCogs className="text-amber-500" />,
+    "Micro-Frontend Architecture": <FaPuzzlePiece className="text-fuchsia-500" />,
+    "Enterprise Design Patterns": <FaTools className="text-rose-500" />,
+    "Complex Animation Systems": <FaRocket className="text-lime-500" />,
+    "Advanced TypeScript with React": <FaCode className="text-sky-500" />,
+    "GraphQL & Apollo Mastery": <FaDatabase className="text-indigo-600" />,
+    "CI/CD & DevOps for React": <FaCloud className="text-orange-600" />,
+    "React Query & Data Fetching": <FaDatabase className="text-purple-600" />,
+    "React Native Advanced": <FaMobile className="text-blue-600" />,
+    "Redux Toolkit & RTK Query": <FaBoxes className="text-red-600" />,
+    "React Testing Library Pro": <FaCheck className="text-green-600" />,
+    "Webpack & Bundling": <FaCogs className="text-yellow-600" />,
+    "React Architecture Patterns": <FaLayerGroup className="text-indigo-600" />,
+    "Error Boundaries & Recovery": <FaShieldAlt className="text-red-500" />,
+    "React Performance Metrics": <FaClock className="text-green-600" />,
+    "Progressive Web Apps": <FaGlobe className="text-blue-600" />,
+    "Accessibility (a11y)": <FaUniversalAccess className="text-purple-600" />,
+    "Internationalization (i18n)": <FaGlobe className="text-green-600" />,
+    "React Design Systems": <FaPuzzlePiece className="text-pink-600" />,
+    "Real-time with WebSockets": <FaPlug className="text-blue-600" />,
+    "React Server Components": <FaServer className="text-red-600" />,
+    "Concurrent Features": <FaSpinner className="text-indigo-600" />,
+    "Memory Management": <FaDatabase className="text-green-600" />,
+    "React DevTools Mastery": <FaTools className="text-purple-600" />,
+    "SEO Optimization": <FaRocket className="text-blue-600" />,
+    "React Animation Libraries": <FaRocket className="text-pink-600" />,
+    "Styled-Components Advanced": <FaPuzzlePiece className="text-purple-600" />
   };
 
   const menu = [
-    "Component Architecture",
-    "State Management Pro",
-    "Performance Mastery",
-    "Advanced Hooks Deep Dive",
-    "Testing Strategies",
-    "Data Fetching Patterns",
-    "Authentication & Security",
-    "Form Management",
-    "Routing & Navigation",
-    "Code Splitting",
-    "Server-Side Rendering",
-    "State Machines",
-    "Micro-Frontends",
-    "Design Patterns",
-    "Animation Systems",
+    "Advanced Component Patterns",
+    "Performance Optimization Pro",
+    "Custom Hooks Engineering",
+    "State Management Architecture",
+    "Advanced React Patterns",
+    "Testing & Debug Mastery",
+    "React Internals Deep Dive",
+    "Advanced Data Patterns",
+    "Security & Authentication",
+    "Complex Form Systems",
+    "Advanced Routing Patterns",
+    "Code Splitting Strategies",
+    "SSR & SSG Mastery",
+    "State Machines & XState",
+    "Micro-Frontend Architecture",
+    "Enterprise Design Patterns",
+    "Complex Animation Systems",
+    "Advanced TypeScript with React",
+    "GraphQL & Apollo Mastery",
+    "CI/CD & DevOps for React",
+    "React Query & Data Fetching",
+    "React Native Advanced",
+    "Redux Toolkit & RTK Query",
+    "React Testing Library Pro",
+    "Webpack & Bundling",
+    "React Architecture Patterns",
+    "Error Boundaries & Recovery",
+    "React Performance Metrics",
+    "Progressive Web Apps",
     "Accessibility (a11y)",
-    "TypeScript Integration",
-    "GraphQL Integration",
-    "Deployment Strategies",
-    "Developer Tools"
+    "Internationalization (i18n)",
+    "React Design Systems",
+    "Real-time with WebSockets",
+    "React Server Components",
+    "Concurrent Features",
+    "Memory Management",
+    "React DevTools Mastery",
+    "SEO Optimization",
+    "React Animation Libraries",
+    "Styled-Components Advanced"
   ];
 
   const topicContent = {
-    "Component Architecture": (
+    "Advanced Component Patterns": (
       <div className="space-y-6 p-4">
-        <h3 className="text-2xl font-bold text-gray-800 mb-4">Component Architecture</h3>
+        <h3 className="text-2xl font-bold text-gray-800 mb-4">Advanced Component Patterns</h3>
         <div className="bg-blue-50 p-4 rounded-lg">
           <p className="text-gray-700 leading-relaxed">
-            Zamonaviy React komponentlarini arxitektura qilish usullari va best practice-lar.
+            React komponentlarining murakkab arxitekturasi va patterns
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <h4 className="text-xl font-semibold text-gray-800 mb-4">
               <FaLayerGroup className="inline-block mr-2 text-blue-500" />
-              Atomic Design
+              Compound Components
             </h4>
             <ul className="space-y-3">
               <li className="flex items-start">
                 <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>Atoms, Molecules, Organisms</span>
+                <span>Implicit State Sharing</span>
               </li>
               <li className="flex items-start">
                 <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>Component Composition</span>
+                <span>Flexible Composition</span>
               </li>
               <li className="flex items-start">
                 <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>Reusability Patterns</span>
+                <span>Control Props Pattern</span>
               </li>
             </ul>
           </div>
-          {/* Additional sections can be added here */}
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+            <h4 className="text-xl font-semibold text-gray-800 mb-4">
+              <FaCode className="inline-block mr-2 text-blue-500" />
+              Render Props & HOCs
+            </h4>
+            <ul className="space-y-3">
+              <li className="flex items-start">
+                <FaCheck className="mt-1 mr-2 text-green-500" />
+                <span>Advanced Composition</span>
+              </li>
+              <li className="flex items-start">
+                <FaCheck className="mt-1 mr-2 text-green-500" />
+                <span>Cross-Cutting Concerns</span>
+              </li>
+              <li className="flex items-start">
+                <FaCheck className="mt-1 mr-2 text-green-500" />
+                <span>Prop Collections & Getters</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     ),
-    "State Management Pro": (
+    "Performance Optimization Pro": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">State Management Pro</h3>
-        <p>Advanced state management techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux - global state management</li>
-          <li>Context API - React-ning o'zida mavjud yechim</li>
-          <li>Zustand - zamonaviy state management</li>
-          <li>Recoil - Facebook tomonidan yaratilgan</li>
-        </ul>
-        <div className="mt-4 p-4 bg-gray-100 rounded-lg">
-          <h4 className="font-semibold mb-2">Example:</h4>
-          <pre className="text-sm overflow-x-auto">
-            {`const useCustomHook = (initialState) => {
-              const [state, dispatch] = useReducer(reducer, initialState);
-              const contextValue = useContext(MyContext);
-              
-              useEffect(() => {
-                // Complex side effects
-              }, [state, contextValue]);
-
-              return {
-                state,
-                dispatch,
-                // Derived values
-                computed: useMemo(() => complexComputation(state), [state])
-              };
-            };`}
-          </pre>
-        </div>
-      </div>
-    ),
-    "Performance Mastery": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Performance Mastery</h3>
+        <h3 className="text-xl font-semibold">Performance Optimization Pro</h3>
         <p>Advanced performance optimization techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>useMemo va useCallback hooks</li>
@@ -134,66 +161,21 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Advanced Hooks Deep Dive": (
+    "Custom Hooks Engineering": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Advanced Hooks Deep Dive</h3>
-        <p>Murakkab va maxsus React hook-lar:</p>
+        <h3 className="text-xl font-semibold">Custom Hooks Engineering</h3>
+        <p>Advanced custom hook techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
-          <li>useReducer bilan murakkab logika
-            <ul className="list-disc pl-6 mt-2 text-sm">
-              <li>TypeScript bilan reducer</li>
-              <li>Middleware pattern</li>
-              <li>Action creators</li>
-            </ul>
-          </li>
-          <li>useContext optimizatsiyasi
-            <ul className="list-disc pl-6 mt-2 text-sm">
-              <li>Context splitting</li>
-              <li>Selector pattern</li>
-              <li>Performance optimization</li>
-            </ul>
-          </li>
-          <li>Custom hooklarni professional yozish
-            <ul className="list-disc pl-6 mt-2 text-sm">
-              <li>Hook composition</li>
-              <li>Reusable logic</li>
-              <li>Testing strategies</li>
-            </ul>
-          </li>
-          <li>useImperativeHandle va forwardRef
-            <ul className="list-disc pl-6 mt-2 text-sm">
-              <li>Complex DOM interactions</li>
-              <li>Parent-child communication</li>
-              <li>Ref patterns</li>
-            </ul>
-          </li>
+          <li>Hook composition</li>
+          <li>Reusable logic</li>
+          <li>Testing strategies</li>
         </ul>
-        <div className="mt-4 p-4 bg-gray-100 rounded-lg">
-          <h4 className="font-semibold mb-2">Amaliy misol:</h4>
-          <pre className="text-sm overflow-x-auto">
-            {`const useCustomHook = (initialState) => {
-              const [state, dispatch] = useReducer(reducer, initialState);
-              const contextValue = useContext(MyContext);
-              
-              useEffect(() => {
-                // Complex side effects
-              }, [state, contextValue]);
-
-              return {
-                state,
-                dispatch,
-                // Derived values
-                computed: useMemo(() => complexComputation(state), [state])
-              };
-            };`}
-          </pre>
-        </div>
       </div>
     ),
-    "Testing Strategies": (
+    "State Management Architecture": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Testing Strategies</h3>
-        <p>Advanced testing strategies:</p>
+        <h3 className="text-xl font-semibold">State Management Architecture</h3>
+        <p>Advanced state management architecture:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
           <li>Context API - React-ning o'zida mavjud yechim</li>
@@ -202,10 +184,10 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Data Fetching Patterns": (
+    "Advanced React Patterns": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Data Fetching Patterns</h3>
-        <p>Advanced data fetching patterns:</p>
+        <h3 className="text-xl font-semibold">Advanced React Patterns</h3>
+        <p>Advanced React pattern techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
           <li>Context API - React-ning o'zida mavjud yechim</li>
@@ -214,10 +196,10 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Authentication & Security": (
+    "Testing & Debug Mastery": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Authentication & Security</h3>
-        <p>Advanced authentication and security techniques:</p>
+        <h3 className="text-xl font-semibold">Testing & Debug Mastery</h3>
+        <p>Advanced testing and debugging techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
           <li>Context API - React-ning o'zida mavjud yechim</li>
@@ -226,9 +208,45 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Form Management": (
+    "React Internals Deep Dive": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Form Management</h3>
+        <h3 className="text-xl font-semibold">React Internals Deep Dive</h3>
+        <p>Advanced React internals techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Redux - global state management</li>
+          <li>Context API - React-ning o'zida mavjud yechim</li>
+          <li>Zustand - zamonaviy state management</li>
+          <li>Recoil - Facebook tomonidan yaratilgan</li>
+        </ul>
+      </div>
+    ),
+    "Advanced Data Patterns": (
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold">Advanced Data Patterns</h3>
+        <p>Advanced data pattern techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Redux - global state management</li>
+          <li>Context API - React-ning o'zida mavjud yechim</li>
+          <li>Zustand - zamonaviy state management</li>
+          <li>Recoil - Facebook tomonidan yaratilgan</li>
+        </ul>
+      </div>
+    ),
+    "Security & Authentication": (
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold">Security & Authentication</h3>
+        <p>Advanced security and authentication techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Redux - global state management</li>
+          <li>Context API - React-ning o'zida mavjud yechim</li>
+          <li>Zustand - zamonaviy state management</li>
+          <li>Recoil - Facebook tomonidan yaratilgan</li>
+        </ul>
+      </div>
+    ),
+    "Complex Form Systems": (
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold">Complex Form Systems</h3>
         <p>Advanced form management techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
@@ -238,9 +256,9 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Routing & Navigation": (
+    "Advanced Routing Patterns": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Routing & Navigation</h3>
+        <h3 className="text-xl font-semibold">Advanced Routing Patterns</h3>
         <p>Advanced routing and navigation techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
@@ -250,9 +268,9 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Code Splitting": (
+    "Code Splitting Strategies": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Code Splitting</h3>
+        <h3 className="text-xl font-semibold">Code Splitting Strategies</h3>
         <p>Advanced code splitting techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Dynamic import</li>
@@ -261,9 +279,9 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Server-Side Rendering": (
+    "SSR & SSG Mastery": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Server-Side Rendering</h3>
+        <h3 className="text-xl font-semibold">SSR & SSG Mastery</h3>
         <p>Advanced server-side rendering techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
@@ -273,9 +291,9 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "State Machines": (
+    "State Machines & XState": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">State Machines</h3>
+        <h3 className="text-xl font-semibold">State Machines & XState</h3>
         <p>Advanced state machine techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
@@ -285,9 +303,9 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Micro-Frontends": (
+    "Micro-Frontend Architecture": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Micro-Frontends</h3>
+        <h3 className="text-xl font-semibold">Micro-Frontend Architecture</h3>
         <p>Advanced micro-frontend techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
@@ -297,9 +315,9 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Design Patterns": (
+    "Enterprise Design Patterns": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Design Patterns</h3>
+        <h3 className="text-xl font-semibold">Enterprise Design Patterns</h3>
         <p>Advanced design pattern techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
@@ -309,9 +327,9 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Animation Systems": (
+    "Complex Animation Systems": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Animation Systems</h3>
+        <h3 className="text-xl font-semibold">Complex Animation Systems</h3>
         <p>Advanced animation system techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
@@ -321,21 +339,9 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Accessibility (a11y)": (
+    "Advanced TypeScript with React": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Accessibility (a11y)</h3>
-        <p>Advanced accessibility techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux - global state management</li>
-          <li>Context API - React-ning o'zida mavjud yechim</li>
-          <li>Zustand - zamonaviy state management</li>
-          <li>Recoil - Facebook tomonidan yaratilgan</li>
-        </ul>
-      </div>
-    ),
-    "TypeScript Integration": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">TypeScript Integration</h3>
+        <h3 className="text-xl font-semibold">Advanced TypeScript with React</h3>
         <p>Advanced TypeScript integration techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
@@ -345,9 +351,9 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "GraphQL Integration": (
+    "GraphQL & Apollo Mastery": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">GraphQL Integration</h3>
+        <h3 className="text-xl font-semibold">GraphQL & Apollo Mastery</h3>
         <p>Advanced GraphQL integration techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
@@ -357,22 +363,10 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Deployment Strategies": (
+    "CI/CD & DevOps for React": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Deployment Strategies</h3>
-        <p>Advanced deployment techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux - global state management</li>
-          <li>Context API - React-ning o'zida mavjud yechim</li>
-          <li>Zustand - zamonaviy state management</li>
-          <li>Recoil - Facebook tomonidan yaratilgan</li>
-        </ul>
-      </div>
-    ),
-    "Developer Tools": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Developer Tools</h3>
-        <p>Advanced developer tool techniques:</p>
+        <h3 className="text-xl font-semibold">CI/CD & DevOps for React</h3>
+        <p>Advanced CI/CD and DevOps techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
           <li>Context API - React-ning o'zida mavjud yechim</li>
@@ -409,7 +403,7 @@ function MukammalReact() {
         {/* Sidebar */}
         <div className={`
           fixed lg:sticky lg:top-0
-          w-[260px] sm:w-[280px] lg:w-[300px]
+          w-[350px] sm:w-[380px] lg:w-[400px] xl:w-[420px]
           h-screen
           bg-gray-100/95 backdrop-blur-sm
           transition-all duration-300 ease-in-out
@@ -417,32 +411,53 @@ function MukammalReact() {
           ${isMobileMenuOpen ? 'left-0' : '-left-full lg:left-0'}
           shadow-lg lg:shadow-none
         `}>
-          <div className="flex flex-col h-full p-3 sm:p-4">
-            <h2 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 pt-16 lg:pt-4">O'rta Daraja React</h2>
-            <div className="overflow-y-auto flex-1 pr-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-              <ul className="space-y-1.5 sm:space-y-2">
+          <div className="flex flex-col h-full p-4 sm:p-5">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-5 pt-16 lg:pt-4 text-gray-800">
+              O'rta Daraja React
+            </h2>
+            <div className="overflow-y-auto flex-1 pr-3 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+              <ul className="space-y-2 sm:space-y-3">
                 {menu.map((item, index) => (
                   <li
                     key={index}
                     className={`
-                      p-2.5 sm:p-3
-                      hover:bg-gray-200/80
+                      group
+                      p-4 sm:p-4.5
+                      hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100
                       cursor-pointer
-                      rounded-lg
+                      rounded-xl
                       transition-all
                       duration-200
-                      ${selectedTopic === item ? 'bg-gray-200/90' : ''}
+                      border border-transparent
+                      hover:border-blue-200
+                      ${selectedTopic === item ? 'bg-blue-100 border-blue-300 shadow-md' : ''}
                     `}
                     onClick={() => {
                       setSelectedTopic(item);
                       setIsMobileMenuOpen(false);
                     }}
                   >
-                    <div className="flex items-center gap-2.5 sm:gap-3">
-                      <span className="text-gray-600 text-sm sm:text-base">
+                    <div className="flex items-center gap-4">
+                      <span className={`
+                        text-xl
+                        text-gray-600 
+                        transition-all 
+                        duration-200 
+                        group-hover:scale-110
+                        ${selectedTopic === item ? 'text-blue-600 scale-110' : ''}
+                      `}>
                         {menuIcons[item]}
                       </span>
-                      <span className="text-xs sm:text-sm md:text-base">{item}</span>
+                      <span className={`
+                        text-base sm:text-lg
+                        font-medium 
+                        transition-colors
+                        duration-200
+                        ${selectedTopic === item ? 'text-blue-700' : 'text-gray-700'}
+                        group-hover:text-blue-600
+                      `}>
+                        {item}
+                      </span>
                     </div>
                   </li>
                 ))}
