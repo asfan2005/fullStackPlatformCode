@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import {
   FaBook, FaCode, FaList, FaSync, FaWrench, FaObjectGroup,
   FaReact, FaClock, FaBoxes, FaProjectDiagram, FaBars, FaTimes, FaShieldAlt, FaLayerGroup, FaTools, FaSpinner, FaDatabase,
-  FaMobile, FaGlobe, FaRocket, FaPlug, FaCheck
+  FaMobile, FaGlobe, FaRocket, FaPlug, FaCheck, FaServer, FaCogs, FaPuzzlePiece, FaUniversalAccess, FaCloud
 } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-
-import { ReactAdvancedHooksOrta, ReactAdvancedRouting, ReactComponentLifecycle, ReactContentApiOrta, ReactCustomHooks, ReactCustomHooksOrta, ReactErrorBoundaries, ReactInternationalizationOrta, ReactMobileOrta, ReactOrtaReactOptimization, ReactPerformanceTuning, ReactReactArchitectureOrta, ReactReactFormsOrta, ReactReactPattersOrta, ReactReactPluginsOrta, ReactReactSuspenseOrta, ReactReactTestingOrta, ReactSecurityBestPractices, ReactServerStateOrta, ReactStateManagementOrta } from "../components/index"
-import ReactReactAnimationsOrta from './pageOrtaReact/ReactReactAnimationsOrta';
 
 function MukammalReact() {
   const navigate = useNavigate();
@@ -15,152 +12,131 @@ function MukammalReact() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const menuIcons = {
-    "React Optimization": <FaSync className="text-blue-500" />,
-    "Advanced Hooks": <FaWrench className="text-green-500" />,
-    "React Patterns": <FaCode className="text-purple-500" />,
-    "State Management": <FaBoxes className="text-orange-500" />,
-    "Advanced Routing": <FaProjectDiagram className="text-red-500" />,
-    "React Testing": <FaList className="text-indigo-500" />,
-    "Server State": <FaClock className="text-yellow-500" />,
-    "React Architecture": <FaObjectGroup className="text-pink-500" />,
-    "Performance Tuning": <FaReact className="text-teal-500" />,
-    "Security Best Practices": <FaBook className="text-cyan-500" />,
-    "Component Lifecycle": <FaClock className="text-emerald-500" />,
-    "Error Boundaries": <FaShieldAlt className="text-red-600" />,
-    "React Context API": <FaLayerGroup className="text-violet-500" />,
-    "Custom Hooks": <FaTools className="text-amber-500" />,
-    "React Suspense": <FaSpinner className="text-fuchsia-500" />,
-    "React Animations": <FaRocket className="text-rose-500" />,
-    "React Forms": <FaDatabase className="text-lime-500" />,
-    "React Mobile": <FaMobile className="text-sky-500" />,
-    "Internationalization": <FaGlobe className="text-indigo-600" />,
-    "React Plugins": <FaPlug className="text-orange-600" />
+    "Component Architecture": <FaObjectGroup className="text-blue-500" />,
+    "State Management Pro": <FaBoxes className="text-green-500" />,
+    "Performance Mastery": <FaSync className="text-purple-500" />,
+    "Advanced Hooks Deep Dive": <FaWrench className="text-orange-500" />,
+    "Testing Strategies": <FaList className="text-red-500" />,
+    "Data Fetching Patterns": <FaDatabase className="text-indigo-500" />,
+    "Authentication & Security": <FaShieldAlt className="text-yellow-500" />,
+    "Form Management": <FaCheck className="text-pink-500" />,
+    "Routing & Navigation": <FaProjectDiagram className="text-teal-500" />,
+    "Code Splitting": <FaCode className="text-cyan-500" />,
+    "Server-Side Rendering": <FaServer className="text-emerald-500" />,
+    "State Machines": <FaCogs className="text-red-600" />,
+    "Micro-Frontends": <FaPuzzlePiece className="text-violet-500" />,
+    "Design Patterns": <FaLayerGroup className="text-amber-500" />,
+    "Animation Systems": <FaRocket className="text-fuchsia-500" />,
+    "Accessibility (a11y)": <FaUniversalAccess className="text-rose-500" />,
+    "TypeScript Integration": <FaCode className="text-lime-500" />,
+    "GraphQL Integration": <FaDatabase className="text-sky-500" />,
+    "Deployment Strategies": <FaCloud className="text-indigo-600" />,
+    "Developer Tools": <FaTools className="text-orange-600" />
   };
 
   const menu = [
-    "React Optimization",
-    "Advanced Hooks",
-    "React Patterns",
-    "State Management",
-    "Advanced Routing",
-    "React Testing",
-    "Server State",
-    "React Architecture",
-    "Performance Tuning",
-    "Security Best Practices",
-    "Component Lifecycle",
-    "Error Boundaries",
-    "React Context API",
-    "Custom Hooks",
-    "React Suspense",
-    "React Animations",
-    "React Forms",
-    "React Mobile",
-    "Internationalization",
-    "React Plugins"
+    "Component Architecture",
+    "State Management Pro",
+    "Performance Mastery",
+    "Advanced Hooks Deep Dive",
+    "Testing Strategies",
+    "Data Fetching Patterns",
+    "Authentication & Security",
+    "Form Management",
+    "Routing & Navigation",
+    "Code Splitting",
+    "Server-Side Rendering",
+    "State Machines",
+    "Micro-Frontends",
+    "Design Patterns",
+    "Animation Systems",
+    "Accessibility (a11y)",
+    "TypeScript Integration",
+    "GraphQL Integration",
+    "Deployment Strategies",
+    "Developer Tools"
   ];
 
   const topicContent = {
-    "React Optimization": (
+    "Component Architecture": (
       <div className="space-y-6 p-4">
-        <h3 className="text-2xl font-bold text-gray-800 mb-4">React Optimizatsiya</h3>
-        
-        {/* Introduction */}
+        <h3 className="text-2xl font-bold text-gray-800 mb-4">Component Architecture</h3>
         <div className="bg-blue-50 p-4 rounded-lg">
           <p className="text-gray-700 leading-relaxed">
-            React ilovalarni optimallashtirishning zamonaviy usullari va texnikalari bilan tanishing. 
-            Bu bo'limda eng muhim optimizatsiya strategiyalari va ularning amaliy qo'llanilishi haqida o'rganamiz.
+            Zamonaviy React komponentlarini arxitektura qilish usullari va best practice-lar.
           </p>
         </div>
-
-        {/* Main Topics */}
         <div className="grid gap-6 md:grid-cols-2">
-          {/* Performance Optimization */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <h4 className="text-xl font-semibold text-gray-800 mb-4">
-              <FaRocket className="inline-block mr-2 text-blue-500" />
-              Performance Optimization
+              <FaLayerGroup className="inline-block mr-2 text-blue-500" />
+              Atomic Design
             </h4>
             <ul className="space-y-3">
               <li className="flex items-start">
                 <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>useMemo va useCallback hooks</span>
+                <span>Atoms, Molecules, Organisms</span>
               </li>
               <li className="flex items-start">
                 <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>React.memo strategiyalari</span>
+                <span>Component Composition</span>
               </li>
               <li className="flex items-start">
                 <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>Virtual DOM optimizatsiyasi</span>
+                <span>Reusability Patterns</span>
               </li>
             </ul>
           </div>
-
-          {/* Code Splitting */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h4 className="text-xl font-semibold text-gray-800 mb-4">
-              <FaCode className="inline-block mr-2 text-purple-500" />
-              Code Splitting
-            </h4>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>Dynamic import</span>
-              </li>
-              <li className="flex items-start">
-                <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>Route-based splitting</span>
-              </li>
-              <li className="flex items-start">
-                <FaCheck className="mt-1 mr-2 text-green-500" />
-                <span>React.lazy va Suspense</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Code Examples */}
-        <div className="mt-6">
-          <h4 className="text-xl font-semibold text-gray-800 mb-4">Amaliy Misollar</h4>
-          
-          {/* Example 1 */}
-          <div className="bg-gray-50 p-4 rounded-lg mb-4">
-            <h5 className="text-lg font-medium text-gray-700 mb-2">1. useMemo Optimization</h5>
-            <pre className="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
-              {`const memoizedValue = useMemo(() => {
-                return computeExpensiveValue(a, b);
-              }, [a, b]);`}
-            </pre>
-          </div>
-
-          {/* Example 2 */}
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <h5 className="text-lg font-medium text-gray-700 mb-2">2. React.memo Usage</h5>
-            <pre className="bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto">
-              {`const MemoizedComponent = React.memo(({ data }) => {
-                return <ExpensiveRenderer data={data} />;
-              }, (prevProps, nextProps) => {
-                return prevProps.data === nextProps.data;
-              });`}
-            </pre>
-          </div>
-        </div>
-
-        {/* Best Practices */}
-        <div className="bg-yellow-50 p-4 rounded-lg mt-6">
-          <h4 className="text-lg font-semibold text-gray-800 mb-2">Muhim Tavsiyalar</h4>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>Faqat kerak bo'lganda memoization ishlating</li>
-            <li>Performance bottleneck-larni React DevTools bilan aniqlang</li>
-            <li>Bundle size monitoring qiling</li>
-          </ul>
+          {/* Additional sections can be added here */}
         </div>
       </div>
     ),
-    "Advanced Hooks": (
+    "State Management Pro": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Ilg'or React Hooklar</h3>
+        <h3 className="text-xl font-semibold">State Management Pro</h3>
+        <p>Advanced state management techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Redux - global state management</li>
+          <li>Context API - React-ning o'zida mavjud yechim</li>
+          <li>Zustand - zamonaviy state management</li>
+          <li>Recoil - Facebook tomonidan yaratilgan</li>
+        </ul>
+        <div className="mt-4 p-4 bg-gray-100 rounded-lg">
+          <h4 className="font-semibold mb-2">Example:</h4>
+          <pre className="text-sm overflow-x-auto">
+            {`const useCustomHook = (initialState) => {
+              const [state, dispatch] = useReducer(reducer, initialState);
+              const contextValue = useContext(MyContext);
+              
+              useEffect(() => {
+                // Complex side effects
+              }, [state, contextValue]);
+
+              return {
+                state,
+                dispatch,
+                // Derived values
+                computed: useMemo(() => complexComputation(state), [state])
+              };
+            };`}
+          </pre>
+        </div>
+      </div>
+    ),
+    "Performance Mastery": (
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold">Performance Mastery</h3>
+        <p>Advanced performance optimization techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>useMemo va useCallback hooks</li>
+          <li>React.memo strategiyalari</li>
+          <li>Virtual DOM optimizatsiyasi</li>
+        </ul>
+      </div>
+    ),
+    "Advanced Hooks Deep Dive": (
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold">Advanced Hooks Deep Dive</h3>
         <p>Murakkab va maxsus React hook-lar:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>useReducer bilan murakkab logika
@@ -196,41 +172,28 @@ function MukammalReact() {
           <h4 className="font-semibold mb-2">Amaliy misol:</h4>
           <pre className="text-sm overflow-x-auto">
             {`const useCustomHook = (initialState) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const contextValue = useContext(MyContext);
-  
-  useEffect(() => {
-    // Complex side effects
-  }, [state, contextValue]);
+              const [state, dispatch] = useReducer(reducer, initialState);
+              const contextValue = useContext(MyContext);
+              
+              useEffect(() => {
+                // Complex side effects
+              }, [state, contextValue]);
 
-  return {
-    state,
-    dispatch,
-    // Derived values
-    computed: useMemo(() => complexComputation(state), [state])
-  };
-};`}
+              return {
+                state,
+                dispatch,
+                // Derived values
+                computed: useMemo(() => complexComputation(state), [state])
+              };
+            };`}
           </pre>
         </div>
       </div>
     ),
-    "React Patterns": (
+    "Testing Strategies": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">React Patternlar</h3>
-        <p>Eng ko'p ishlatiladigan React patternlar:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Compound Components</li>
-          <li>Render Props Pattern</li>
-          <li>Higher-Order Components (HOC)</li>
-          <li>Custom Hooks Pattern</li>
-          <li>Provider Pattern</li>
-        </ul>
-      </div>
-    ),
-    "State Management": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-        <p>React ilovalarida holatni boshqarish usullari:</p>
+        <h3 className="text-xl font-semibold">Testing Strategies</h3>
+        <p>Advanced testing strategies:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
           <li>Context API - React-ning o'zida mavjud yechim</li>
@@ -239,22 +202,10 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Advanced Routing": (
+    "Data Fetching Patterns": (
       <div className="space-y-4">
-      <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-      <p>React ilovalarida holatni boshqarish usullari:</p>
-      <ul className="list-disc pl-6 space-y-2">
-        <li>Redux - global state management</li>
-        <li>Context API - React-ning o'zida mavjud yechim</li>
-        <li>Zustand - zamonaviy state management</li>
-        <li>Recoil - Facebook tomonidan yaratilgan</li>
-      </ul>
-    </div>
-    ),
-    "React Testing": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-        <p>React ilovalarida holatni boshqarish usullari:</p>
+        <h3 className="text-xl font-semibold">Data Fetching Patterns</h3>
+        <p>Advanced data fetching patterns:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
           <li>Context API - React-ning o'zida mavjud yechim</li>
@@ -263,10 +214,10 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Server State": (
+    "Authentication & Security": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-        <p>React ilovalarida holatni boshqarish usullari:</p>
+        <h3 className="text-xl font-semibold">Authentication & Security</h3>
+        <p>Advanced authentication and security techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
           <li>Context API - React-ning o'zida mavjud yechim</li>
@@ -275,10 +226,10 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "React Architecture": (
+    "Form Management": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-        <p>React ilovalarida holatni boshqarish usullari:</p>
+        <h3 className="text-xl font-semibold">Form Management</h3>
+        <p>Advanced form management techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
           <li>Context API - React-ning o'zida mavjud yechim</li>
@@ -287,10 +238,10 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Performance Tuning": (
+    "Routing & Navigation": (
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-        <p>React ilovalarida holatni boshqarish usullari:</p>
+        <h3 className="text-xl font-semibold">Routing & Navigation</h3>
+        <p>Advanced routing and navigation techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
           <li>Context API - React-ning o'zida mavjud yechim</li>
@@ -299,58 +250,21 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "Security Best Practices": (
+    "Code Splitting": (
       <div className="space-y-4">
-      <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-      <p>React ilovalarida holatni boshqarish usullari:</p>
-      <ul className="list-disc pl-6 space-y-2">
-        <li>Redux - global state management</li>
-        <li>Context API - React-ning o'zida mavjud yechim</li>
-        <li>Zustand - zamonaviy state management</li>
-        <li>Recoil - Facebook tomonidan yaratilgan</li>
-      </ul>
-    </div>
+        <h3 className="text-xl font-semibold">Code Splitting</h3>
+        <p>Advanced code splitting techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Dynamic import</li>
+          <li>Route-based splitting</li>
+          <li>React.lazy va Suspense</li>
+        </ul>
+      </div>
     ),
-    "Component Lifecycle": (
+    "Server-Side Rendering": (
       <div className="space-y-4">
-      <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-      <p>React ilovalarida holatni boshqarish usullari:</p>
-      <ul className="list-disc pl-6 space-y-2">
-        <li>Redux - global state management</li>
-        <li>Context API - React-ning o'zida mavjud yechim</li>
-        <li>Zustand - zamonaviy state management</li>
-        <li>Recoil - Facebook tomonidan yaratilgan</li>
-      </ul>
-    </div>
-    ),
-    "Error Boundaries": (
-      <div className="space-y-4">
-      <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-      <p>React ilovalarida holatni boshqarish usullari:</p>
-      <ul className="list-disc pl-6 space-y-2">
-        <li>Redux - global state management</li>
-        <li>Context API - React-ning o'zida mavjud yechim</li>
-        <li>Zustand - zamonaviy state management</li>
-        <li>Recoil - Facebook tomonidan yaratilgan</li>
-      </ul>
-    </div>
-    ),
-    "React Context API": (
-      <div className="space-y-4">
-      <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-      <p>React ilovalarida holatni boshqarish usullari:</p>
-      <ul className="list-disc pl-6 space-y-2">
-        <li>Redux - global state management</li>
-        <li>Context API - React-ning o'zida mavjud yechim</li>
-        <li>Zustand - zamonaviy state management</li>
-        <li>Recoil - Facebook tomonidan yaratilgan</li>
-      </ul>
-    </div>
-    ),
-    "Custom Hooks": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-        <p>React ilovalarida holatni boshqarish usullari:</p>
+        <h3 className="text-xl font-semibold">Server-Side Rendering</h3>
+        <p>Advanced server-side rendering techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
           <li>Context API - React-ning o'zida mavjud yechim</li>
@@ -359,58 +273,10 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "React Suspense": (
+    "State Machines": (
       <div className="space-y-4">
-      <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-      <p>React ilovalarida holatni boshqarish usullari:</p>
-      <ul className="list-disc pl-6 space-y-2">
-        <li>Redux - global state management</li>
-        <li>Context API - React-ning o'zida mavjud yechim</li>
-        <li>Zustand - zamonaviy state management</li>
-        <li>Recoil - Facebook tomonidan yaratilgan</li>
-      </ul>
-    </div>
-    ),
-    "React Animations": (
-      <div className="space-y-4">
-      <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-      <p>React ilovalarida holatni boshqarish usullari:</p>
-      <ul className="list-disc pl-6 space-y-2">
-        <li>Redux - global state management</li>
-        <li>Context API - React-ning o'zida mavjud yechim</li>
-        <li>Zustand - zamonaviy state management</li>
-        <li>Recoil - Facebook tomonidan yaratilgan</li>
-      </ul>
-    </div>
-    ),
-    "React Forms": (
-      <div className="space-y-4">
-      <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-      <p>React ilovalarida holatni boshqarish usullari:</p>
-      <ul className="list-disc pl-6 space-y-2">
-        <li>Redux - global state management</li>
-        <li>Context API - React-ning o'zida mavjud yechim</li>
-        <li>Zustand - zamonaviy state management</li>
-        <li>Recoil - Facebook tomonidan yaratilgan</li>
-      </ul>
-    </div>
-    ),
-    "React Mobile": (
-      <div className="space-y-4">
-      <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-      <p>React ilovalarida holatni boshqarish usullari:</p>
-      <ul className="list-disc pl-6 space-y-2">
-        <li>Redux - global state management</li>
-        <li>Context API - React-ning o'zida mavjud yechim</li>
-        <li>Zustand - zamonaviy state management</li>
-        <li>Recoil - Facebook tomonidan yaratilgan</li>
-      </ul>
-    </div>
-    ),
-    "Internationalization": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-        <p>React ilovalarida holatni boshqarish usullari:</p>
+        <h3 className="text-xl font-semibold">State Machines</h3>
+        <p>Advanced state machine techniques:</p>
         <ul className="list-disc pl-6 space-y-2">
           <li>Redux - global state management</li>
           <li>Context API - React-ning o'zida mavjud yechim</li>
@@ -419,17 +285,101 @@ function MukammalReact() {
         </ul>
       </div>
     ),
-    "React Plugins": (
+    "Micro-Frontends": (
       <div className="space-y-4">
-      <h3 className="text-xl font-semibold">Holat Boshqaruvi</h3>
-      <p>React ilovalarida holatni boshqarish usullari:</p>
-      <ul className="list-disc pl-6 space-y-2">
-        <li>Redux - global state management</li>
-        <li>Context API - React-ning o'zida mavjud yechim</li>
-        <li>Zustand - zamonaviy state management</li>
-        <li>Recoil - Facebook tomonidan yaratilgan</li>
-      </ul>
-    </div>
+        <h3 className="text-xl font-semibold">Micro-Frontends</h3>
+        <p>Advanced micro-frontend techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Redux - global state management</li>
+          <li>Context API - React-ning o'zida mavjud yechim</li>
+          <li>Zustand - zamonaviy state management</li>
+          <li>Recoil - Facebook tomonidan yaratilgan</li>
+        </ul>
+      </div>
+    ),
+    "Design Patterns": (
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold">Design Patterns</h3>
+        <p>Advanced design pattern techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Redux - global state management</li>
+          <li>Context API - React-ning o'zida mavjud yechim</li>
+          <li>Zustand - zamonaviy state management</li>
+          <li>Recoil - Facebook tomonidan yaratilgan</li>
+        </ul>
+      </div>
+    ),
+    "Animation Systems": (
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold">Animation Systems</h3>
+        <p>Advanced animation system techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Redux - global state management</li>
+          <li>Context API - React-ning o'zida mavjud yechim</li>
+          <li>Zustand - zamonaviy state management</li>
+          <li>Recoil - Facebook tomonidan yaratilgan</li>
+        </ul>
+      </div>
+    ),
+    "Accessibility (a11y)": (
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold">Accessibility (a11y)</h3>
+        <p>Advanced accessibility techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Redux - global state management</li>
+          <li>Context API - React-ning o'zida mavjud yechim</li>
+          <li>Zustand - zamonaviy state management</li>
+          <li>Recoil - Facebook tomonidan yaratilgan</li>
+        </ul>
+      </div>
+    ),
+    "TypeScript Integration": (
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold">TypeScript Integration</h3>
+        <p>Advanced TypeScript integration techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Redux - global state management</li>
+          <li>Context API - React-ning o'zida mavjud yechim</li>
+          <li>Zustand - zamonaviy state management</li>
+          <li>Recoil - Facebook tomonidan yaratilgan</li>
+        </ul>
+      </div>
+    ),
+    "GraphQL Integration": (
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold">GraphQL Integration</h3>
+        <p>Advanced GraphQL integration techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Redux - global state management</li>
+          <li>Context API - React-ning o'zida mavjud yechim</li>
+          <li>Zustand - zamonaviy state management</li>
+          <li>Recoil - Facebook tomonidan yaratilgan</li>
+        </ul>
+      </div>
+    ),
+    "Deployment Strategies": (
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold">Deployment Strategies</h3>
+        <p>Advanced deployment techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Redux - global state management</li>
+          <li>Context API - React-ning o'zida mavjud yechim</li>
+          <li>Zustand - zamonaviy state management</li>
+          <li>Recoil - Facebook tomonidan yaratilgan</li>
+        </ul>
+      </div>
+    ),
+    "Developer Tools": (
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold">Developer Tools</h3>
+        <p>Advanced developer tool techniques:</p>
+        <ul className="list-disc pl-6 space-y-2">
+          <li>Redux - global state management</li>
+          <li>Context API - React-ning o'zida mavjud yechim</li>
+          <li>Zustand - zamonaviy state management</li>
+          <li>Recoil - Facebook tomonidan yaratilgan</li>
+        </ul>
+      </div>
     )
   };
 
