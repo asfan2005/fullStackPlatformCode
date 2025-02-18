@@ -248,3 +248,4 @@ export {default as ReactReactPluginsOrta} from "../componentsReact/pageOrtaReact
 // react mukammal pages
 export {default as ReactAdvancedComponentPatterns} from "../componentsReact/pageMukammalReact/ReactAdvancedComponentPatterns";
 export {default as ReactPerformanceOptimizationPro} from "../componentsReact/pageMukammalReact/ReactPerformanceOptimizationPro";
+export {default as ReactCustomHooksEngineering} from "../componentsReact/pageMukammalReact/ReactCustomHooksEngineering";

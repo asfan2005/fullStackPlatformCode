@@ -7,6 +7,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import ReactAdvancedComponentPatterns from './pageMukammalReact/ReactAdvancedComponentPatterns';
 import ReactPerformanceOptimizationPro from './pageMukammalReact/ReactPerformanceOptimizationPro';
+import ReactCustomHooksEngineering from './pageMukammalReact/ReactCustomHooksEngineering';
 
 function MukammalReact() {
   const navigate = useNavigate();
@@ -107,15 +108,7 @@ function MukammalReact() {
      <ReactPerformanceOptimizationPro/>
     ),
     "Custom Hooks Engineering": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Custom Hooks Engineering</h3>
-        <p>Advanced custom hook techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Hook composition</li>
-          <li>Reusable logic</li>
-          <li>Testing strategies</li>
-        </ul>
-      </div>
+      <ReactCustomHooksEngineering/>
     ),
     "State Management Architecture": (
       <div className="space-y-4">
