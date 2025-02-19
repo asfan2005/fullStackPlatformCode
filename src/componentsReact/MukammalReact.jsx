@@ -9,6 +9,14 @@ import ReactAdvancedComponentPatterns from './pageMukammalReact/ReactAdvancedCom
 import ReactPerformanceOptimizationPro from './pageMukammalReact/ReactPerformanceOptimizationPro';
 import ReactCustomHooksEngineering from './pageMukammalReact/ReactCustomHooksEngineering';
 import ReactStateManagementArchi from './pageMukammalReact/ReactStateManagementArchi';
+import ReactAdvancedMukammal from './pageMukammalReact/ReactAdvancedMukammal';
+import ReactTestingMukammal from './pageMukammalReact/ReactTestingMukammal';
+import ReactInternalsMukammal from './pageMukammalReact/ReactInternalsMukammal';
+import ReactAdvancedPatternsMukamma from './pageMukammalReact/ReactAdvancedPatternsMukamma';
+import ReactSecurityAuthMukammal from './pageMukammalReact/ReactSecurityAuthMukammal';
+import ReactComplexFormMukammal from './pageMukammalReact/ReactComplexFormMukammal';
+import ReactAdvancedRoutingMukammal from './pageMukammalReact/ReactAdvancedRoutingMukammal';
+import ReactCodeSplittingMukammal from './pageMukammalReact/ReactCodeSplittingMukammal';
 
 function MukammalReact() {
   const navigate = useNavigate();
@@ -115,99 +123,28 @@ function MukammalReact() {
       <ReactStateManagementArchi/>
     ),
     "Advanced React Patterns": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Advanced React Patterns</h3>
-        <p>Advanced React pattern techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux - global state management</li>
-          <li>Context API - React-ning o'zida mavjud yechim</li>
-          <li>Zustand - zamonaviy state management</li>
-          <li>Recoil - Facebook tomonidan yaratilgan</li>
-        </ul>
-      </div>
+     <ReactAdvancedMukammal/>
     ),
     "Testing & Debug Mastery": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Testing & Debug Mastery</h3>
-        <p>Advanced testing and debugging techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux - global state management</li>
-          <li>Context API - React-ning o'zida mavjud yechim</li>
-          <li>Zustand - zamonaviy state management</li>
-          <li>Recoil - Facebook tomonidan yaratilgan</li>
-        </ul>
-      </div>
+     <ReactTestingMukammal/>
     ),
     "React Internals Deep Dive": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">React Internals Deep Dive</h3>
-        <p>Advanced React internals techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux - global state management</li>
-          <li>Context API - React-ning o'zida mavjud yechim</li>
-          <li>Zustand - zamonaviy state management</li>
-          <li>Recoil - Facebook tomonidan yaratilgan</li>
-        </ul>
-      </div>
+      <ReactInternalsMukammal/>
     ),
     "Advanced Data Patterns": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Advanced Data Patterns</h3>
-        <p>Advanced data pattern techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux - global state management</li>
-          <li>Context API - React-ning o'zida mavjud yechim</li>
-          <li>Zustand - zamonaviy state management</li>
-          <li>Recoil - Facebook tomonidan yaratilgan</li>
-        </ul>
-      </div>
+      <ReactAdvancedPatternsMukamma/>
     ),
     "Security & Authentication": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Security & Authentication</h3>
-        <p>Advanced security and authentication techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux - global state management</li>
-          <li>Context API - React-ning o'zida mavjud yechim</li>
-          <li>Zustand - zamonaviy state management</li>
-          <li>Recoil - Facebook tomonidan yaratilgan</li>
-        </ul>
-      </div>
+    <ReactSecurityAuthMukammal/>
     ),
     "Complex Form Systems": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Complex Form Systems</h3>
-        <p>Advanced form management techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux - global state management</li>
-          <li>Context API - React-ning o'zida mavjud yechim</li>
-          <li>Zustand - zamonaviy state management</li>
-          <li>Recoil - Facebook tomonidan yaratilgan</li>
-        </ul>
-      </div>
+     <ReactComplexFormMukammal/>
     ),
     "Advanced Routing Patterns": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Advanced Routing Patterns</h3>
-        <p>Advanced routing and navigation techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux - global state management</li>
-          <li>Context API - React-ning o'zida mavjud yechim</li>
-          <li>Zustand - zamonaviy state management</li>
-          <li>Recoil - Facebook tomonidan yaratilgan</li>
-        </ul>
-      </div>
+     <ReactAdvancedRoutingMukammal/>
     ),
     "Code Splitting Strategies": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Code Splitting Strategies</h3>
-        <p>Advanced code splitting techniques:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Dynamic import</li>
-          <li>Route-based splitting</li>
-          <li>React.lazy va Suspense</li>
-        </ul>
-      </div>
+     <ReactCodeSplittingMukammal/>
     ),
     "SSR & SSG Mastery": (
       <div className="space-y-4">
