@@ -37,7 +37,7 @@ const CodeBlock = memo(({ code }) => {
 
     let transformedCode = code.trim();
 
-    // Agar kod return bilan boshlanmasa va function/class bo‘lmasa
+    // Agar kod return bilan boshlanmasa va function/class bo'lmasa
     if (!transformedCode.startsWith('return') && 
         !transformedCode.includes('function') && 
         !transformedCode.includes('class')) {
@@ -50,7 +50,7 @@ const CodeBlock = memo(({ code }) => {
         render(<Demo />);
       `;
     } 
-    // Agar function bor-u, lekin `render()` chaqirilmagan bo‘lsa
+    // Agar function bor-u, lekin `render()` chaqirilmagan bo'lsa
     else if (transformedCode.includes('function') && !transformedCode.includes('render(')) {
       transformedCode += `\nrender(<Demo />);`;
     }
@@ -147,33 +147,45 @@ function ReactPerformanceOptimizationPro() {
           <h1 className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 hover:from-purple-600 hover:to-blue-600 transition-all duration-300 md:text-6xl mb-8">
             {reactPerformanceOptimizationProData.title}
           </h1>
+          <p className="text-xl text-gray-600">
+            React dasturlashda ishlash samaradorligini oshirish usullari
+          </p>
         </div>
 
         {/* Tutorials Section */}
-        <div className="space-y-16">
+        <div className="space-y-12">
           {reactPerformanceOptimizationProData.tutorials.map((tutorial) => (
-            <ContentCard key={tutorial.id}>
+            <ContentCard key={tutorial.id} className="overflow-hidden">
               {/* Tutorial Header */}
-              <h2 className="text-3xl font-bold text-gray-800 mb-8">
-                {tutorial.title}
-              </h2>
+              <div className="border-b pb-6 mb-8">
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                  {tutorial.title}
+                </h2>
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
+                    {tutorial.url}
+                  </span>
+                </div>
+              </div>
 
               {/* Tutorial Content */}
-              <div className="space-y-8">
+              <div className="space-y-10">
                 {tutorial.content.map((item, index) => (
-                  <div key={index} className="space-y-4">
-                    <h3 className="text-2xl font-bold text-gray-800">
+                  <div key={index} className="space-y-6">
+                    <h3 className="text-2xl font-bold text-gray-800 border-l-4 border-blue-500 pl-4">
                       {item.title}
                     </h3>
                     
                     {item.text && (
-                      <p className="text-gray-700 text-lg leading-relaxed">
-                        {item.text}
-                      </p>
+                      <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <p className="text-gray-700 text-lg leading-relaxed">
+                          {item.text}
+                        </p>
+                      </div>
                     )}
                     
                     {item.code && (
-                      <div className="mt-4">
+                      <div className="mt-6">
                         <CodeBlock code={item.code} />
                       </div>
                     )}

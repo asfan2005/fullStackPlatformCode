@@ -9,28 +9,66 @@ export const reactAdvancedComponentPatternsData = {
             content: [
                 {
                     title: "Compound Components nima?",
-                    text: "Compound Components - bu React komponentlarini yaratishning ilg'or usuli bo'lib, u bir-biri bilan bog'liq bo'lgan komponentlarni yaratish imkonini beradi. Bu pattern yordamida komponentlar orasida ma'lumotlarni almashish va ularni boshqarish osonlashadi."
+                    text: "Compound Components - bu React komponentlarini yaratishning ilg'or usuli bo'lib, u bir-biri bilan bog'liq bo'lgan komponentlarni yaratish imkonini beradi."
                 },
                 {
-                    title: "Misol",
+                    title: "To'liq Misol",
                     code: `
-const Select = ({ children }) => {
-    const [selectedOption, setSelectedOption] = useState(null);
+import React, { createContext, useContext, useState } from 'react';
+
+// Context yaratish
+const SelectContext = createContext();
+
+// Asosiy Select komponenti
+const Select = ({ children, defaultValue = null }) => {
+    const [selectedOption, setSelectedOption] = useState(defaultValue);
     
     return (
         <SelectContext.Provider value={{ selectedOption, setSelectedOption }}>
-            {children}
+            <div className="select-container">
+                {children}
+            </div>
         </SelectContext.Provider>
     );
 };
 
+// Select komponenti uchun Option komponenti
 Select.Option = ({ value, children }) => {
     const { selectedOption, setSelectedOption } = useContext(SelectContext);
+    const isSelected = selectedOption === value;
     
     return (
-        <div onClick={() => setSelectedOption(value)}>
+        <div 
+            className={\`select-option \${isSelected ? 'selected' : ''}\`}
+            onClick={() => setSelectedOption(value)}
+        >
             {children}
         </div>
+    );
+};
+
+// Select komponenti uchun Trigger komponenti
+Select.Trigger = () => {
+    const { selectedOption } = useContext(SelectContext);
+    
+    return (
+        <div className="select-trigger">
+            Selected: {selectedOption || 'None'}
+        </div>
+    );
+};
+
+// Foydalanish
+export const SelectExample = () => {
+    return (
+        <Select defaultValue="option1">
+            <Select.Trigger />
+            <div className="options-container">
+                <Select.Option value="option1">Option 1</Select.Option>
+                <Select.Option value="option2">Option 2</Select.Option>
+                <Select.Option value="option3">Option 3</Select.Option>
+            </div>
+        </Select>
     );
 };`
                 }
@@ -43,24 +81,80 @@ Select.Option = ({ value, children }) => {
             content: [
                 {
                     title: "Render Props nima?",
-                    text: "Render Props - bu komponent funksionalligini boshqa komponentlar bilan ulashish uchun ishlatiladigan pattern. Bu pattern orqali komponentning render logikasini props orqali uzatish mumkin."
+                    text: "Render Props - bu komponent funksionalligini boshqa komponentlar bilan ulashish uchun ishlatiladigan pattern."
                 },
                 {
-                    title: "Misol",
+                    title: "To'liq Misol",
                     code: `
+import React, { useState, useEffect } from 'react';
+
+// Mouse pozitsiyasini kuzatuvchi komponent
 const MouseTracker = ({ render }) => {
     const [position, setPosition] = useState({ x: 0, y: 0 });
     
     useEffect(() => {
         const handleMouseMove = (event) => {
-            setPosition({ x: event.clientX, y: event.clientY });
+            setPosition({
+                x: event.clientX,
+                y: event.clientY
+            });
         };
         
         window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+        };
     }, []);
     
     return render(position);
+};
+
+// Mouse pozitsiyasini ko'rsatuvchi komponent
+const MousePosition = () => {
+    return (
+        <MouseTracker
+            render={({ x, y }) => (
+                <div className="mouse-position">
+                    <h2>Mouse Position:</h2>
+                    <p>X: {x}</p>
+                    <p>Y: {y}</p>
+                </div>
+            )}
+        />
+    );
+};
+
+// Mouse pozitsiyasiga qarab harakatlanuvchi element
+const MovingBox = () => {
+    return (
+        <MouseTracker
+            render={({ x, y }) => (
+                <div
+                    style={{
+                        position: 'fixed',
+                        left: x - 25,
+                        top: y - 25,
+                        width: 50,
+                        height: 50,
+                        backgroundColor: 'blue',
+                        borderRadius: '50%'
+                    }}
+                />
+            )}
+        />
+    );
+};
+
+// Asosiy komponent
+export const MouseTrackerExample = () => {
+    return (
+        <div>
+            <h1>Mouse Tracker Example</h1>
+            <MousePosition />
+            <MovingBox />
+        </div>
+    );
 };`
                 }
             ]
@@ -72,21 +166,149 @@ const MouseTracker = ({ render }) => {
             content: [
                 {
                     title: "HOC nima?",
-                    text: "Higher-Order Components - bu komponentni qabul qilib, yangi komponentni qaytaradigan funksiya. Bu pattern komponent logikasini qayta ishlatish uchun ishlatiladi."
+                    text: "Higher-Order Components - bu komponentni qabul qilib, yangi komponentni qaytaradigan funksiya."
                 },
                 {
-                    title: "Misol",
+                    title: "To'liq Misol",
                     code: `
+import React, { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
+
+// Authentication HOC
 const withAuth = (WrappedComponent) => {
     return function WithAuthComponent(props) {
         const [isAuthenticated, setIsAuthenticated] = useState(false);
-        
-        if (!isAuthenticated) {
-            return <Navigate to="/login" />;
+        const [isLoading, setIsLoading] = useState(true);
+
+        useEffect(() => {
+            // Autentifikatsiyani tekshirish
+            const checkAuth = async () => {
+                try {
+                    const token = localStorage.getItem('token');
+                    const response = await fetch('/api/verify-token', {
+                        headers: {
+                            'Authorization': \`Bearer \${token}\`
+                        }
+                    });
+                    
+                    setIsAuthenticated(response.ok);
+                } catch (error) {
+                    console.error('Auth check failed:', error);
+                    setIsAuthenticated(false);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+
+            checkAuth();
+        }, []);
+
+        if (isLoading) {
+            return <div>Loading...</div>;
         }
-        
+
+        if (!isAuthenticated) {
+            return <Navigate to="/login" replace />;
+        }
+
         return <WrappedComponent {...props} />;
     };
+};
+
+// Loading HOC
+const withLoading = (WrappedComponent) => {
+    return function WithLoadingComponent({ isLoading, ...props }) {
+        if (isLoading) {
+            return (
+                <div className="loading-spinner">
+                    <div className="spinner"></div>
+                    <p>Loading...</p>
+                </div>
+            );
+        }
+        return <WrappedComponent {...props} />;
+    };
+};
+
+// Error Handling HOC
+const withErrorHandling = (WrappedComponent) => {
+    return function WithErrorHandlingComponent(props) {
+        const [error, setError] = useState(null);
+
+        const handleError = (error) => {
+            console.error('Error caught:', error);
+            setError(error.message);
+        };
+
+        if (error) {
+            return (
+                <div className="error-container">
+                    <h3>Error occurred:</h3>
+                    <p>{error}</p>
+                    <button onClick={() => setError(null)}>Try Again</button>
+                </div>
+            );
+        }
+
+        return (
+            <WrappedComponent
+                {...props}
+                onError={handleError}
+            />
+        );
+    };
+};
+
+// Namuna komponent
+const UserProfile = ({ user, onError }) => {
+    useEffect(() => {
+        if (!user) {
+            onError(new Error('User data not found'));
+        }
+    }, [user, onError]);
+
+    return (
+        <div className="user-profile">
+            <h2>{user.name}</h2>
+            <p>{user.email}</p>
+        </div>
+    );
+};
+
+// HOC'larni qo'llash
+const EnhancedUserProfile = withAuth(
+    withLoading(
+        withErrorHandling(UserProfile)
+    )
+);
+
+// Foydalanish
+export const UserProfilePage = () => {
+    const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await fetch('/api/user');
+                const data = await response.json();
+                setUser(data);
+            } catch (error) {
+                console.error('Failed to fetch user:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchUser();
+    }, []);
+
+    return (
+        <EnhancedUserProfile
+            user={user}
+            isLoading={isLoading}
+        />
+    );
 };`
                 }
             ]
