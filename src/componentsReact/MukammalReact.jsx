@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import ReactAdvancedComponentPatterns from './pageMukammalReact/ReactAdvancedComponentPatterns';
 import ReactPerformanceOptimizationPro from './pageMukammalReact/ReactPerformanceOptimizationPro';
 import ReactCustomHooksEngineering from './pageMukammalReact/ReactCustomHooksEngineering';
+import ReactStateManagementArchi from './pageMukammalReact/ReactStateManagementArchi';
 
 function MukammalReact() {
   const navigate = useNavigate();
@@ -111,16 +112,7 @@ function MukammalReact() {
       <ReactCustomHooksEngineering/>
     ),
     "State Management Architecture": (
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">State Management Architecture</h3>
-        <p>Advanced state management architecture:</p>
-        <ul className="list-disc pl-6 space-y-2">
-          <li>Redux - global state management</li>
-          <li>Context API - React-ning o'zida mavjud yechim</li>
-          <li>Zustand - zamonaviy state management</li>
-          <li>Recoil - Facebook tomonidan yaratilgan</li>
-        </ul>
-      </div>
+      <ReactStateManagementArchi/>
     ),
     "Advanced React Patterns": (
       <div className="space-y-4">
