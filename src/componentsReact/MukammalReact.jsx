@@ -28,6 +28,16 @@ import ReactCiCdMukammal from './pageMukammalReact/ReactCiCdMukammal';
 import ReactQueryDataMukammal from './pageMukammalReact/ReactQueryDataMukammal';
 import ReactReactNativeMukammal from './pageMukammalReact/ReactReactNativeMukammal';
 import ReactReduxToolkitMukammal from './pageMukammalReact/ReactReduxToolkitMukammal';
+import ReactTestingLibraryMukammal from './pageMukammalReact/ReactTestingLibraryMukammal';
+import ReactWebpackBundlingMukammal from './pageMukammalReact/ReactWebpackBundlingMukammal';
+import ReactArchitectureMukammal from './pageMukammalReact/ReactArchitectureMukammal';
+import ReactErrorBoundaries from './pageOrtaReact/ReactErrorBoundaries';
+import ReactErrorBoundariesMukammal from './pageMukammalReact/ReactErrorBoundariesMukammal';
+import ReactPerformanceMukammal from './pageMukammalReact/ReactPerformanceMukammal';
+import ReactPrognessiveWebMukammal from './pageMukammalReact/ReactPrognessiveWebMukammal';
+import ReactAccessibilityMukammal from './pageMukammalReact/ReactAccessibilityMukammal';
+import ReactInternationalizationMukammal from './pageMukammalReact/ReactInternationalizationMukammal';
+import ReactServerComponentsMukammal from './pageMukammalReact/ReactServerComponentsMukammal';
 
 function MukammalReact() {
   const navigate = useNavigate();
@@ -109,15 +119,8 @@ function MukammalReact() {
     "Progressive Web Apps",
     "Accessibility (a11y)",
     "Internationalization (i18n)",
-    "React Design Systems",
-    "Real-time with WebSockets",
     "React Server Components",
-    "Concurrent Features",
-    "Memory Management",
-    "React DevTools Mastery",
-    "SEO Optimization",
-    "React Animation Libraries",
-    "Styled-Components Advanced"
+    
   ];
 
   const topicContent = {
@@ -191,207 +194,32 @@ function MukammalReact() {
       <ReactReduxToolkitMukammal/>
     ),
     "React Testing Library Pro": (
-      <div className="space-y-6 p-4">
-        <h2 className="text-2xl font-bold text-gray-800">Redux Toolkit va RTK Query</h2>
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-semibold mb-4 text-blue-600">Asosiy Komponentlar</h3>
-          <ul className="list-disc pl-6 space-y-3">
-            <li>createSlice API</li>
-            <li>RTK Query endpoints</li>
-            <li>State management</li>
-            <li>Middleware va Thunks</li>
-          </ul>
-        </div>
-      </div>
+     <ReactTestingLibraryMukammal/>
     ),
     "Webpack & Bundling": (
-      <div className="space-y-6 p-4">
-      <h2 className="text-2xl font-bold text-gray-800">Redux Toolkit va RTK Query</h2>
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-semibold mb-4 text-blue-600">Asosiy Komponentlar</h3>
-        <ul className="list-disc pl-6 space-y-3">
-          <li>createSlice API</li>
-          <li>RTK Query endpoints</li>
-          <li>State management</li>
-          <li>Middleware va Thunks</li>
-        </ul>
-      </div>
-    </div>
+     <ReactWebpackBundlingMukammal/>
     ),
     "React Architecture Patterns": (
-      <div className="space-y-6 p-4">
-      <h2 className="text-2xl font-bold text-gray-800">Redux Toolkit va RTK Query</h2>
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-semibold mb-4 text-blue-600">Asosiy Komponentlar</h3>
-        <ul className="list-disc pl-6 space-y-3">
-          <li>createSlice API</li>
-          <li>RTK Query endpoints</li>
-          <li>State management</li>
-          <li>Middleware va Thunks</li>
-        </ul>
-      </div>
-    </div>
+     <ReactArchitectureMukammal/>
     ),
     "Error Boundaries & Recovery": (
-      <div className="space-y-6 p-4">
-        <h2 className="text-2xl font-bold text-gray-800">Redux Toolkit va RTK Query</h2>
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-semibold mb-4 text-blue-600">Asosiy Komponentlar</h3>
-          <ul className="list-disc pl-6 space-y-3">
-            <li>createSlice API</li>
-            <li>RTK Query endpoints</li>
-            <li>State management</li>
-            <li>Middleware va Thunks</li>
-          </ul>
-        </div>
-      </div>
+      <ReactErrorBoundariesMukammal/>
     ),
     "React Performance Metrics": (
-      <div className="space-y-6 p-4">
-        <h2 className="text-2xl font-bold text-gray-800">Redux Toolkit va RTK Query</h2>
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-semibold mb-4 text-blue-600">Asosiy Komponentlar</h3>
-          <ul className="list-disc pl-6 space-y-3">
-            <li>createSlice API</li>
-            <li>RTK Query endpoints</li>
-            <li>State management</li>
-            <li>Middleware va Thunks</li>
-          </ul>
-        </div>
-      </div>
+     <ReactPerformanceMukammal/>
     ),
     "Progressive Web Apps": (
-      <div className="space-y-6 p-4">
-      <h2 className="text-2xl font-bold text-gray-800">Redux Toolkit va RTK Query</h2>
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-semibold mb-4 text-blue-600">Asosiy Komponentlar</h3>
-        <ul className="list-disc pl-6 space-y-3">
-          <li>createSlice API</li>
-          <li>RTK Query endpoints</li>
-          <li>State management</li>
-          <li>Middleware va Thunks</li>
-        </ul>
-      </div>
-    </div>
+    <ReactPrognessiveWebMukammal/>
     ),
     "Accessibility (a11y)": (
-      <div className="space-y-6 p-4">
-      <h2 className="text-2xl font-bold text-gray-800">Redux Toolkit va RTK Query</h2>
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-semibold mb-4 text-blue-600">Asosiy Komponentlar</h3>
-        <ul className="list-disc pl-6 space-y-3">
-          <li>createSlice API</li>
-          <li>RTK Query endpoints</li>
-          <li>State management</li>
-          <li>Middleware va Thunks</li>
-        </ul>
-      </div>
-    </div>
+     <ReactAccessibilityMukammal/>
     ),
     "Internationalization (i18n)": (
-      <div className="space-y-6 p-4">
-      <h2 className="text-2xl font-bold text-gray-800">Redux Toolkit va RTK Query</h2>
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-semibold mb-4 text-blue-600">Asosiy Komponentlar</h3>
-        <ul className="list-disc pl-6 space-y-3">
-          <li>createSlice API</li>
-          <li>RTK Query endpoints</li>
-          <li>State management</li>
-          <li>Middleware va Thunks</li>
-        </ul>
-      </div>
-    </div>
-    ),
-    "React Design Systems": (
-      <div className="space-y-6 p-4">
-        <h2 className="text-2xl font-bold text-gray-800">Redux Toolkit va RTK Query</h2>
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-semibold mb-4 text-blue-600">Asosiy Komponentlar</h3>
-          <ul className="list-disc pl-6 space-y-3">
-            <li>createSlice API</li>
-            <li>RTK Query endpoints</li>
-            <li>State management</li>
-            <li>Middleware va Thunks</li>
-          </ul>
-        </div>
-      </div>
-    ),
-    "Real-time with WebSockets": (
-      <div className="space-y-6 p-4">
-      <h2 className="text-2xl font-bold text-gray-800">Redux Toolkit va RTK Query</h2>
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-xl font-semibold mb-4 text-blue-600">Asosiy Komponentlar</h3>
-        <ul className="list-disc pl-6 space-y-3">
-          <li>createSlice API</li>
-          <li>RTK Query endpoints</li>
-          <li>State management</li>
-          <li>Middleware va Thunks</li>
-        </ul>
-      </div>
-    </div>
+    <ReactInternationalizationMukammal/>
     ),
     "React Server Components": (
-      <div className="space-y-6 p-4">
-        <h2 className="text-2xl font-bold text-gray-800">React Server Komponentlari</h2>
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-semibold mb-4 text-blue-600">Asosiy Xususiyatlar</h3>
-          <ul className="list-disc pl-6 space-y-3">
-            <li>Server-side rendering</li>
-            <li>Client-server integration</li>
-            <li>Data fetching patterns</li>
-            <li>Performance benefits</li>
-          </ul>
-        </div>
-      </div>
+     <ReactServerComponentsMukammal/>
     ),
-    "Concurrent Features": (
-      <div>
-        <h1>salom</h1>
-      </div>
-    ),
-    "Memory Management": (
-      <div className="space-y-6 p-4">
-        <h2 className="text-2xl font-bold text-gray-800">Xotira Boshqaruvi</h2>
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-semibold mb-4 text-blue-600">Muhim Jihatlar</h3>
-          <ul className="list-disc pl-6 space-y-3">
-            <li>Memory leaks oldini olish</li>
-            <li>useEffect cleanup</li>
-            <li>Component lifecycle</li>
-            <li>Performance monitoring</li>
-          </ul>
-        </div>
-      </div>
-    ),
-    "React DevTools Mastery": (
-      <div>
-        <h1>salom</h1>
-      </div>
-    ),
-    "SEO Optimization": (
-      <div className="space-y-6 p-4">
-        <h2 className="text-2xl font-bold text-gray-800">SEO Optimizatsiya</h2>
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h3 className="text-xl font-semibold mb-4 text-blue-600">SEO Strategiyalari</h3>
-          <ul className="list-disc pl-6 space-y-3">
-            <li>Meta tags boshqaruvi</li>
-            <li>Server-side rendering</li>
-            <li>Semantic HTML</li>
-            <li>Performance metrics</li>
-          </ul>
-        </div>
-      </div>
-    ),
-    "React Animation Libraries": (
-      <div>
-        <h1>salom</h1>
-      </div>
-    ),
-    "Styled-Components Advanced": (
-      <div>
-        <h1>salom</h1>
-      </div>
-    )
   };
 
   return (
