@@ -277,3 +277,11 @@ export {default as ReactPrognessiveWebMukammal} from "../componentsReact/pageMuk
 export {default as ReactAccessibilityMukammal} from "../componentsReact/pageMukammalReact/ReactAccessibilityMukammal";
 export {default as ReactInternationalizationMukammal} from "../componentsReact/pageMukammalReact/ReactInternationalizationMukammal";
 export {default as ReactServerComponentsMukammal} from "../componentsReact/pageMukammalReact/ReactServerComponentsMukammal";
+
+
+// komputer savodxonligi
+export {default as KomputerSavodxonlik} from "./komputerSavodxonli/KomputerSavodxonlik";
+export {default as KomputerTuzilishi} from "../componentsKamputerSavod/KomputerTuzilishi/KomputerTuzilishi";
+export {default as ReactOperationTizim} from '../componentsKamputerSavod/OperationTizim/ReactOperationTizim';
+export {default as MatnMuharririWord} from "../componentsKamputerSavod/MatnMuharririWord/MatnMuharririWord";
+

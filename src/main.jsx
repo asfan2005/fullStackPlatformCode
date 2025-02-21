@@ -27,7 +27,10 @@ import {
   HomePageReact,
   BoshlangichReact,
   OrtaReact,
-  MukammalReact
+  MukammalReact,
+  KomputerTuzilishi,
+  ReactOperationTizim,
+  MatnMuharririWord
 } from "./components/index.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 createRoot(document.getElementById("root")).render(
@@ -60,6 +63,9 @@ createRoot(document.getElementById("root")).render(
         <Route path="/react/boshlangich" element={<BoshlangichReact/>}/>
         <Route path="/react/orta" element={<OrtaReact/>}/>
         <Route path="/react/mukammal" element={<MukammalReact/>}/>
+        <Route path="/komputer/tuzilishi" element={<KomputerTuzilishi/>}/>
+        <Route path="/komputer/operatsionTizim" element={<ReactOperationTizim/>}/>
+        <Route path="/komputer/matnMuharriri" element={<MatnMuharririWord/>}/>
       </Routes>
     </BrowserRouter>
   </StrictMode>

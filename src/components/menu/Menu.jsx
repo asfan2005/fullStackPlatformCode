@@ -5,6 +5,7 @@ import {
   DevicePhoneMobileIcon,
   BeakerIcon,
   CommandLineIcon,
+  ComputerDesktopIcon,
 } from "@heroicons/react/24/outline";
 
 const menuItems = [
@@ -12,6 +13,7 @@ const menuItems = [
   { name: "Frontend", icon: CodeBracketIcon, id: "frontend" },
   { name: "Backend", icon: CommandLineIcon, id: "backend" },
   { name: "Mobile", icon: DevicePhoneMobileIcon, id: "mobile" },
+  { name: "Kompyuter savodxonligi", icon: ComputerDesktopIcon, id: "computer-literacy" },
   { name: "Amaliyot", icon: BeakerIcon, id: "practice" },
   { name: "Kodlar", icon: CodeBracketIcon, id: "codes" },
 ];

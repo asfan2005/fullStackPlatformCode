@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, FrontEnd, BackEnd, Mobile, Practice, Code } from "../index";
+import { Home, FrontEnd, BackEnd, Mobile, Practice, Code,KomputerSavodxonlik } from "../index";
 
 function Section({ currentPage }) {
   const renderContent = () => {
@@ -40,6 +40,12 @@ function Section({ currentPage }) {
             <Code />
           </div>
         );
+        case "computer-literacy":
+          return(
+            <div className="p-4">
+            <KomputerSavodxonlik/>
+            </div>
+          )
       default:
         return <div className="p-4">Sahifa topilmadi</div>;
     }

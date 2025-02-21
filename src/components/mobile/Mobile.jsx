@@ -5,7 +5,6 @@ import {
   SiFlutter,
   SiKotlin,
   SiSwift,
-  SiXamarin,
   SiIonic,
   SiFirebase,
   SiRealm,
@@ -60,7 +59,7 @@ const technologies = [
   },
   {
     name: "Xamarin",
-    icon: SiXamarin,
+    icon: SiSwift,
     color: "#3498DB",
     description: ".NET freymvorki yordamida kross-platforma ilovalar yaratish.",
     link: "/mobile/xamarin",
