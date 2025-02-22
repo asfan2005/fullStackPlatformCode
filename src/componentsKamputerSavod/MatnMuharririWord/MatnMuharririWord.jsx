@@ -192,16 +192,7 @@ function MatnMuharririWord() {
             {wordRibbonData.description}
           </p>
 
-          {/* Ribbon Image */}
-          <div className="mb-12 rounded-xl overflow-hidden shadow-2xl">
-            <img 
-              src={wordRibbonData.sections[0].img} 
-              alt="Word Ribbon Interface" 
-              className="w-full object-cover"
-            />
-          </div>
-
-          {/* Ribbon Sections */}
+          {/* Ribbon Sections Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {wordRibbonData.sections.map((section) => (
               <motion.div
@@ -217,39 +208,61 @@ function MatnMuharririWord() {
                 <div className="space-y-4">
                   {section.tools && section.tools.map((tool, index) => (
                     <div key={index} className="bg-blue-50/50 rounded-lg p-4">
-                      <h4 className="font-medium text-gray-800 mb-2 flex items-center gap-2">
-                        {tool.icon && <i className={`fas fa-${tool.icon} text-blue-500`}></i>}
-                        {tool.name}
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-medium text-gray-800 flex items-center gap-2">
+                          {tool.icon && <i className={`fas fa-${tool.icon} text-blue-500`}></i>}
+                          {tool.name}
+                        </h4>
                         {tool.shortcut && (
-                          <span className="text-sm bg-blue-100 px-2 py-1 rounded ml-auto">
+                          <span className="text-sm bg-blue-100 px-2 py-1 rounded">
                             {tool.shortcut}
                           </span>
                         )}
-                      </h4>
-                      <p className="text-gray-600 text-sm">{tool.description}</p>
+                      </div>
                       
-                      {/* Features rendering with type checking */}
-                      {Array.isArray(tool.features) && (
-                        <ul className="mt-2 space-y-1">
-                          {tool.features.map((feature, i) => (
-                            <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
-                              <span className="text-blue-500">•</span>
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
+                      <p className="text-gray-600 text-sm mb-2">{tool.description}</p>
+
+                      {/* Tool Features */}
+                      {tool.features && (
+                        <div className="mt-2 space-y-2">
+                          {Array.isArray(tool.features) ? (
+                            <ul className="space-y-1">
+                              {tool.features.map((feature, i) => (
+                                <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
+                                  <span className="text-blue-500">•</span>
+                                  {typeof feature === 'string' ? feature : feature.description}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <div className="space-y-2">
+                              {Object.entries(tool.features).map(([key, value], i) => (
+                                <div key={i} className="bg-white/50 rounded-lg p-2">
+                                  <h5 className="font-medium text-sm text-gray-700">{key}</h5>
+                                  <p className="text-sm text-gray-600">
+                                    {typeof value === 'string' ? value : value.description}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       )}
-                      
-                      {/* Handle features as an object */}
-                      {tool.features && typeof tool.features === 'object' && !Array.isArray(tool.features) && (
-                        <ul className="mt-2 space-y-1">
-                          {Object.entries(tool.features).map(([key, value], i) => (
-                            <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
-                              <span className="text-blue-500">•</span>
-                              {value}
-                            </li>
-                          ))}
-                        </ul>
+
+                      {/* Additional Tool Information */}
+                      {tool.additionalInfo && (
+                        <div className="mt-3 pt-3 border-t border-blue-100">
+                          {tool.additionalInfo.tips && (
+                            <div className="space-y-1">
+                              {tool.additionalInfo.tips.map((tip, i) => (
+                                <p key={i} className="text-sm text-blue-600 flex items-center gap-2">
+                                  <span>💡</span>
+                                  {tip}
+                                </p>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       )}
                     </div>
                   ))}
@@ -258,45 +271,116 @@ function MatnMuharririWord() {
             ))}
           </div>
 
-          {/* Additional Features */}
-          <div className="mt-12 grid md:grid-cols-2 gap-8">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6"
-            >
-              <h3 className="text-xl font-semibold mb-4">
-                {wordRibbonData.additionalFeatures.quickAccessToolbar.description}
-              </h3>
-              <ul className="space-y-2">
-                {wordRibbonData.additionalFeatures.quickAccessToolbar.defaultTools.map((tool, index) => (
-                  <li key={index} className="flex items-center gap-2 text-gray-700">
-                    <span className="text-blue-500">✓</span>
-                    {tool}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6"
-            >
-              <h3 className="text-xl font-semibold mb-4">
-                {wordRibbonData.additionalFeatures.contextualTabs.description}
-              </h3>
-              <ul className="space-y-2">
-                {wordRibbonData.additionalFeatures.contextualTabs.examples.map((tab, index) => (
-                  <li key={index} className="flex items-center gap-2 text-gray-700">
-                    <span className="text-purple-500">⚡</span>
-                    {tab}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+          {/* Keyboard Shortcuts Section */}
+          <div className="mt-12 bg-white/70 rounded-xl p-8">
+            <h3 className="text-2xl font-semibold mb-6">Klaviatura Tugmalari</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              {Object.entries(wordRibbonData.keyboardShortcuts).map(([category, shortcuts]) => (
+                <div key={category} className="bg-blue-50/50 rounded-lg p-4">
+                  <h4 className="font-medium text-gray-800 mb-3 capitalize">{category}</h4>
+                  <ul className="space-y-2">
+                    {shortcuts.map((shortcut, i) => (
+                      <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
+                        <span className="text-blue-500">⌘</span>
+                        {shortcut}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
+
+          {/* Quick Access Toolbar Section */}
+          <div className="mt-12 bg-white/70 rounded-xl p-8">
+            <h3 className="text-2xl font-semibold mb-6">
+              {wordRibbonData.additionalFeatures.quickAccessToolbar.description}
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-blue-50/50 rounded-lg p-4">
+                <h4 className="font-medium text-gray-800 mb-3">Standart Tugmalar</h4>
+                <ul className="space-y-2">
+                  {wordRibbonData.additionalFeatures.quickAccessToolbar.defaultTools.map((tool, i) => (
+                    <li key={i} className="flex items-center gap-2 text-gray-700">
+                      <i className={`fas fa-${tool.icon} text-blue-500`}></i>
+                      <span>{tool.name}</span>
+                      {tool.shortcut && (
+                        <span className="text-sm bg-blue-100 px-2 py-1 rounded ml-auto">
+                          {tool.shortcut}
+                        </span>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Styles Section */}
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg"
+          >
+            <h3 className="text-2xl font-semibold mb-6 flex items-center gap-3">
+              <i className="fas fa-paint-brush text-blue-500"></i>
+              Styles
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {wordRibbonData.sections
+                .find(section => section.id === "styles")
+                ?.presets.map((style, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ scale: 1.02 }}
+                    className="bg-blue-50/50 rounded-lg p-4 border border-blue-100"
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-medium text-gray-800">{style.name}</h4>
+                      {style.shortcut && (
+                        <span className="text-sm bg-blue-100 px-2 py-1 rounded">
+                          {style.shortcut}
+                        </span>
+                      )}
+                    </div>
+                    
+                    <p className="text-sm text-gray-600 mb-3">{style.description}</p>
+                    
+                    {/* Default Settings */}
+                    <div className="space-y-2 bg-white/70 rounded-lg p-3">
+                      <h5 className="text-sm font-medium text-gray-700">Default Settings:</h5>
+                      <ul className="text-sm space-y-1">
+                        {Object.entries(style.defaultSettings).map(([key, value], i) => (
+                          <li key={i} className="flex items-center gap-2 text-gray-600">
+                            <span className="text-blue-500">•</span>
+                            <span className="capitalize">{key}:</span>
+                            <span>{value}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </motion.div>
+                ))}
+            </div>
+
+            {/* Additional Features */}
+            <div className="mt-6 bg-purple-50/50 rounded-lg p-4">
+              <h4 className="font-medium text-gray-800 mb-3">Additional Features</h4>
+              <ul className="space-y-2">
+                {Object.entries(wordRibbonData.sections
+                  .find(section => section.id === "styles")
+                  ?.additionalFeatures || {}).map(([key, value], index) => (
+                  <li key={index} className="flex items-center gap-2 text-gray-700">
+                    <span className="text-purple-500">•</span>
+                    <span>{value}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
         </motion.div>
 
-        {/* Real Examples Section */}
+        {/* Practical Examples Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -304,171 +388,96 @@ function MatnMuharririWord() {
           transition={{ duration: 0.8 }}
           className="mt-24 bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-xl rounded-3xl shadow-2xl p-12 border border-white/20"
         >
-          <h2 className="text-4xl font-bold text-gray-800 mb-12 text-center bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            Amaliy Misollar
+          <h2 className="text-4xl font-bold text-gray-800 mb-8 text-center bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            {wordRibbonData.practicalExamples.title}
           </h2>
+          
+          <p className="text-xl text-gray-700 text-center mb-12">
+            {wordRibbonData.practicalExamples.description}
+          </p>
 
-          {/* Business Documents */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-semibold mb-8">
-              {wordRibbonData?.realExamples?.businessDocuments?.title || "Biznes Hujjatlar"}
-            </h3>
-            <div className="grid md:grid-cols-2 gap-8">
-              {wordRibbonData?.realExamples?.businessDocuments?.examples?.map((example, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.02 }}
-                  className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg"
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {wordRibbonData.practicalExamples.tasks.map((task) => (
+              <motion.div
+                key={task.id}
+                whileHover={{ scale: 1.02 }}
+                className="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-gray-100"
+              >
+                {/* Task Header */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="bg-blue-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold">
+                    {task.id}
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-semibold text-gray-800">
+                      {task.title}
+                    </h3>
+                    <p className="text-gray-600 mt-1">
+                      {task.description}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Task Steps */}
+                <div className="bg-blue-50/50 rounded-lg p-6 mb-6">
+                  <h4 className="font-medium text-gray-800 mb-4 flex items-center gap-2">
+                    <i className="fas fa-list-ol text-blue-500"></i>
+                    Bajarish bosqichlari:
+                  </h4>
+                  <ol className="list-decimal list-inside space-y-3">
+                    {task.steps.map((step, index) => (
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="text-gray-700 pl-2"
+                      >
+                        {step}
+                      </motion.li>
+                    ))}
+                  </ol>
+                </div>
+
+                {/* Task Tips */}
+                <div className="bg-yellow-50/50 rounded-lg p-6">
+                  <h4 className="font-medium text-gray-800 mb-4 flex items-center gap-2">
+                    <i className="fas fa-lightbulb text-yellow-500"></i>
+                    Foydali maslahatlar:
+                  </h4>
+                  <ul className="space-y-3">
+                    {task.tips.map((tip, index) => (
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-start gap-2 text-gray-700"
+                      >
+                        <span className="text-yellow-500 mt-1">💡</span>
+                        <span>{tip}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Interactive Practice Button */}
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full mt-6 py-4 px-6 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
                 >
-                  <h4 className="text-xl font-medium mb-4">{example?.name}</h4>
-                  {example?.template && (
-                    <div className="space-y-4">
-                      <div className="bg-blue-50/50 rounded-lg p-4">
-                        <h5 className="font-medium mb-2">Tuzilishi:</h5>
-                        <ul className="space-y-2">
-                          {example?.template?.structure?.map((item, i) => (
-                            <li key={i} className="flex items-center gap-2 text-gray-700">
-                              <span className="text-blue-500">•</span>
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      {example?.template?.formatting && (
-                        <div className="bg-purple-50/50 rounded-lg p-4">
-                          <h5 className="font-medium mb-2">Formatlash:</h5>
-                          <ul className="space-y-2">
-                            {Object.entries(example.template.formatting).map(([key, value], i) => (
-                              <li key={i} className="flex items-center gap-2 text-gray-700">
-                                <span className="text-purple-500">•</span>
-                                {`${key}: ${value}`}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
+                  <i className="fas fa-play"></i>
+                  Mashqni boshlash
+                </motion.button>
+              </motion.div>
+            ))}
           </div>
 
-          {/* Tutorials Section */}
-          <div className="mb-16">
-            <h3 className="text-2xl font-semibold mb-8">Qo'llanmalar</h3>
-            <div className="grid md:grid-cols-2 gap-8">
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg"
-              >
-                <h4 className="text-xl font-medium mb-4">Asosiy Qo'llanmalar</h4>
-                <div className="space-y-6">
-                  {wordRibbonData.tutorials.basic.map((tutorial, index) => (
-                    <div key={index} className="bg-blue-50/50 rounded-lg p-4">
-                      <h5 className="font-medium mb-2">{tutorial.title}</h5>
-                      <ol className="list-decimal list-inside space-y-2">
-                        {tutorial.steps.map((step, i) => (
-                          <li key={i} className="text-gray-700">{step}</li>
-                        ))}
-                      </ol>
-                      {tutorial.tips && (
-                        <div className="mt-2 text-blue-600">
-                          <p className="font-medium">Maslahat:</p>
-                          <p>{tutorial.tips}</p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg"
-              >
-                <h4 className="text-xl font-medium mb-4">Kengaytirilgan Qo'llanmalar</h4>
-                <div className="space-y-6">
-                  {wordRibbonData.tutorials.advanced.map((tutorial, index) => (
-                    <div key={index} className="bg-purple-50/50 rounded-lg p-4">
-                      <h5 className="font-medium mb-2">{tutorial.title}</h5>
-                      <ol className="list-decimal list-inside space-y-2">
-                        {tutorial.steps.map((step, i) => (
-                          <li key={i} className="text-gray-700">{step}</li>
-                        ))}
-                      </ol>
-                      {tutorial.tips && (
-                        <ul className="mt-2 space-y-1">
-                          {tutorial.tips.map((tip, i) => (
-                            <li key={i} className="text-purple-600 flex items-center gap-2">
-                              <span>💡</span>
-                              {tip}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Common Issues Section */}
-          <div>
-            <h3 className="text-2xl font-semibold mb-8">Ko'p Uchraydigan Muammolar</h3>
-            <div className="grid md:grid-cols-2 gap-8">
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg"
-              >
-                <h4 className="text-xl font-medium mb-4">Formatlash Muammolari</h4>
-                <div className="space-y-4">
-                  {wordRibbonData.commonIssues.formatting.map((issue, index) => (
-                    <div key={index} className="bg-red-50/50 rounded-lg p-4">
-                      <h5 className="font-medium text-red-600 mb-2">{issue.problem}</h5>
-                      <div className="space-y-2">
-                        <p className="text-green-600">
-                          <span className="font-medium">Yechim: </span>
-                          {issue.solution}
-                        </p>
-                        <p className="text-blue-600">
-                          <span className="font-medium">Oldini olish: </span>
-                          {issue.prevention}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg"
-              >
-                <h4 className="text-xl font-medium mb-4">Moslik Muammolari</h4>
-                <div className="space-y-4">
-                  {wordRibbonData.commonIssues.compatibility.map((issue, index) => (
-                    <div key={index} className="bg-yellow-50/50 rounded-lg p-4">
-                      <h5 className="font-medium text-yellow-600 mb-2">{issue.problem}</h5>
-                      <div className="space-y-2">
-                        <p className="text-green-600">
-                          <span className="font-medium">Yechim: </span>
-                          {issue.solution}
-                        </p>
-                        <p className="text-blue-600">
-                          <span className="font-medium">Oldini olish: </span>
-                          {issue.prevention}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            </div>
-          </div>
+          
         </motion.div>
+
+       
 
         {/* Enhanced Additional Information Section */}
         <motion.div
