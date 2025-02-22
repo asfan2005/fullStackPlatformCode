@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import wordProcessorData from './dataWordMatn'
 import wordRibbonData from './dataWordRibbon'
+import wordInsertData from './dataWordInsert'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 
@@ -473,11 +474,112 @@ function MatnMuharririWord() {
               </motion.div>
             ))}
           </div>
-
-          
         </motion.div>
 
-       
+        {/* Practice Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-24 bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-xl rounded-3xl shadow-2xl p-12 border border-white/20"
+        >
+          <h2 className="text-4xl font-bold text-gray-800 mb-8 text-center bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            {wordInsertData.practice.title}
+          </h2>
+          
+          <p className="text-xl text-gray-700 text-center mb-12">
+            {wordInsertData.practice.description}
+          </p>
+
+          {/* Practice Exercises Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {wordInsertData.practice.exercises.map((exercise) => (
+              <motion.div
+                key={exercise.id}
+                whileHover={{ scale: 1.02 }}
+                className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-100"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="bg-blue-500/10 p-3 rounded-lg">
+                    <span className="text-2xl font-bold text-blue-600">#{exercise.id}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-800">{exercise.title}</h3>
+                    <span className="text-sm px-3 py-1 rounded-full bg-blue-100 text-blue-700">
+                      {exercise.difficulty}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Tasks List */}
+                <div className="mb-6">
+                  <h4 className="font-medium text-gray-800 mb-3">Vazifalar:</h4>
+                  <ul className="space-y-2">
+                    {exercise.tasks.map((task, index) => (
+                      <li key={index} className="flex items-start gap-2 text-gray-700">
+                        <span className="text-blue-500 mt-1">•</span>
+                        <span>{task}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Tips Section */}
+                <div className="bg-blue-50/50 rounded-lg p-4">
+                  <h4 className="font-medium text-gray-800 mb-2">Maslahatlar:</h4>
+                  <ul className="space-y-2">
+                    {exercise.tips.map((tip, index) => (
+                      <li key={index} className="flex items-start gap-2 text-gray-600">
+                        <span className="text-yellow-500">💡</span>
+                        <span>{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Final Project Section */}
+          <div className="bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-2xl p-8">
+            <h3 className="text-2xl font-bold text-gray-800 mb-6">
+              {wordInsertData.practice.finalProject.title}
+            </h3>
+            
+            <p className="text-gray-700 mb-6">
+              {wordInsertData.practice.finalProject.description}
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Requirements */}
+              <div className="bg-white/80 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-800 mb-4">Talablar:</h4>
+                <ul className="space-y-2">
+                  {wordInsertData.practice.finalProject.requirements.map((req, index) => (
+                    <li key={index} className="flex items-center gap-2 text-gray-700">
+                      <span className="text-green-500">✓</span>
+                      <span>{req}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Evaluation Criteria */}
+              <div className="bg-white/80 rounded-xl p-6">
+                <h4 className="font-semibold text-gray-800 mb-4">Baholash Mezonlari:</h4>
+                <ul className="space-y-2">
+                  {wordInsertData.practice.finalProject.evaluationCriteria.map((criteria, index) => (
+                    <li key={index} className="flex items-center gap-2 text-gray-700">
+                      <span className="text-blue-500">★</span>
+                      <span>{criteria}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Enhanced Additional Information Section */}
         <motion.div
@@ -538,6 +640,147 @@ function MatnMuharririWord() {
           <p className="text-xl text-gray-600 mt-6 px-6 py-3 bg-white/50 backdrop-blur-sm rounded-xl inline-block">
             Versiya: {wordProcessorData.version}
           </p>
+        </motion.div>
+
+        {/* Word Insert Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-24 bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-xl rounded-3xl shadow-2xl p-12 border border-white/20"
+        >
+          <h2 className="text-4xl font-bold text-gray-800 mb-8 text-center bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            {wordInsertData.title}
+          </h2>
+          
+          <p className="text-xl text-gray-700 text-center mb-12">
+            {wordInsertData.description}
+          </p>
+
+          {/* Insert Sections Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {wordInsertData.sections.map((section) => (
+              <motion.div
+                key={section.id}
+                whileHover={{ scale: 1.02 }}
+                className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-gray-100"
+              >
+                {/* Section Header */}
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="bg-blue-500/10 p-3 rounded-lg">
+                    <i className={`fas fa-${section.icon} text-2xl text-blue-600`}></i>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-800">{section.name}</h3>
+                    <p className="text-sm text-gray-600 mt-1">{section.description}</p>
+                  </div>
+                </div>
+
+                {/* Tools List */}
+                <div className="space-y-4">
+                  {section.tools.map((tool) => (
+                    <div
+                      key={tool.name}
+                      className="bg-blue-50/50 rounded-lg p-4 hover:bg-blue-50/80 transition-colors"
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <i className={`fas fa-${tool.icon || 'circle'} text-blue-500`}></i>
+                          <h4 className="font-medium text-gray-800">{tool.name}</h4>
+                        </div>
+                        {tool.shortcut && (
+                          <span className="text-sm bg-blue-100/80 px-2 py-1 rounded text-blue-700">
+                            {tool.shortcut}
+                          </span>
+                        )}
+                      </div>
+                      
+                      <p className="text-sm text-gray-600 mb-3">{tool.description}</p>
+
+                      {/* Tool Features */}
+                      {tool.features && (
+                        <div className="mt-3 space-y-3">
+                          {Object.entries(tool.features).map(([key, value]) => (
+                            <div key={key} className="bg-white/70 rounded-lg p-3">
+                              <h5 className="text-sm font-medium text-gray-700 capitalize mb-2">{key}</h5>
+                              {Array.isArray(value) ? (
+                                <ul className="space-y-1">
+                                  {value.map((item, i) => (
+                                    <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
+                                      <span className="text-blue-500">•</span>
+                                      {item}
+                                    </li>
+                                  ))}
+                                </ul>
+                              ) : (
+                                <p className="text-sm text-gray-600">{value}</p>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Additional Info & Tips */}
+                      {tool.additionalInfo && (
+                        <div className="mt-3 pt-3 border-t border-blue-100">
+                          {tool.additionalInfo.tips && (
+                            <div className="space-y-2">
+                              {tool.additionalInfo.tips.map((tip, i) => (
+                                <p key={i} className="text-sm text-blue-600 flex items-center gap-2">
+                                  <span>💡</span>
+                                  {tip}
+                                </p>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Keyboard Shortcuts Section */}
+          <div className="mt-12 bg-white/70 rounded-xl p-8">
+            <h3 className="text-2xl font-semibold mb-6">Klaviatura Tugmalari</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              {Object.entries(wordInsertData.keyboardShortcuts).map(([category, shortcuts]) => (
+                <div key={category} className="bg-blue-50/50 rounded-lg p-4">
+                  <h4 className="font-medium text-gray-800 mb-3 capitalize">{category}</h4>
+                  <ul className="space-y-2">
+                    {shortcuts.map((shortcut, i) => (
+                      <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
+                        <span className="text-blue-500">⌘</span>
+                        {shortcut}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Common Issues Section */}
+          <div className="mt-12 bg-white/70 rounded-xl p-8">
+            <h3 className="text-2xl font-semibold mb-6">Ko'p Uchraydigan Muammolar</h3>
+            <div className="grid md:grid-cols-2 gap-6">
+              {Object.entries(wordInsertData.commonIssues).map(([category, issues]) => (
+                <div key={category} className="bg-blue-50/50 rounded-lg p-4">
+                  <h4 className="font-medium text-gray-800 mb-3 capitalize">{category}</h4>
+                  {issues.map((issue, i) => (
+                    <div key={i} className="mb-4 last:mb-0">
+                      <p className="font-medium text-red-600 mb-2">{issue.problem}</p>
+                      <p className="text-sm text-gray-600 mb-1">Yechim: {issue.solution}</p>
+                      <p className="text-sm text-blue-600">Oldini olish: {issue.prevention}</p>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
         </motion.div>
       </div>
     </div>
