@@ -34,7 +34,8 @@ import {
   ReactElektronJadvallar,
   ReactKomputerTaqdimot,
   ReactInternetSavod,
-  KomputerXavfsizlikOne
+  KomputerXavfsizlikOne,
+  BlutliTexnologiyalar
 } from "./components/index.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 createRoot(document.getElementById("root")).render(
@@ -74,6 +75,7 @@ createRoot(document.getElementById("root")).render(
         <Route path="/komputer/taqdimotlar" element={<ReactKomputerTaqdimot/>}/>
         <Route path="/komputer/internet" element={<ReactInternetSavod/>}/>
         <Route path="/komputer/xavfsizlik" element={<KomputerXavfsizlikOne/>}/>
+        <Route path="/komputer/bulutliTexnologiyalar" element={<BlutliTexnologiyalar/>}/>
       </Routes>
     </BrowserRouter>
   </StrictMode>

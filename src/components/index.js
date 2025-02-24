@@ -288,3 +288,4 @@ export {default as ReactElektronJadvallar} from "../componentsKamputerSavod/Elek
 export {default as ReactKomputerTaqdimot} from "../componentsKamputerSavod/KomputerTaqdimotlar/ReactKomputerTaqdimot";
 export {default as ReactInternetSavod} from "../componentsKamputerSavod/KomputerInternet/ReactInternetSavod";
 export {default as KomputerXavfsizlikOne} from "../componentsKamputerSavod/Xavfsizlik/KomputerXavfsizlikOne";
+export {default as BlutliTexnologiyalar} from "../componentsKamputerSavod/BlutliTexnologiyalar/BlutliTexnologiyalar";
