@@ -284,4 +284,7 @@ export {default as KomputerSavodxonlik} from "./komputerSavodxonli/KomputerSavod
 export {default as KomputerTuzilishi} from "../componentsKamputerSavod/KomputerTuzilishi/KomputerTuzilishi";
 export {default as ReactOperationTizim} from '../componentsKamputerSavod/OperationTizim/ReactOperationTizim';
 export {default as MatnMuharririWord} from "../componentsKamputerSavod/MatnMuharririWord/MatnMuharririWord";
-
+export {default as ReactElektronJadvallar} from "../componentsKamputerSavod/ElektronJadvallar/ReactElektronJadvallar";
+export {default as ReactKomputerTaqdimot} from "../componentsKamputerSavod/KomputerTaqdimotlar/ReactKomputerTaqdimot";
+export {default as ReactInternetSavod} from "../componentsKamputerSavod/KomputerInternet/ReactInternetSavod";
+export {default as KomputerXavfsizlikOne} from "../componentsKamputerSavod/Xavfsizlik/KomputerXavfsizlikOne";

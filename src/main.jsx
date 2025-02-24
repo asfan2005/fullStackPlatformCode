@@ -30,7 +30,11 @@ import {
   MukammalReact,
   KomputerTuzilishi,
   ReactOperationTizim,
-  MatnMuharririWord
+  MatnMuharririWord,
+  ReactElektronJadvallar,
+  ReactKomputerTaqdimot,
+  ReactInternetSavod,
+  KomputerXavfsizlikOne
 } from "./components/index.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 createRoot(document.getElementById("root")).render(
@@ -66,6 +70,10 @@ createRoot(document.getElementById("root")).render(
         <Route path="/komputer/tuzilishi" element={<KomputerTuzilishi/>}/>
         <Route path="/komputer/operatsionTizim" element={<ReactOperationTizim/>}/>
         <Route path="/komputer/matnMuharriri" element={<MatnMuharririWord/>}/>
+        <Route path="/komputer/elektronJadvallar" element={<ReactElektronJadvallar/>}/>
+        <Route path="/komputer/taqdimotlar" element={<ReactKomputerTaqdimot/>}/>
+        <Route path="/komputer/internet" element={<ReactInternetSavod/>}/>
+        <Route path="/komputer/xavfsizlik" element={<KomputerXavfsizlikOne/>}/>
       </Routes>
     </BrowserRouter>
   </StrictMode>
