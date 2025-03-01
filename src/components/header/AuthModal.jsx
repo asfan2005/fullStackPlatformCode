@@ -88,20 +88,24 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
             email: formData.email.trim(),
             password: formData.password
           });
-
+          
+          
           if (response.data.success) {
-            localStorage.setItem('user', JSON.stringify(response.data.user));
-            localStorage.setItem('token', response.data.token);
-
+            // Token va user ma'lumotlarini saqlash 
+            const { user, token } = response.data;
+            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('token', token); // Tokenni to'g'ridan-to'g'ri saqlash
+            
+            
+            // Authorization headerini o'rnatish
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             setMessage({ 
               text: response.data.message || 'Muvaffaqiyatli kirildi!', 
               type: 'success' 
             });
-
             if (onLoginSuccess) {
-              onLoginSuccess(response.data.user);
+              onLoginSuccess(user);
             }
-
             setTimeout(() => {
               onClose && onClose();
             }, 1500);
