@@ -289,3 +289,5 @@ export {default as ReactKomputerTaqdimot} from "../componentsKamputerSavod/Kompu
 export {default as ReactInternetSavod} from "../componentsKamputerSavod/KomputerInternet/ReactInternetSavod";
 export {default as KomputerXavfsizlikOne} from "../componentsKamputerSavod/Xavfsizlik/KomputerXavfsizlikOne";
 export {default as BlutliTexnologiyalar} from "../componentsKamputerSavod/BlutliTexnologiyalar/BlutliTexnologiyalar";
+export {default as Profile} from "../adminPage/Profile";
+export {default as Settings} from "../adminPage/Setting";

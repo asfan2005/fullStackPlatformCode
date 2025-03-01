@@ -9,6 +9,7 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
     confirmPassword: '',  
     fullName: '',
     codeName: '',
+    phone: ''
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +63,12 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
       } else if (formData.password !== formData.confirmPassword) {
         newErrors.confirmPassword = 'Parollar mos kelmadi';
       }
+      
+      if (!formData.phone) {
+        newErrors.phone = 'Telefon raqami kiritilishi shart';
+      } else if (!/^\+998[0-9]{9}$/.test(formData.phone)) {
+        newErrors.phone = 'Telefon raqami +998 bilan boshlanishi va 12 raqamdan iborat bo`lishi kerak';
+      }
     }
     
     setErrors(newErrors);
@@ -104,6 +111,7 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
             fullName: formData.fullName.trim(),
             codeName: formData.codeName.trim(),
             email: formData.email.trim(),
+            phone: formData.phone.trim(),
             password: formData.password,
             confirmPassword: formData.confirmPassword
           });
@@ -122,7 +130,8 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
                 password: '',
                 confirmPassword: '',
                 fullName: '',
-                codeName: ''
+                codeName: '',
+                phone: ''
               });
             }, 1500);
           }
@@ -238,6 +247,24 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
                   placeholder="Kod nomingizni kiriting"
                 />
                 {errors.codeName && <p className="text-red-500 text-xs mt-1">{errors.codeName}</p>}
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="phone" className="block text-gray-700 text-sm font-medium mb-1">
+                  Telefon raqami
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
+                    errors.phone ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'
+                  }`}
+                  placeholder="+998901234567"
+                />
+                {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
               </div>
             </>
           )}

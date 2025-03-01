@@ -1,7 +1,8 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./App.jsx";
-import "./index.css";
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import App from './App'
+import './index.css'
 import {
   Html,
   Boshlangich,
@@ -35,11 +36,14 @@ import {
   ReactKomputerTaqdimot,
   ReactInternetSavod,
   KomputerXavfsizlikOne,
-  BlutliTexnologiyalar
+  BlutliTexnologiyalar,
+  Profile
 } from "./components/index.js";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-createRoot(document.getElementById("root")).render(
-  <StrictMode>
+import { Routes, Route } from "react-router-dom";
+import Setting from "./adminPage/Setting.jsx";
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
@@ -76,7 +80,9 @@ createRoot(document.getElementById("root")).render(
         <Route path="/komputer/internet" element={<ReactInternetSavod/>}/>
         <Route path="/komputer/xavfsizlik" element={<KomputerXavfsizlikOne/>}/>
         <Route path="/komputer/bulutliTexnologiyalar" element={<BlutliTexnologiyalar/>}/>
+        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/settings" element={<Setting/>}/>
       </Routes>
     </BrowserRouter>
-  </StrictMode>
-);
+  </React.StrictMode>,
+)
