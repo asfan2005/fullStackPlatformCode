@@ -23,14 +23,14 @@ import {
   FaNodeJs,
   FaTelegramPlane,
   FaInstagram,
-  FaCheck, 
+  FaCheck,
   FaTimes,
 } from "react-icons/fa";
-import { 
-  Code2, 
-  Database, 
-  Smartphone, 
-  Laptop, 
+import {
+  Code2,
+  Database,
+  Smartphone,
+  Laptop,
   Brain,
   Terminal,
   Palette,
@@ -562,13 +562,13 @@ function Home() {
                 Dasturlash Yo'nalishlari
               </h2>
               <p className="text-base md:text-xl text-gray-600 leading-relaxed px-4">
-                Zamonaviy dasturlash sohasining eng istiqbolli yo'nalishlarini o'rganing va 
-                o'z karyerangizni boshlang. Har bir yo'nalish bo'yicha professional mentorlar 
+                Zamonaviy dasturlash sohasining eng istiqbolli yo'nalishlarini o'rganing va
+                o'z karyerangizni boshlang. Har bir yo'nalish bo'yicha professional mentorlar
                 va amaliy loyihalar sizni kutmoqda.
               </p>
             </motion.div>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {categories.map((category, index) => (
               <motion.div
@@ -718,17 +718,17 @@ function Home() {
                         className="flex items-center group"
                       >
                         <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-indigo-50 group-hover:bg-indigo-100 transition-colors duration-200">
-                          <svg 
-                            className="w-5 h-5 text-indigo-600" 
-                            fill="none" 
-                            viewBox="0 0 24 24" 
+                          <svg
+                            className="w-5 h-5 text-indigo-600"
+                            fill="none"
+                            viewBox="0 0 24 24"
                             stroke="currentColor"
                           >
-                            <path 
-                              strokeLinecap="round" 
-                              strokeLinejoin="round" 
-                              strokeWidth={2} 
-                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" 
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                             />
                           </svg>
                         </div>
@@ -784,13 +784,12 @@ function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className={`relative w-full md:w-96 bg-white rounded-2xl shadow-xl overflow-hidden ${
-                  plan.name === "Online kurs" 
-                    ? "border-2 border-green-500" 
-                    : plan.name === "Premium" 
-                    ? "border-2 border-indigo-500" 
+                className={`relative w-full md:w-96 bg-white rounded-2xl shadow-xl overflow-hidden ${plan.name === "Online kurs"
+                  ? "border-2 border-green-500"
+                  : plan.name === "Premium"
+                    ? "border-2 border-indigo-500"
                     : ""
-                }`}
+                  }`}
               >
                 {plan.name === "Premium" && (
                   <div className="absolute top-0 right-0">
@@ -810,16 +809,15 @@ function Home() {
 
                 <div className="p-8">
                   <div className="text-center mb-8">
-                    <h3 className={`text-2xl font-bold mb-4 ${
-                      plan.name === "Online kurs" 
-                        ? "text-green-600" 
-                        : plan.name === "Premium" 
-                        ? "text-indigo-600" 
+                    <h3 className={`text-2xl font-bold mb-4 ${plan.name === "Online kurs"
+                      ? "text-green-600"
+                      : plan.name === "Premium"
+                        ? "text-indigo-600"
                         : "text-gray-800"
-                    }`}>
+                      }`}>
                       {plan.name}
                     </h3>
-                    
+
                     <div className="mb-4">
                       <div className="flex items-center justify-center">
                         <span className="text-4xl font-bold text-gray-900">
@@ -827,20 +825,19 @@ function Home() {
                         </span>
                       </div>
                       <p className="text-gray-500 text-sm">oyiga</p>
-                      
+
                       <div className="mt-2 text-lg font-semibold text-gray-700">
                         {plan.price.yearly}
                         <span className="text-sm text-gray-500 block">yiliga</span>
                       </div>
                     </div>
 
-                    <div className={`w-16 h-1 mx-auto rounded-full ${
-                      plan.name === "Online kurs" 
-                        ? "bg-gradient-to-r from-green-400 to-green-600" 
-                        : plan.name === "Premium" 
-                        ? "bg-gradient-to-r from-indigo-400 to-indigo-600" 
+                    <div className={`w-16 h-1 mx-auto rounded-full ${plan.name === "Online kurs"
+                      ? "bg-gradient-to-r from-green-400 to-green-600"
+                      : plan.name === "Premium"
+                        ? "bg-gradient-to-r from-indigo-400 to-indigo-600"
                         : "bg-gradient-to-r from-gray-300 to-gray-500"
-                    }`} />
+                      }`} />
                   </div>
 
                   <ul className="space-y-4 mb-8">
@@ -864,10 +861,10 @@ function Home() {
                         <span className={`text-sm ${feature.included ? "text-gray-800" : "text-gray-400"}`}>
                           {feature.name}
                         </span>
-                        {(plan.name === "Premium" && !plans[0].features[idx]?.included) || 
-                         (plan.name === "Online kurs" && idx > 0) ? (
-                          <FaStar className="text-yellow-400 w-4 h-4 ml-auto" />
-                        ) : null}
+                        {((plan.name === "Premium" && !plans[0].features[idx]?.included) ||
+                          (plan.name === "Online kurs" && !plans[1].features.some(f => f.name === feature.name))) && (
+                            <FaStar className="text-yellow-400 w-4 h-4 ml-auto flex-shrink-0" />
+                          )}
                       </motion.li>
                     ))}
                   </ul>
@@ -875,20 +872,30 @@ function Home() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={handleButtonClick}
-                    className={`w-full py-3 px-6 rounded-xl text-white font-semibold transition-all duration-200 shadow-lg ${
-                      plan.name === "Online kurs" 
-                        ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-green-200" 
-                        : plan.name === "Premium"
+                    onClick={() => {
+                      if (plan.name === "Premium") {
+                        // Premium tarif uchun /payment routega yo'naltirish
+                        window.location.href = "/payment";
+                      } if (plan.name === "Online kurs") {
+                        window.location.href = "/payment1"
+                      }
+                      else {
+                        // Boshqa tariflar uchun telegram
+                        window.open('https://t.me/asfan_001', '_blank');
+                      }
+                    }}
+                    className={`w-full py-3 px-6 rounded-xl text-white font-semibold transition-all duration-200 shadow-lg ${plan.name === "Online kurs"
+                      ? "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-green-200"
+                      : plan.name === "Premium"
                         ? "bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 shadow-indigo-200"
                         : "bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 shadow-gray-200"
-                    }`}
+                      }`}
                   >
-                    {plan.name === "Online kurs" 
-                      ? "Kursga yozilish" 
-                      : plan.name === "Premium" 
-                      ? "Premium ga o'tish" 
-                      : "Boshlash"}
+                    {plan.name === "Online kurs"
+                      ? "Kursga yozilish"
+                      : plan.name === "Premium"
+                        ? "Premium ga o'tish"
+                        : "Boshlash"}
                   </motion.button>
                 </div>
               </motion.div>
@@ -896,7 +903,7 @@ function Home() {
           </div>
         </div>
       </section>
-      
+
 
       <footer className="bg-gray-800 text-white py-4 rounded">
         <div className="container mx-auto px-4 flex justify-between items-center">

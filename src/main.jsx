@@ -37,7 +37,9 @@ import {
   ReactInternetSavod,
   KomputerXavfsizlikOne,
   BlutliTexnologiyalar,
-  Profile
+  Profile,
+  PaymentPage,
+  PaymentPage1
 } from "./components/index.js";
 import { Routes, Route } from "react-router-dom";
 import Setting from "./adminPage/Setting.jsx";
@@ -82,6 +84,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/komputer/bulutliTexnologiyalar" element={<BlutliTexnologiyalar/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/settings" element={<Setting/>}/>
+        <Route path='/payment' element={<PaymentPage/>}/>
+        <Route path='/payment1' element={<PaymentPage1/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

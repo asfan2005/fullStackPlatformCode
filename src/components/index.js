@@ -291,3 +291,9 @@ export {default as KomputerXavfsizlikOne} from "../componentsKamputerSavod/Xavfs
 export {default as BlutliTexnologiyalar} from "../componentsKamputerSavod/BlutliTexnologiyalar/BlutliTexnologiyalar";
 export {default as Profile} from "../adminPage/Profile";
 export {default as Settings} from "../adminPage/Setting";
+export {default as Foydalanuvchilar} from "../adminPage1/Foydalanuvchilar";
+export {default as Statistika} from "../adminPage1/Statistika";
+export {default as Message} from "../adminPage1/Message";
+export {default as Payments}from '../PullikObunalar/Payments';
+export {default as PaymentPage} from "../PullikObunalar/PaytmentPage";
+export {default as PaymentPage1} from "../PullikObunalar/PaymentPage1";

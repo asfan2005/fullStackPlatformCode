@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, FrontEnd, BackEnd, Mobile, Practice, Code,KomputerSavodxonlik } from "../index";
+import { Home, FrontEnd, BackEnd, Mobile, Practice, Code, KomputerSavodxonlik, Foydalanuvchilar, Statistika, Message, Payments } from "../index";
 
 function Section({ currentPage }) {
   const renderContent = () => {
@@ -40,12 +40,36 @@ function Section({ currentPage }) {
             <Code />
           </div>
         );
-        case "computer-literacy":
+      case "computer-literacy":
+        return (
+          <div className="p-4">
+            <KomputerSavodxonlik />
+          </div>
+        );
+      case "all-users":
+        return (
+          <div className="p-4">
+            <Foydalanuvchilar />
+          </div>
+        );
+        case "statistics":
           return(
             <div className="p-4">
-            <KomputerSavodxonlik/>
+              <Statistika/>
             </div>
-          )
+          );
+          case "messages":
+            return(
+              <div className="p-4">
+                <Message/>
+              </div>
+            );
+            case "payments":
+              return (
+                <div className="p-4">
+                  <Payments/>
+                </div>
+              )
       default:
         return <div className="p-4">Sahifa topilmadi</div>;
     }

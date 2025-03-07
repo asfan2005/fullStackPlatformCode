@@ -11,6 +11,7 @@ function Header() {
     return savedUser ? JSON.parse(savedUser) : null;
   });
   const [showLogoutDropdown, setShowLogoutDropdown] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,6 +36,19 @@ function Header() {
       // URL ni tozalash
       window.history.replaceState({}, document.title, window.location.pathname);
     }
+  }, []);
+
+  useEffect(() => {
+    const checkAdminStatus = () => {
+      const user = localStorage.getItem('user');
+      if (user) {
+        const userData = JSON.parse(user);
+        if (userData.email === 'asfan.coder@gmail.com') {
+          setIsAdmin(true);
+        }
+      }
+    };
+    checkAdminStatus();
   }, []);
 
   const fetchUserData = async (userId, token) => {
@@ -70,6 +84,14 @@ function Header() {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
     localStorage.setItem('token', userData.token || '');
+    
+    // Admin tekshiruvi
+    if (userData.email === 'asfan.coder@gmail.com') {
+      setIsAdmin(true);
+    }
+    
+    closeAuthModal();
+    window.location.reload();
   };
 
   const handleLogout = () => {
@@ -77,6 +99,8 @@ function Header() {
     setShowLogoutDropdown(false);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    // Sahifani yangilash
+    window.location.reload();
   };
 
   // Function to get user display text for the avatar
@@ -189,6 +213,11 @@ function Header() {
                       <div className="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-indigo-50 to-purple-50">
                         <p className="text-sm leading-5 text-gray-500 font-medium">Xush kelibsiz!</p>
                         <p className="text-sm font-semibold leading-5 text-gray-900 truncate">{user.email}</p>
+                        {isAdmin && (
+                          <span className="inline-block px-2 py-1 mt-1 text-xs font-semibold text-white bg-red-500 rounded-full">
+                            Admin
+                          </span>
+                        )}
                       </div>
                       
                       <Link to="/profile" 
