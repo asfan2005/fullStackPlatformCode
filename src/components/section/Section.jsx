@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, FrontEnd, BackEnd, Mobile, Practice, Code, KomputerSavodxonlik, Foydalanuvchilar, Statistika, Message, Payments } from "../index";
+import { Home, FrontEnd, BackEnd, Mobile, Practice, Code, KomputerSavodxonlik, Foydalanuvchilar, Statistika, Message, Payments, OnlineKursObuna } from "../index";
 
 function Section({ currentPage }) {
   const renderContent = () => {
@@ -69,7 +69,13 @@ function Section({ currentPage }) {
                 <div className="p-4">
                   <Payments/>
                 </div>
-              )
+              );
+              case "online-subscription":
+                return(
+                  <div className="p-4">
+                    <OnlineKursObuna/>
+                  </div>
+                )
       default:
         return <div className="p-4">Sahifa topilmadi</div>;
     }
