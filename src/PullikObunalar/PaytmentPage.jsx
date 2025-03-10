@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from "../components/header/Header"
 import { useNavigate } from 'react-router-dom';
 import axios from "axios"
-// Modal komponenti
+// Modal komponenti 
 const SuccessModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
@@ -41,6 +41,181 @@ const SuccessModal = ({ isOpen, onClose }) => {
     );
 };
 
+// SubscriptionStatus komponenti o'rniga yangi funksiya
+const SubscriptionInfo = ({ subscription }) => {
+    const [timeLeft, setTimeLeft] = useState('');
+    const [progress, setProgress] = useState(0);
+    const [daysLeft, setDaysLeft] = useState(0);
+
+    useEffect(() => {
+        const updateTimeLeft = () => {
+            if (!subscription?.end_date) return;
+
+            const end = new Date(subscription.end_date);
+            const now = new Date();
+            const start = new Date(subscription.start_date);
+            const total = end - start;
+            const elapsed = end - now;
+            
+            const days = Math.floor(elapsed / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((elapsed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            
+            setDaysLeft(days);
+            const progressValue = ((total - elapsed) / total) * 100;
+            setProgress(Math.max(0, Math.min(100, progressValue)));
+
+            if (elapsed <= 0) {
+                setTimeLeft('Obuna tugagan');
+                return;
+            }
+
+            setTimeLeft(`${days} kun ${hours} soat qoldi`);
+        };
+
+        updateTimeLeft();
+        const timer = setInterval(updateTimeLeft, 1000 * 60);
+        return () => clearInterval(timer);
+    }, [subscription]);
+
+    if (!subscription) return null;
+
+    return (
+        <div className="w-full bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20 mb-8">
+            <div className="w-full bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 p-6">
+                <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-semibold text-white flex items-center space-x-2">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>Joriy obuna holati</span>
+                    </h3>
+                    <span className={`px-4 py-1.5 rounded-full text-sm font-medium ${
+                        subscription.status === 'active' 
+                            ? 'bg-green-100 text-green-800 border border-green-200' 
+                            : 'bg-red-100 text-red-800 border border-red-200'
+                    }`}>
+                        {subscription.status === 'active' ? 'Faol' : 'Faol emas'}
+                    </span>
+                </div>
+            </div>
+
+            <div className="p-6">
+                {/* Obuna ma'lumotlari */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                    <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                        <div className="text-sm text-gray-500 mb-1">Tarif</div>
+                        <div className="font-medium text-gray-900">{subscription.plan_name}</div>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                        <div className="text-sm text-gray-500 mb-1">Narx</div>
+                        <div className="font-medium text-gray-900">{subscription.plan_price}</div>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                        <div className="text-sm text-gray-500 mb-1">Boshlanish sanasi</div>
+                        <div className="font-medium text-gray-900">
+                            {new Date(subscription.start_date).toLocaleDateString('uz-UZ')}
+                        </div>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+                        <div className="text-sm text-gray-500 mb-1">Tugash sanasi</div>
+                        <div className="font-medium text-gray-900">
+                            {new Date(subscription.end_date).toLocaleDateString('uz-UZ')}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Progress bar */}
+                <div className="space-y-3">
+                    <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                        <div 
+                            className={`h-full rounded-full transition-all duration-500 ${
+                                progress > 80 ? 'bg-red-500' : 
+                                progress > 50 ? 'bg-yellow-500' : 
+                                'bg-green-500'
+                            }`}
+                            style={{ width: `${progress}%` }}
+                        />
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                        <div className={`font-medium ${
+                            daysLeft <= 5 ? 'text-red-600' : 
+                            daysLeft <= 10 ? 'text-yellow-600' : 
+                            'text-green-600'
+                        }`}>
+                            {timeLeft}
+                        </div>
+                        <div className="text-gray-500">
+                            {Math.round(progress)}% ishlatilgan
+                        </div>
+                    </div>
+                </div>
+
+                {/* Ogohlantirish */}
+                {daysLeft <= 5 && daysLeft > 0 && (
+                    <div className="mt-6 p-4 bg-yellow-50 rounded-xl border border-yellow-100">
+                        <div className="flex items-start space-x-3">
+                            <svg className="w-6 h-6 text-yellow-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                            <div>
+                                <h4 className="text-sm font-medium text-yellow-800">
+                                    Obuna muddati tugayapti
+                                </h4>
+                                <p className="mt-1 text-sm text-yellow-700">
+                                    Obuna muddati tugashiga {daysLeft} kun qoldi. Iltimos, yangi to'lovni amalga oshiring.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
+
+// Notification komponenti
+const Notification = ({ type, title, message, onClose }) => {
+  return (
+    <div className={`fixed bottom-4 right-4 w-96 bg-white rounded-lg shadow-xl border-l-4 ${
+      type === 'success' ? 'border-green-500' :
+      type === 'warning' ? 'border-yellow-500' :
+      'border-red-500'
+    } p-4 transform transition-all duration-500 z-50`}>
+      <div className="flex items-start">
+        <div className="flex-shrink-0">
+          {type === 'success' ? (
+            <svg className="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+            </svg>
+          ) : type === 'warning' ? (
+            <svg className="h-6 w-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          ) : (
+            <svg className="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          )}
+        </div>
+        <div className="ml-3 w-0 flex-1">
+          <p className="text-sm font-medium text-gray-900">{title}</p>
+          <p className="mt-1 text-sm text-gray-500">{message}</p>
+        </div>
+        <div className="ml-4 flex-shrink-0 flex">
+          <button
+            onClick={onClose}
+            className="inline-flex text-gray-400 hover:text-gray-500"
+          >
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 function PaymentPage({ plan, onClose }) {
     const [formData, setFormData] = useState({
         fullName: "",
@@ -60,7 +235,74 @@ function PaymentPage({ plan, onClose }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [subscription, setSubscription] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [notifications, setNotifications] = useState([]);
+    const [paymentStatus, setPaymentStatus] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+    
+        checkPaymentStatus();
+    }, []);
+
+   
+
+    const checkPaymentStatus = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/api/payments/all');
+            
+            if (response.data.success && response.data.payments.length > 0) {
+                // Eng oxirgi to'lovni olish
+                const latestPayment = response.data.payments[0];
+                
+                if (latestPayment.status === 'completed') {
+                    // To'lov tasdiqlangan bo'lsa
+                    setPaymentStatus('completed');
+                    
+                    // Obuna ma'lumotlarini yangilash
+                    setSubscription({
+                        status: 'active',
+                        plan_name: latestPayment.plan_name,
+                        plan_price: latestPayment.plan_price,
+                        start_date: latestPayment.updated_at,
+                        end_date: calculateEndDate(latestPayment.updated_at),
+                        user: {
+                            full_name: latestPayment.full_name,
+                            phone_number: latestPayment.phone_number,
+                            telegram_username: latestPayment.telegram_username
+                        }
+                    });
+
+                    // Muvaffaqiyatli to'lov xabari
+                    showNotification({
+                        type: 'success',
+                        title: 'To\'lov tasdiqlandi',
+                        message: `${latestPayment.plan_name} tarifi uchun to'lovingiz tasdiqlandi. Xizmatdan foydalanishingiz mumkin.`
+                    });
+                }
+            }
+        } catch (error) {
+            console.error('To\'lov holatini tekshirishda xatolik:', error);
+        }
+    };
+
+    // Obuna tugash sanasini hisoblash
+    const calculateEndDate = (startDate) => {
+        const endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + 30); // 30 kun qo'shish
+        return endDate.toISOString();
+    };
+
+    const showNotification = (notification) => {
+        const id = Date.now();
+        setNotifications(prev => [...prev, { ...notification, id }]);
+        
+        // 5 sekunddan keyin notification ni o'chirish
+        setTimeout(() => {
+            setNotifications(prev => prev.filter(n => n.id !== id));
+        }, 5000);
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -139,55 +381,61 @@ function PaymentPage({ plan, onClose }) {
             // To'lov ma'lumotlarini tayyorlash
             const newTransactionId = Math.random().toString(36).substr(2, 9);
             
-            // To'lov ma'lumotlarini JSON formatida tayyorlash
-            const paymentData = {
-                transactionId: newTransactionId,
-                timestamp: new Date().toISOString(),
-                status: "pending",
-                paymentData: {
-                    fullName: formData.fullName,
-                    telegramUsername: formData.telegramUsername,
-                    phoneNumber: formData.phoneNumber,
-                    cardNumber: formData.cardNumber,
-                    cardOwner: formData.cardOwner,
-                    planName: formData.planName,
-                    planPrice: formData.planPrice,
-                    paymentDate: new Date().toISOString()
-                }
+            const formDataToSend = new FormData();
+            
+            if (formData.image) {
+                formDataToSend.append('receipt', formData.image);
+            }
+            
+            formDataToSend.append('transactionId', newTransactionId);
+            formDataToSend.append('timestamp', new Date().toISOString());
+            formDataToSend.append('status', 'pending');
+            
+            const paymentDataObj = {
+                fullName: formData.fullName,
+                telegramUsername: formData.telegramUsername,
+                phoneNumber: formData.phoneNumber,
+                cardNumber: formData.cardNumber,
+                cardOwner: formData.cardOwner,
+                planName: formData.planName,
+                planPrice: formData.planPrice,
+                paymentDate: new Date().toISOString()
             };
             
-            // Serverga yuborish
+            formDataToSend.append('paymentData', JSON.stringify(paymentDataObj));
+            
             const response = await axios.post(
-                'http://localhost:3000/api/payments',
-                paymentData,
+                'http://localhost:3000/api/payments/with-receipt',
+                formDataToSend,
                 {
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'multipart/form-data'
                     }
                 }
             );
             
-            console.log("✅ TO'LOV MUVAFFAQIYATLI:", response.data);
-            
-            // To'lov muvaffaqiyatli bo'lganda
-            setShowSuccessModal(true);
-            resetForm();
+            if (response.data.success) {
+                setShowSuccessModal(true);
+                resetForm();
+                // To'lovdan keyin statusni tekshirish
+                await checkPaymentStatus();
+            }
             
         } catch (error) {
-            console.error("❌ TO'LOV XATOSI:", error);
-            
+            console.error("TO'LOV XATOSI:", error);
             let errorMessage = "To'lov jarayonida xatolik yuz berdi.";
             
             if (error.response) {
-                // Server xatosi
                 errorMessage = error.response.data.message || errorMessage;
             } else if (error.request) {
-                // Network xatosi
                 errorMessage = "Server bilan bog'lanishda xatolik yuz berdi.";
             }
             
-            alert(errorMessage + " Iltimos, qayta urinib ko'ring.");
-            
+            showNotification({
+                type: 'error',
+                title: 'Xatolik',
+                message: errorMessage
+            });
         } finally {
             setIsSubmitting(false);
         }
@@ -231,6 +479,9 @@ function PaymentPage({ plan, onClose }) {
             </div>
 
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
+                {/* Subscription Status */}
+                {subscription && <SubscriptionInfo subscription={subscription} />}
+
                 {/* Main Container */}
                 <div className="w-full bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
                     {/* Header Section */}
@@ -288,6 +539,11 @@ function PaymentPage({ plan, onClose }) {
                     {/* Main Content */}
                     <div className="w-full p-6 sm:p-10">
                         <div className="w-full max-w-5xl mx-auto space-y-8">
+                            {/* Obuna holati */}
+                            {subscription && (
+                                <SubscriptionInfo subscription={subscription} />
+                            )}
+
                             {/* Payment Info Card */}
                             <div className="w-full bg-gradient-to-br from-violet-50 via-indigo-50 to-blue-50 p-6 sm:p-8 rounded-2xl border border-indigo-100/50 shadow-xl">
                                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6">
@@ -582,6 +838,19 @@ function PaymentPage({ plan, onClose }) {
                     if (onClose) onClose();
                 }} 
             />
+
+            {/* Notifications */}
+            <div className="fixed bottom-4 right-4 space-y-4 z-50">
+                {notifications.map(notification => (
+                    <Notification
+                        key={notification.id}
+                        {...notification}
+                        onClose={() => setNotifications(prev => 
+                            prev.filter(n => n.id !== notification.id)
+                        )}
+                    />
+                ))}
+            </div>
         </div>
     );
 }

@@ -464,19 +464,17 @@ export const excelTipsData = [
 
 // Tutorialni konsolda ko'rsatish funksiyasi
 function displayExcelTutorial(data) {
-    console.log("=== Excelda Jadval Yaratish Qo'llanmasi ===");
+   
     data.forEach(step => {
-        console.log(`\nQadam ${step.step}: ${step.title}`);
-        console.log(`Tavsif: ${step.description}`);
-        console.log("Misol:");
+        
         if (Array.isArray(step.exampleData)) {
             step.exampleData.forEach(item => {
-                console.log(`  ${item.column}: ${item.value}`);
+                
             });
         } else {
-            console.log(`  ${step.exampleData.column || step.exampleData}: ${step.exampleData.value || ""}`);
+           
         }
-        console.log(`Eslatma: ${step.note}`);
+        
     });
 }
 
@@ -500,22 +498,17 @@ function calculateStatistics(data) {
 // Statistikani ko'rsatish funksiyasi
 function displayStatistics(data) {
     const stats = calculateStatistics(data);
-    console.log("\n=== Talabalar statistikasi ===");
-    console.log(`Jami talabalar soni: ${stats.totalStudents}`);
-    console.log(`O'rtacha ball: ${stats.averageScore}`);
-    console.log("\nBaholar taqsimoti:");
+ 
     Object.entries(stats.gradeDistribution).forEach(([grade, count]) => {
-        console.log(`${grade}: ${count} ta talaba`);
+      
     });
 }
 
 // Namunaviy ma'lumotlarni jadval sifatida ko'rsatish
 function displaySampleData(data) {
-    console.log("\n=== Namunaviy Ma'lumotlar (Excel uchun) ===");
-    console.log("ID | Ism     | Ball | Baho");
-    console.log("---------------------------");
+   
     data.forEach(item => {
-        console.log(`${String(item.id).padEnd(2)} | ${item.name.padEnd(7)} | ${item.score}  | ${item.grade}`);
+    
     });
     
     // Statistikani ko'rsatish
@@ -524,14 +517,11 @@ function displaySampleData(data) {
 
 // Formulalarni ko'rsatish funksiyasi
 function displayExcelFormulas(data) {
-    console.log("\n=== Excel formulalar va funksiyalar ===");
+   
     data.forEach(category => {
-        console.log(`\n${category.category}:`);
+      
         category.formulas.forEach(formula => {
-            console.log(`\nNomi: ${formula.name}`);
-            console.log(`Sintaksis: ${formula.syntax}`);
-            console.log(`Tavsif: ${formula.description}`);
-            console.log(`Misol: ${JSON.stringify(formula.example)}`);
+            
         });
     });
 }
@@ -544,7 +534,3 @@ displayExcelFormulas(excelFormulasData);
 // JSON formatida eksport qilish
 const jsonTutorial = JSON.stringify(excelTutorialData, null, 2);
 const jsonSampleData = JSON.stringify(sampleStudentData, null, 2);
-console.log("\n=== JSON formatida tutorial ma'lumotlari (eksport uchun) ===");
-console.log(jsonTutorial.slice(0, 500) + "..."); // Faqat bir qismini ko'rsatish
-console.log("\n=== JSON formatida namunaviy ma'lumotlar ===");
-console.log(jsonSampleData.slice(0, 500) + "..."); // Faqat bir qismini ko'rsatish

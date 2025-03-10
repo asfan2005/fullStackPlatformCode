@@ -855,5 +855,3 @@ export const internetData = [
     }
   ];
   
-  // Massivni konsolda ko'rish uchun
-  console.log(internetData);

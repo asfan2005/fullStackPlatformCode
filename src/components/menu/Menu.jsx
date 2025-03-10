@@ -23,6 +23,17 @@ import {
   ClipboardDocumentListIcon,
   UsersIcon,
   KeyIcon,
+  BanknotesIcon,
+  ReceiptRefundIcon,
+  CreditCardIcon,
+  WalletIcon,
+  CreditCardIcon as CardIcon,
+  CalculatorIcon,
+  ClockIcon,
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+  ArrowPathIcon,
+  DocumentDuplicateIcon,
 } from "@heroicons/react/24/outline";
 
 const menuItems = [
@@ -33,6 +44,57 @@ const menuItems = [
   { name: "Kompyuter savodxonligi", icon: ComputerDesktopIcon, id: "computer-literacy", requiresAuth: true },
   { name: "Amaliyot", icon: BeakerIcon, id: "practice", requiresAuth: true },
   { name: "Kodlar", icon: CodeBracketIcon, id: "codes", requiresAuth: true },
+];
+
+// Enhanced payment menu items with detailed options
+const paymentMenuItems = [
+  { 
+    name: "To'lovlar boshqaruvi", 
+    icon: BanknotesIcon, 
+    id: "payment-management", 
+    requiresAuth: true,
+    subItems: [
+      { name: "To'lov tarixi", icon: ClockIcon, id: "payment-history" },
+      { name: "Joriy to'lovlar", icon: CheckCircleIcon, id: "current-payments" },
+      { name: "Kutilayotgan to'lovlar", icon: ExclamationCircleIcon, id: "pending-payments" },
+      { name: "Bekor qilingan to'lovlar", icon: ArrowPathIcon, id: "cancelled-payments" },
+      { name: "To'lov hisobotlari", icon: DocumentDuplicateIcon, id: "payment-reports" },
+    ]
+  },
+  { 
+    name: "Kurs to'lovlari", 
+    icon: CreditCardIcon, 
+    id: "course-payments", 
+    requiresAuth: true,
+    subItems: [
+      { name: "Frontend kurslari", icon: CodeBracketIcon, id: "frontend-course-payments" },
+      { name: "Backend kurslari", icon: CommandLineIcon, id: "backend-course-payments" },
+      { name: "Mobile kurslari", icon: DevicePhoneMobileIcon, id: "mobile-course-payments" },
+      { name: "Premium kurslari", icon: StarIcon, id: "premium-course-payments" },
+    ]
+  },
+  { 
+    name: "To'lov usullari", 
+    icon: CreditCardIcon, 
+    id: "payment-methods", 
+    requiresAuth: true,
+    subItems: [
+      { name: "Bank kartasi", icon: CardIcon, id: "card-payment" },
+      { name: "Click/Payme", icon: CreditCardIcon, id: "click-payment" },
+      { name: "Naqd pul", icon: BanknotesIcon, id: "cash-payment" },
+    ]
+  },
+  { 
+    name: "Hisobni boshqarish", 
+    icon: WalletIcon, 
+    id: "account-balance", 
+    requiresAuth: true,
+    subItems: [
+      { name: "Joriy balans", icon: CalculatorIcon, id: "current-balance" },
+      { name: "Bonus ballar", icon: StarIcon, id: "bonus-points" },
+      { name: "Chegirmalar", icon: BanknotesIcon, id: "discounts" },
+    ]
+  },
 ];
 
 const premiumMenuItems = [
@@ -130,6 +192,20 @@ const adminMenuItems = [
     ]
   },
   {
+    name: "To'lovlar boshqaruvi",
+    icon: BanknotesIcon,
+    id: "payment-management",
+    requiresAuth: true,
+    adminOnly: true,
+    subItems: [
+      { name: "Barcha to'lovlar", id: "all-payments" },
+      { name: "Kutilayotgan to'lovlar", id: "pending-payments" },
+      { name: "Muvaffaqiyatli to'lovlar", id: "successful-payments" },
+      { name: "Bekor qilingan to'lovlar", id: "cancelled-payments" },
+      { name: "To'lov hisobotlari", id: "payment-reports" },
+    ]
+  },
+  {
     name: "Xavfsizlik",
     icon: ShieldCheckIcon,
     id: "security",
@@ -151,6 +227,7 @@ const adminMenuItems = [
       { name: "Umumiy sozlamalar", id: "general-settings" },
       { name: "Email sozlamalari", id: "email-settings" },
       { name: "Tizim sozlamalari", id: "system-settings" },
+      { name: "To'lov sozlamalari", id: "payment-settings" },
     ]
   },
 ];
@@ -160,10 +237,15 @@ function Menu({ setCurrentPage, currentPage, closeMenu }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
   const [expandedItems, setExpandedItems] = useState([]);
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
+  const [hoveredItem, setHoveredItem] = useState(null);
+  
+  // Auto-expand payment section by default
+  const [expandedPaymentSections, setExpandedPaymentSections] = useState([
+    "payment-management", 
+    "course-payments", 
+    "payment-methods", 
+    "account-balance"
+  ]);
 
   useEffect(() => {
     const checkAuth = () => {
@@ -171,7 +253,6 @@ function Menu({ setCurrentPage, currentPage, closeMenu }) {
       if (user) {
         const userData = JSON.parse(user);
         setIsAuthenticated(true);
-        setUser(userData);
         if (userData.email === 'asfan.coder@gmail.com') {
           setIsAdmin(true);
         }
@@ -182,7 +263,6 @@ function Menu({ setCurrentPage, currentPage, closeMenu }) {
         setIsAuthenticated(false);
         setIsAdmin(false);
         setIsPremium(false);
-        setUser(null);
       }
     };
 
@@ -198,7 +278,7 @@ function Menu({ setCurrentPage, currentPage, closeMenu }) {
 
   const handleMenuClick = (id, requiresAuth, isPremium) => {
     if (requiresAuth && !isAuthenticated) {
-      setCurrentPage('home');
+      setCurrentPage('login');
       closeMenu();
       return;
     }
@@ -219,51 +299,209 @@ function Menu({ setCurrentPage, currentPage, closeMenu }) {
     );
   };
 
+  const togglePaymentSection = (id) => {
+    setExpandedPaymentSections(prev => 
+      prev.includes(id) 
+        ? prev.filter(item => item !== id)
+        : [...prev, id]
+    );
+  };
+
+  // Get styles for menu items based on various states
+  const getMenuItemStyles = (id, isActive, requiresAuth, isPremiumItem = false, isAdminItem = false) => {
+    const baseStyles = "flex items-center w-full p-3 rounded-lg transition-all duration-200 transform";
+    const activeStyles = isActive 
+      ? isAdminItem 
+        ? "bg-gradient-to-r from-red-500 to-red-600 text-white shadow-md"
+        : isPremiumItem 
+          ? "bg-gradient-to-r from-yellow-400 to-yellow-500 text-white shadow-md" 
+          : "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md"
+      : "";
+    
+    const hoverStyles = hoveredItem === id 
+      ? isAdminItem 
+        ? "bg-red-100 scale-[1.02]" 
+        : isPremiumItem 
+          ? "bg-yellow-100 scale-[1.02]" 
+          : "bg-blue-50 scale-[1.02]"
+      : "hover:bg-gray-100 hover:scale-[1.01]";
+    
+    const disabledStyles = !isAuthenticated && requiresAuth ? "opacity-50 cursor-not-allowed" : "";
+    
+    return `${baseStyles} ${activeStyles} ${!isActive ? hoverStyles : ""} ${disabledStyles}`;
+  };
+
+  const getPaymentMenuItemStyles = (id, isActive) => {
+    const baseStyles = "flex items-center w-full p-3 rounded-lg transition-all duration-200 transform";
+    const activeStyles = isActive 
+      ? "bg-gradient-to-r from-green-500 to-green-600 text-white shadow-md"
+      : "";
+    
+    const hoverStyles = hoveredItem === id 
+      ? "bg-green-50 scale-[1.02]"
+      : "hover:bg-gray-100 hover:scale-[1.01]";
+    
+    const expandedStyles = expandedPaymentSections.includes(id) ? "bg-green-50" : "";
+    
+    return `${baseStyles} ${activeStyles} ${!isActive ? hoverStyles : ""} ${!isActive && expandedStyles}`;
+  };
+
+  const getSubMenuItemStyles = (id, isActive, isAdminItem = false, isPaymentItem = false) => {
+    const baseStyles = "flex items-center w-full p-2 pl-3 rounded-lg transition-all duration-200 transform";
+    let activeStyles = "";
+    
+    if (isActive) {
+      if (isAdminItem) {
+        activeStyles = "bg-red-400 text-white shadow-sm";
+      } else if (isPaymentItem) {
+        activeStyles = "bg-green-400 text-white shadow-sm";
+      } else {
+        activeStyles = "bg-blue-400 text-white shadow-sm";
+      }
+    }
+    
+    const hoverStyles = hoveredItem === id 
+      ? isAdminItem 
+        ? "bg-red-50 scale-[1.02]" 
+        : isPaymentItem
+          ? "bg-green-50 scale-[1.02]"
+          : "bg-blue-50 scale-[1.02]"
+      : "hover:bg-gray-100 hover:scale-[1.01]";
+    
+    return `${baseStyles} ${activeStyles} ${!isActive ? hoverStyles : ""}`;
+  };
+
   return (
-    <nav className="bg-gray-100 text-gray-800 h-full p-4 shadow-lg overflow-y-auto">
+    <nav className="bg-white text-gray-800 h-full py-4 px-3 shadow-lg overflow-y-auto border-r border-gray-200">
       <div className="space-y-2">
+        {/* Main menu heading */}
+        <div className="px-2 mb-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+          Asosiy menu
+        </div>
+
         {/* Regular menu items */}
         {menuItems.map((item) => (
           <button
             key={item.id}
             onClick={() => handleMenuClick(item.id, item.requiresAuth)}
-            className={`flex items-center w-full p-3 rounded-lg transition-colors duration-200 
-              ${currentPage === item.id ? "bg-blue-500 text-white" : "hover:bg-gray-200"}
-              ${!isAuthenticated && item.requiresAuth ? "opacity-50" : ""}`}
+            onMouseEnter={() => setHoveredItem(item.id)}
+            onMouseLeave={() => setHoveredItem(null)}
+            className={getMenuItemStyles(item.id, currentPage === item.id, item.requiresAuth)}
           >
-            <item.icon
-              className={`h-6 w-6 mr-[10px] ${
-                currentPage === item.id ? "text-white" : "text-gray-600"
-              }`}
-            />
-            <span className="text-sm">
+            <div className="flex items-center justify-center mr-3 w-8 h-8">
+              <item.icon
+                className={`h-6 w-6 ${
+                  currentPage === item.id ? "text-white" : "text-gray-600"
+                }`}
+              />
+            </div>
+            <span className="flex-1 font-medium text-sm">
               {item.name}
               {!isAuthenticated && item.requiresAuth && " 🔒"}
             </span>
           </button>
         ))}
 
+        {/* Payment section - Expanded and highlighted */}
+        <div className="my-4 border-t border-gray-300"></div>
+        <div className="py-2 px-3 bg-green-50 rounded-lg mb-2 border border-green-200">
+          <div className="flex items-center mb-2">
+            <BanknotesIcon className="h-5 w-5 text-green-600 mr-2" />
+            <span className="text-sm font-semibold text-green-700 uppercase tracking-wider">
+              To'lovlar bo'limi
+            </span>
+          </div>
+          <p className="text-xs text-green-600 mb-1">
+            Barcha to'lovlar va hisobni boshqarish
+          </p>
+        </div>
+
+        {/* Payment Menu Items - Expanded by default */}
+        <div className="space-y-2">
+          {paymentMenuItems.map((item) => (
+            <div key={item.id} className="space-y-1">
+              <button
+                onClick={() => togglePaymentSection(item.id)}
+                onMouseEnter={() => setHoveredItem(item.id)}
+                onMouseLeave={() => setHoveredItem(null)}
+                className={getPaymentMenuItemStyles(item.id, currentPage === item.id)}
+              >
+                <div className="flex items-center justify-center mr-3 w-8 h-8">
+                  <item.icon
+                    className={`h-6 w-6 ${
+                      currentPage === item.id ? "text-white" : "text-green-600"
+                    }`}
+                  />
+                </div>
+                <span className="flex-1 font-medium text-sm">{item.name}</span>
+                <svg
+                  className={`w-5 h-5 transform transition-transform duration-200 ${
+                    expandedPaymentSections.includes(item.id) ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {expandedPaymentSections.includes(item.id) && (
+                <div className="ml-8 space-y-1 py-1 pl-3 border-l-2 border-green-300 animate-fadeIn">
+                  {item.subItems.map((subItem) => (
+                    <button
+                      key={subItem.id}
+                      onClick={() => handleMenuClick(subItem.id, true)}
+                      onMouseEnter={() => setHoveredItem(subItem.id)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                      className={getSubMenuItemStyles(subItem.id, currentPage === subItem.id, false, true)}
+                    >
+                      {subItem.icon && (
+                        <div className="flex items-center justify-center mr-2 w-6 h-6">
+                          <subItem.icon
+                            className={`h-4 w-4 ${
+                              currentPage === subItem.id ? "text-white" : "text-green-600"
+                            }`}
+                          />
+                        </div>
+                      )}
+                      <span className="text-sm font-medium">{subItem.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
         {/* Premium menu items */}
         {isAuthenticated && (
           <>
             <div className="my-4 border-t border-gray-300"></div>
-            <div className="px-2 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <div className="px-2 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50 rounded-md mb-2">
               Premium Bo'lim
             </div>
             {premiumMenuItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleMenuClick(item.id, item.requiresAuth, item.isPremium)}
-                className={`flex items-center w-full p-3 rounded-lg transition-colors duration-200 
-                  ${currentPage === item.id ? "bg-yellow-500 text-white" : "hover:bg-gray-200"}
-                  ${!isPremium && item.isPremium ? "opacity-50" : ""}`}
+                onMouseEnter={() => setHoveredItem(item.id)}
+                onMouseLeave={() => setHoveredItem(null)}
+                className={getMenuItemStyles(item.id, currentPage === item.id, item.requiresAuth, true)}
               >
-                <item.icon
-                  className={`h-6 w-6 mr-[10px] ${
-                    currentPage === item.id ? "text-white" : "text-gray-600"
-                  }`}
-                />
-                <span className="text-sm">
+                <div className="flex items-center justify-center mr-3 w-8 h-8 relative">
+                  <item.icon
+                    className={`h-6 w-6 ${
+                      currentPage === item.id ? "text-white" : "text-gray-600"
+                    }`}
+                  />
+                  {!isPremium && item.isPremium && (
+                    <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+                    </span>
+                  )}
+                </div>
+                <span className="flex-1 font-medium text-sm">
                   {item.name}
                   {!isPremium && item.isPremium && " ⭐"}
                 </span>
@@ -276,24 +514,25 @@ function Menu({ setCurrentPage, currentPage, closeMenu }) {
         {isAdmin && (
           <>
             <div className="my-4 border-t border-gray-300"></div>
-            <div className="px-2 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <div className="px-2 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50 rounded-md mb-2">
               Admin Panel
             </div>
             {adminMenuItems.map((item) => (
               <div key={item.id} className="space-y-1">
                 <button
                   onClick={() => toggleSubItems(item.id)}
-                  className={`flex items-center justify-between w-full p-3 rounded-lg transition-colors duration-200 
-                    ${currentPage === item.id ? "bg-red-500 text-white" : "hover:bg-gray-200"}`}
+                  onMouseEnter={() => setHoveredItem(item.id)}
+                  onMouseLeave={() => setHoveredItem(null)}
+                  className={getMenuItemStyles(item.id, currentPage === item.id, true, false, true)}
                 >
-                  <div className="flex items-center">
+                  <div className="flex items-center justify-center mr-3 w-8 h-8">
                     <item.icon
-                      className={`h-6 w-6 mr-[10px] ${
+                      className={`h-6 w-6 ${
                         currentPage === item.id ? "text-white" : "text-gray-600"
                       }`}
                     />
-                    <span className="text-sm">{item.name}</span>
                   </div>
+                  <span className="flex-1 font-medium text-sm">{item.name}</span>
                   <svg
                     className={`w-5 h-5 transform transition-transform duration-200 ${
                       expandedItems.includes(item.id) ? "rotate-180" : ""
@@ -306,15 +545,16 @@ function Menu({ setCurrentPage, currentPage, closeMenu }) {
                   </svg>
                 </button>
                 {expandedItems.includes(item.id) && (
-                  <div className="ml-6 space-y-1">
+                  <div className="ml-8 space-y-1 py-1 pl-3 border-l-2 border-red-300 animate-fadeIn">
                     {item.subItems.map((subItem) => (
                       <button
                         key={subItem.id}
                         onClick={() => handleMenuClick(subItem.id, true)}
-                        className={`flex items-center w-full p-2 rounded-lg transition-colors duration-200 
-                          ${currentPage === subItem.id ? "bg-red-400 text-white" : "hover:bg-gray-200"}`}
+                        onMouseEnter={() => setHoveredItem(subItem.id)}
+                        onMouseLeave={() => setHoveredItem(null)}
+                        className={getSubMenuItemStyles(subItem.id, currentPage === subItem.id, true)}
                       >
-                        <span className="text-sm">{subItem.name}</span>
+                        <span className="text-sm font-medium ml-1">{subItem.name}</span>
                       </button>
                     ))}
                   </div>
@@ -327,5 +567,18 @@ function Menu({ setCurrentPage, currentPage, closeMenu }) {
     </nav>
   );
 }
+
+// Add this to your CSS or Tailwind config
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+`;
+document.head.appendChild(style);
 
 export default Menu;

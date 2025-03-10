@@ -335,5 +335,3 @@ export const powerPointData = [
     }
   ];
   
-  // Massivni konsolda ko'rish uchun
-  console.log(powerPointData);

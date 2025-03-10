@@ -289,5 +289,3 @@ export const computerSecurityData = [
     }
   ];
   
-  // Massivni konsolda ko'rish uchun
-  console.log(computerSecurityData);
