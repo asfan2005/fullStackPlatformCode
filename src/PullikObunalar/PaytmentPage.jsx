@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from "../components/header/Header"
 import { useNavigate } from 'react-router-dom';
 import axios from "axios"
-// Modal komponenti 
+// Modal komponenti
 const SuccessModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
@@ -160,7 +160,7 @@ const SubscriptionInfo = ({ subscription }) => {
                             <div>
                                 <h4 className="text-sm font-medium text-yellow-800">
                                     Obuna muddati tugayapti
-                                </h4>
+                                </h4>   
                                 <p className="mt-1 text-sm text-yellow-700">
                                     Obuna muddati tugashiga {daysLeft} kun qoldi. Iltimos, yangi to'lovni amalga oshiring.
                                 </p>
@@ -238,60 +238,129 @@ function PaymentPage({ plan, onClose }) {
     const [subscription, setSubscription] = useState(null);
     const [loading, setLoading] = useState(true);
     const [notifications, setNotifications] = useState([]);
-    const [paymentStatus, setPaymentStatus] = useState(null);
     const navigate = useNavigate();
+    const [userPayments, setUserPayments] = useState([]);
+    const [currentUserPhone, setCurrentUserPhone] = useState('');
 
     useEffect(() => {
-    
         checkPaymentStatus();
-    }, []);
-
-   
+    }, [currentUserPhone]);
 
     const checkPaymentStatus = async () => {
         try {
+            // Foydalanuvchi telefon raqami bo'sh bo'lmasligi kerak
+            if (!formData.phoneNumber) {
+                return;
+            }
+
             const response = await axios.get('http://localhost:3000/api/payments/all');
             
             if (response.data.success && response.data.payments.length > 0) {
-                // Eng oxirgi to'lovni olish
-                const latestPayment = response.data.payments[0];
+                // Foydalanuvchining telefon raqami bo'yicha to'lovlarni filtrlash
+                const userSpecificPayments = response.data.payments.filter(
+                    payment => payment.phone_number === formData.phoneNumber
+                );
                 
-                if (latestPayment.status === 'completed') {
-                    // To'lov tasdiqlangan bo'lsa
-                    setPaymentStatus('completed');
-                    
-                    // Obuna ma'lumotlarini yangilash
-                    setSubscription({
-                        status: 'active',
-                        plan_name: latestPayment.plan_name,
-                        plan_price: latestPayment.plan_price,
-                        start_date: latestPayment.updated_at,
-                        end_date: calculateEndDate(latestPayment.updated_at),
-                        user: {
-                            full_name: latestPayment.full_name,
-                            phone_number: latestPayment.phone_number,
-                            telegram_username: latestPayment.telegram_username
-                        }
-                    });
+                setUserPayments(userSpecificPayments);
 
-                    // Muvaffaqiyatli to'lov xabari
+                // Eng so'nggi tasdiqlangan to'lovni topish
+                const latestCompletedPayment = userSpecificPayments.find(
+                    payment => payment.status === 'completed' || payment.status === 'success'
+                );
+                
+                if (latestCompletedPayment) {
+                    // To'lov tasdiqlangan bo'lsa
+                    const subscriptionData = {
+                        status: 'active',
+                        plan_name: latestCompletedPayment.plan_name,
+                        plan_price: latestCompletedPayment.plan_price,
+                        start_date: latestCompletedPayment.updated_at || latestCompletedPayment.created_at,
+                        end_date: calculateEndDate(latestCompletedPayment.updated_at || latestCompletedPayment.created_at),
+                        user: {
+                            full_name: latestCompletedPayment.full_name,
+                            phone_number: latestCompletedPayment.phone_number,
+                            telegram_username: latestCompletedPayment.telegram_username
+                        }
+                    };
+                    
+                    setSubscription(subscriptionData);
+                    
                     showNotification({
                         type: 'success',
-                        title: 'To\'lov tasdiqlandi',
-                        message: `${latestPayment.plan_name} tarifi uchun to'lovingiz tasdiqlandi. Xizmatdan foydalanishingiz mumkin.`
+                        title: 'To\'lov tasdiqlangan',
+                        message: `${latestCompletedPayment.plan_name} tarifi faol`
+                    });
+                } else if (userSpecificPayments.length > 0) {
+                    // To'lov kutilmoqda
+                    showNotification({
+                        type: 'warning',
+                        title: 'To\'lov kutilmoqda',
+                        message: 'To\'lovingiz tasdiqlanishi kutilmoqda'
                     });
                 }
             }
         } catch (error) {
             console.error('To\'lov holatini tekshirishda xatolik:', error);
+            showNotification({
+                type: 'error',
+                title: 'Xatolik',
+                message: 'To\'lov ma\'lumotlarini olishda xatolik yuz berdi'
+            });
         }
     };
 
-    // Obuna tugash sanasini hisoblash
+    // Telefon raqami o'zgarganda to'lovlarni tekshirish
+    useEffect(() => {
+        if (formData.phoneNumber) {
+            checkPaymentStatus();
+        }
+    }, [formData.phoneNumber]);
+
+    // To'lov yuborilgandan keyin statusni tekshirish
+    useEffect(() => {
+        const checkInterval = setInterval(() => {
+            if (formData.phoneNumber) {
+                checkPaymentStatus();
+            }
+        }, 10000); // Har 10 sekundda tekshirish
+
+        return () => clearInterval(checkInterval);
+    }, [formData.phoneNumber]);
+
+    // Tugash sanasini hisoblash uchun yordam funksiyasi
     const calculateEndDate = (startDate) => {
-        const endDate = new Date(startDate);
-        endDate.setDate(endDate.getDate() + 30); // 30 kun qo'shish
-        return endDate.toISOString();
+        const date = new Date(startDate);
+        date.setDate(date.getDate() + 30); // 30 kunlik obuna
+        return date.toISOString();
+    };
+
+    // Telefon raqamini formatlash uchun funksiya
+    const formatPhoneNumber = (value) => {
+        // Raqamlardan boshqa belgilarni olib tashlash
+        const numbers = value.replace(/\D/g, '');
+        
+        // Agar raqam 9 dan ko'p bo'lsa, faqat birinchi 9 tasini olish
+        const trimmed = numbers.slice(0, 9);
+        
+        // +998 prefiksini qo'shish
+        return trimmed ? `+998${trimmed}` : '';
+    };
+
+    // Telefon raqami o'zgarganda
+    const handlePhoneNumberChange = (e) => {
+        const { value } = e.target;
+        // Faqat raqamlarni qoldirish
+        const numbersOnly = value.replace(/\D/g, '');
+        
+        // Raqamni formatlash
+        const formattedValue = formatPhoneNumber(numbersOnly);
+        
+        setFormData(prev => ({
+            ...prev,
+            phoneNumber: formattedValue
+        }));
+        
+        setCurrentUserPhone(formattedValue);
     };
 
     const showNotification = (notification) => {
@@ -373,14 +442,13 @@ function PaymentPage({ plan, onClose }) {
         setPreviewImage(null);
     };
 
+    // To'lovni yuborish
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
 
         try {
-            // To'lov ma'lumotlarini tayyorlash
             const newTransactionId = Math.random().toString(36).substr(2, 9);
-            
             const formDataToSend = new FormData();
             
             if (formData.image) {
@@ -391,10 +459,11 @@ function PaymentPage({ plan, onClose }) {
             formDataToSend.append('timestamp', new Date().toISOString());
             formDataToSend.append('status', 'pending');
             
+            // Telefon raqamini to'g'ri formatda yuborish
             const paymentDataObj = {
                 fullName: formData.fullName,
                 telegramUsername: formData.telegramUsername,
-                phoneNumber: formData.phoneNumber,
+                phoneNumber: formData.phoneNumber, // Bu endi +998 bilan keladi
                 cardNumber: formData.cardNumber,
                 cardOwner: formData.cardOwner,
                 planName: formData.planName,
@@ -417,7 +486,7 @@ function PaymentPage({ plan, onClose }) {
             if (response.data.success) {
                 setShowSuccessModal(true);
                 resetForm();
-                // To'lovdan keyin statusni tekshirish
+                // To'lov yuborilgandan keyin statusni tekshirish
                 await checkPaymentStatus();
             }
             
@@ -427,8 +496,6 @@ function PaymentPage({ plan, onClose }) {
             
             if (error.response) {
                 errorMessage = error.response.data.message || errorMessage;
-            } else if (error.request) {
-                errorMessage = "Server bilan bog'lanishda xatolik yuz berdi.";
             }
             
             showNotification({
@@ -479,8 +546,39 @@ function PaymentPage({ plan, onClose }) {
             </div>
 
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
-                {/* Subscription Status */}
-                {subscription && <SubscriptionInfo subscription={subscription} />}
+                {/* To'lov holati */}
+                {userPayments.length > 0 && (
+                    <div className="mb-8">
+                        <div className="bg-white rounded-xl p-6 shadow-lg">
+                            <h3 className="text-xl font-semibold mb-4">Sizning to'lovlaringiz</h3>
+                            <div className="space-y-4">
+                                {userPayments.map(payment => (
+                                    <div 
+                                        key={payment.id}
+                                        className="border rounded-lg p-4 flex justify-between items-center"
+                                    >
+                                        <div>
+                                            <p className="font-medium">{payment.plan_name}</p>
+                                            <p className="text-sm text-gray-600">
+                                                {new Date(payment.created_at).toLocaleDateString('uz-UZ')}
+                                            </p>
+                                        </div>
+                                        <div className="flex items-center space-x-4">
+                                            <span className="font-medium">{payment.plan_price}</span>
+                                            <span className={`px-3 py-1 rounded-full text-sm ${
+                                                payment.status === 'completed' 
+                                                    ? 'bg-green-100 text-green-800' 
+                                                    : 'bg-yellow-100 text-yellow-800'
+                                            }`}>
+                                                {payment.status === 'completed' ? 'Tasdiqlangan' : 'Kutilmoqda'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* Main Container */}
                 <div className="w-full bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
@@ -672,17 +770,13 @@ function PaymentPage({ plan, onClose }) {
                                             <input
                                                 type="tel"
                                                 name="phoneNumber"
-                                                value={formData.phoneNumber}
-                                                onChange={handleChange}
+                                                value={formData.phoneNumber.replace('+998', '')}
+                                                onChange={handlePhoneNumberChange}
                                                 placeholder="XX XXX XX XX"
                                                 className="w-full pl-20 pr-12 py-3.5 bg-white/70 backdrop-blur-sm border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 shadow-sm group-hover:shadow-md"
                                                 required
+                                                maxLength={9}
                                             />
-                                            <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                                                <svg className="w-5 h-5 text-gray-400 group-focus-within:text-indigo-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                                </svg>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -759,7 +853,7 @@ function PaymentPage({ plan, onClose }) {
                                             <div className="flex items-center justify-center space-x-3">
                                                 <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
                                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                                                 </svg>
                                                 <span>To'lov amalga oshirilmoqda...</span>
                                             </div>
