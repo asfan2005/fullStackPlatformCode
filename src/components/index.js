@@ -298,3 +298,5 @@ export { default as Payments } from '../PullikObunalar/Payments';
 export { default as PaymentPage } from "../PullikObunalar/PaytmentPage";
 export { default as PaymentPage1 } from "../PullikObunalar/PaymentPage1";
 export { default as OnlineKursObuna } from "../PullikObunalar/OnlineKursObuna";
+export {default as FrontEndKurslar} from "../kursTolovlar/frontEnd/FrontEndKurslar";
+export {default as FrontVide} from "../VideDarslar/frontEnd/FrontVide"

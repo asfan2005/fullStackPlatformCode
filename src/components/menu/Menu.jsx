@@ -506,8 +506,8 @@ function Menu({ setCurrentPage, currentPage, closeMenu }) {
               Premium Bo'lim
             </div>
             {premiumMenuItems.map((item) => (
-              <button
-                key={item.id}
+          <button
+            key={item.id}
                 onClick={() => handleMenuClick(item.id, item.requiresAuth, item.isPremium)}
                 onMouseEnter={() => setHoveredItem(item.id)}
                 onMouseLeave={() => setHoveredItem(null)}
@@ -557,10 +557,10 @@ function Menu({ setCurrentPage, currentPage, closeMenu }) {
                   className={getMenuItemStyles(item.id, currentPage === item.id, true, false, true)}
                 >
                   <div className="flex items-center justify-center mr-3 w-8 h-8">
-                    <item.icon
+            <item.icon
                       className={`h-6 w-6 ${currentPage === item.id ? "text-white" : "text-gray-600"
-                        }`}
-                    />
+              }`}
+            />
                   </div>
                   <span className="flex-1 font-medium text-sm">{item.name}</span>
                   <svg
@@ -584,8 +584,8 @@ function Menu({ setCurrentPage, currentPage, closeMenu }) {
                         className={getSubMenuItemStyles(subItem.id, currentPage === subItem.id, true)}
                       >
                         <span className="text-sm font-medium ml-1">{subItem.name}</span>
-                      </button>
-                    ))}
+          </button>
+        ))}
                   </div>
                 )}
               </div>
