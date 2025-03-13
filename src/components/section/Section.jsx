@@ -82,6 +82,24 @@ function Section({ currentPage }) {
             <FrontEndKurslar />
           </div>
         );
+        case 'backend-course-payments':
+          return (
+            <div className="p-4">
+              <FrontEndKurslar />
+            </div>
+          );
+          case 'mobile-course-payments':
+            return (
+              <div className="p-4">
+                <FrontEndKurslar />
+              </div>
+            );
+            case 'premium-course-payments':
+              return (
+                <div className="p-4">
+                  <FrontEndKurslar />
+                </div>
+              );
         case 'video-lessons':
           return(
             <div className="p-4">
