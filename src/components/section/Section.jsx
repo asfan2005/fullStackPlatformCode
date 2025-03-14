@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, FrontEnd, BackEnd, Mobile, Practice, Code, KomputerSavodxonlik, Foydalanuvchilar, Statistika, Message, Payments, OnlineKursObuna, FrontEndKurslar, FrontVide } from "../index";
+import { Home, FrontEnd, BackEnd, Mobile, Practice, Code, KomputerSavodxonlik, Foydalanuvchilar, Statistika, Message, Payments, OnlineKursObuna, FrontEndKurslar, FrontVide, KursTolovlariHammasi } from "../index";
 
 function Section({ currentPage }) {
   const renderContent = () => {
@@ -82,30 +82,36 @@ function Section({ currentPage }) {
             <FrontEndKurslar />
           </div>
         );
-        case 'backend-course-payments':
-          return (
-            <div className="p-4">
-              <FrontEndKurslar />
-            </div>
-          );
-          case 'mobile-course-payments':
-            return (
-              <div className="p-4">
-                <FrontEndKurslar />
-              </div>
-            );
-            case 'premium-course-payments':
-              return (
-                <div className="p-4">
-                  <FrontEndKurslar />
-                </div>
-              );
-        case 'video-lessons':
-          return(
-            <div className="p-4">
-              <FrontVide/>
-            </div>
-          )
+      case 'backend-course-payments':
+        return (
+          <div className="p-4">
+            <FrontEndKurslar />
+          </div>
+        );
+      case 'mobile-course-payments':
+        return (
+          <div className="p-4">
+            <FrontEndKurslar />
+          </div>
+        );
+      case 'premium-course-payments':
+        return (
+          <div className="p-4">
+            <FrontEndKurslar />
+          </div>
+        );
+      case 'video-lessons':
+        return (
+          <div className="p-4">
+            <FrontVide />
+          </div>
+        );
+      case 'frontend-courses':
+        return (
+          <div className="p-4">
+            <KursTolovlariHammasi />
+          </div>
+        )
       default:
         return <div className="p-4">Sahifa topilmadi</div>;
     }

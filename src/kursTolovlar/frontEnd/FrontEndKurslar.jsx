@@ -264,12 +264,12 @@ const FrontendPaymentSection = () => {
                       {course.free && (
                         <span className="bg-blue-100 text-blue-700 text-xs px-1.5 py-0.5 rounded">Tekin</span>
                       )}
-                    </div>
+              </div>
                     <p className="text-sm text-gray-500 flex items-center gap-1 mt-1">
                       <Calendar size={14} />
                       Davomiyligi: {course.duration}
                     </p>
-                  </div>
+              </div>
                   <div className="text-right">
                     {course.free ? (
                       <>
@@ -288,10 +288,10 @@ const FrontendPaymentSection = () => {
                         )}
                       </>
                     )}
-                  </div>
-                </div>
-              ))}
             </div>
+          </div>
+        ))}
+      </div>
             
             {/* Info banner for free courses */}
             {selectedCourseType === 'kompyuterSavodxonligi' && (
@@ -375,20 +375,20 @@ const FrontendPaymentSection = () => {
                   <span className="font-medium text-green-600">
                     {calculateSavings().toLocaleString('en-US')} so'm
                   </span>
-                </div>
+            </div>
               )}
               
               <div className="flex items-center gap-2 text-sm text-gray-600 mt-3">
                 <Calendar size={16} />
                 <span>O'quv davomiyligi: {selectedCourseType === 'premium' ? '12' : '6'} oy</span>
-              </div>
+        </div>
               
               <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
                 <BookOpen size={16} />
                 <span>Jami {coursesData[selectedCourseType].length} ta kurs</span>
-              </div>
-            </div>
-            
+          </div>
+        </div>
+
             {/* Checkout button */}
             <button 
               className="w-full py-4 rounded-lg font-bold mt-6 flex items-center justify-center gap-2 transition-all duration-200 shadow-md bg-green-600 text-white hover:bg-green-700 hover:scale-105"
@@ -423,9 +423,9 @@ const FrontendPaymentSection = () => {
                   <Check size={16} className="text-green-600" />
                 </div>
                 <p className="text-sm text-gray-700">Vazifalarni tekshirish va shaxsiy fikr-mulohazalar</p>
-              </div>
-            </div>
-            
+          </div>
+        </div>
+
             {/* Additional info */}
             <div className="mt-6 pt-4 border-t border-gray-200">
               <div className="flex items-center justify-between text-sm text-gray-600">
@@ -437,10 +437,10 @@ const FrontendPaymentSection = () => {
                   <Zap size={16} className="text-green-600" />
                   <span>Darhol kirish imkoniyati</span>
                 </div>
-              </div>
-            </div>
-          </div>
         </div>
+        </div>
+          </div>
+          </div>
       )}
       
       {/* Payment Modal */}
@@ -454,7 +454,7 @@ const FrontendPaymentSection = () => {
         discountApplied={discountApplied}
         courseCategories={courseCategories}
       />
-    </div>
+          </div>
   );
 };
 

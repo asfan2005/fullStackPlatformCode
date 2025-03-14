@@ -74,7 +74,7 @@ const PaymentModal = ({
       
       // Calculate initial price
       updateFinalPrice();
-    }
+  }
   }, [isOpen, selectedCourseType, courseData]);
 
   // Update final price whenever selected courses change
@@ -173,7 +173,7 @@ const PaymentModal = ({
   };
 
   // Add image upload handler
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 5242880) { // 5MB limit
@@ -186,15 +186,40 @@ const PaymentModal = ({
         return;
       }
 
-      setReceiptImage(file);
-      setUploadError('');
-      
-      // Create preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+      try {
+        // Create FormData object
+        const formData = new FormData();
+        formData.append('receipt', file);
+
+        // Upload image to server
+        const response = await fetch('http://localhost:3000/api/payment-modal/upload-receipt', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.message || 'Rasmni yuklashda xatolik');
+        }
+
+        setReceiptImage(file);
+        setUploadError('');
+        
+        // Create preview
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+
+        showToast('Rasm muvaffaqiyatli yuklandi', 'success');
+
+      } catch (error) {
+        console.error('Rasm yuklashda xatolik:', error);
+        setUploadError('Rasmni yuklashda xatolik yuz berdi');
+        showToast('Rasmni yuklashda xatolik yuz berdi', 'error');
+      }
     }
   };
 
@@ -203,51 +228,62 @@ const PaymentModal = ({
     try {
       setIsSendingToAdmin(true);
       
-      // Log payment details
-      const paymentDetails = {
-        transactionId,
-        date: currentDate,
-        cardInfo: {
-          lastFour: formData.cardNumber.substring(formData.cardNumber.length - 4),
-          holder: formData.cardHolder,
-          expiry: formData.expiryDate
+      // Create FormData for multipart/form-data
+      const formDataObj = new FormData();
+      
+      // Add receipt image if exists
+      if (receiptImage) {
+        formDataObj.append('receipt', receiptImage);
+      }
+
+      // Prepare payment data with correct user information
+      const paymentData = {
+        fileName: receiptImage?.name || null,
+        additionalAmount: customAmount ? parseFloat(customAmount) : 0,
+        baseAmount: selectedCourses.reduce((sum, course) => sum + (course.free ? 0 : course.price), 0),
+        finalAmount: finalPrice,
+        subscriptionType: selectedPlan,
+        discounts: {
+          yearly: selectedPlan === 'yearly' ? '20%' : 'Yo\'q',
+          promo: discountApplied ? '10%' : 'Yo\'q'
         },
-        customerInfo: {
-          email: formData.email,
-          phone: `+998${formData.phone}`,
-          address: formData.address || 'Kiritilmagan',
-          passport: formData.passportNumber || 'Kiritilmagan'
-        },
+        address: formData.address || '',
+        email: formData.email,
+        passport: formData.passportNumber || '',
+        phone: formData.phone ? `+998${formData.phone}` : '',
         courses: selectedCourses.map(course => ({
           id: course.id,
           title: course.title,
           price: course.free ? 0 : course.price,
           category: course.categoryName
-        })),
-        paymentDetails: {
-          baseAmount: selectedCourses.reduce((sum, course) => sum + (course.free ? 0 : course.price), 0),
-          additionalAmount: customAmount ? parseFloat(customAmount) : 0,
-          subscriptionType: selectedPlan,
-          discounts: {
-            yearly: selectedPlan === 'yearly' ? '20%' : 'Yo\'q',
-            promo: discountApplied ? '10%' : 'Yo\'q'
-          },
-          finalAmount: finalPrice
-        },
-        receiptImage: receiptImage ? 'Yuklangan' : 'Yuklanmagan'
+        }))
       };
+
       
-      console.log('To\'lov ma\'lumotlari:', paymentDetails);
-      
-      // Simulate API call success
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
+      // Add payment data to FormData
+      formDataObj.append('paymentData', JSON.stringify(paymentData));
+
+      // Send data to backend
+      const response = await fetch('http://localhost:3000/api/payment-modal/create', {
+        method: 'POST',
+        body: formDataObj
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'To\'lovni saqlashda xatolik');
+      }
+
+      setTransactionId(result.data.transaction_id);
       setAdminNotified(true);
-      console.log('Admin muvaffaqiyatli xabardor qilindi');
+      showToast('To\'lov muvaffaqiyatli saqlandi', 'success');
 
     } catch (error) {
-      console.error('Adminga yuborishda xatolik:', error);
-      showToast('Ma\'lumotlarni yuborishda xatolik yuz berdi', 'error');
+      console.error('To\'lovni saqlashda xatolik:', error);
+      showToast('To\'lovni saqlashda xatolik yuz berdi', 'error');
+      setAdminNotified(false);
     } finally {
       setIsSendingToAdmin(false);
     }

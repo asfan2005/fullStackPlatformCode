@@ -189,7 +189,8 @@ const adminMenuItems = [
       { name: "Aktiv obunalar", id: "active-subscriptions" },
       { name: "Obuna tarixi", id: "subscription-history" },
       { name: "To'lovlar", id: "payments" },
-      { name: "Online Obuna", id: "online-subscription" }
+      { name: "Online Obuna", id: "online-subscription" },
+      {name:"Kurs tolovlari(Hammasi)", id:"frontend-courses"}
     ]
   },
   {
