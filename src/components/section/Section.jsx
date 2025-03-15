@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, FrontEnd, BackEnd, Mobile, Practice, Code, KomputerSavodxonlik, Foydalanuvchilar, Statistika, Message, Payments, OnlineKursObuna, FrontEndKurslar, FrontVide, KursTolovlariHammasi } from "../index";
+import { Home, FrontEnd, BackEnd, Mobile, Practice, Code, KomputerSavodxonlik, Foydalanuvchilar, Statistika, Message, Payments, OnlineKursObuna, FrontEndKurslar, FrontVide, KursTolovlariHammasi, PremiumKurslar, ShaxsiyMentorlik, QoshimchaMateriallar, Shertifikatlar } from "../index";
 
 function Section({ currentPage }) {
   const renderContent = () => {
@@ -110,6 +110,30 @@ function Section({ currentPage }) {
         return (
           <div className="p-4">
             <KursTolovlariHammasi />
+          </div>
+        );
+      case 'premium-courses':
+        return (
+          <div className="p-4">
+            <PremiumKurslar />
+          </div>
+        );
+      case 'personal-mentor':
+        return (
+          <div className="p-4">
+            <ShaxsiyMentorlik />
+          </div>
+        );
+      case 'extra-materials':
+        return (
+          <div className="p-4">
+            <QoshimchaMateriallar />
+          </div>
+        );
+      case 'certificates':
+        return (
+          <div className="p-4">
+            <Shertifikatlar />
           </div>
         )
       default:

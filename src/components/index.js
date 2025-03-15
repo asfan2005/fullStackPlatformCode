@@ -301,3 +301,7 @@ export { default as OnlineKursObuna } from "../PullikObunalar/OnlineKursObuna";
 export { default as FrontEndKurslar } from "../kursTolovlar/frontEnd/FrontEndKurslar";
 export { default as FrontVide } from "../VideDarslar/frontEnd/FrontVide";
 export { default as KursTolovlariHammasi } from "../PullikObunalar/KursTolovlariHammasi";
+export { default as PremiumKurslar } from "../premiumMenuItemItems/PremiumKurslar/PremiumKurslar";
+export {default as ShaxsiyMentorlik} from "../premiumMenuItemItems/ShaxsiyMentor/ShaxsiyMentorlik";
+export {default as QoshimchaMateriallar} from "../premiumMenuItemItems/qoshimchaMateriallar/QoshimchaMateriallar";
+export {default as Shertifikatlar} from "../premiumMenuItemItems/Shertifikatlar/Shertifikatlar";
