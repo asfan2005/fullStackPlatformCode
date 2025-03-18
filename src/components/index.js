@@ -305,3 +305,4 @@ export { default as PremiumKurslar } from "../premiumMenuItemItems/PremiumKursla
 export {default as ShaxsiyMentorlik} from "../premiumMenuItemItems/ShaxsiyMentor/ShaxsiyMentorlik";
 export {default as QoshimchaMateriallar} from "../premiumMenuItemItems/qoshimchaMateriallar/QoshimchaMateriallar";
 export {default as Shertifikatlar} from "../premiumMenuItemItems/Shertifikatlar/Shertifikatlar";
+export {default as PremiumAmaliyot} from "../premiumMenuItemItems/PremiumAmaliyot/PremiumAmaliyot";
