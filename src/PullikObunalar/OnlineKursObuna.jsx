@@ -53,8 +53,8 @@ Rahmat!`;
       setLoading(true);
       const response = await axios.get('http://localhost:3000/api/payment-page/all');
       
-      if (response.data && response.data.payments) {
-        setPayments(response.data.payments);
+      if (response.data.success && response.data.data.payments) {
+        setPayments(response.data.data.payments);
       } else {
         setPayments([]);
       }
@@ -268,6 +268,12 @@ Rahmat!`;
     } catch (error) {
       return { days: 0, hours: 0, minutes: 0 };
     }
+  };
+
+  // Kvitansiya rasmini ko'rsatish uchun URL ni to'g'rilash
+  const getReceiptUrl = (payment) => {
+    if (!payment.receipt_url) return null;
+    return `http://localhost:3000${payment.receipt_url}`;
   };
 
   // Render payment table
@@ -751,23 +757,23 @@ Rahmat!`;
                 </span>
                 <h4 className="text-base sm:text-lg font-semibold text-gray-900">To'lov cheki</h4>
               </div>
-              {imageUrl ? (
+              {selectedPayment.receipt_url ? (
                 <div className="relative group">
                   <div className="aspect-[3/4] rounded-lg overflow-hidden bg-white shadow-sm border border-gray-100">
                     <img
-                      src={imageUrl}
+                      src={getReceiptUrl(selectedPayment)}
                       alt="To'lov cheki"
                       className="w-full h-full object-contain"
                       loading="lazy"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = '/placeholder-image.jpg';
+                        e.target.src = 'https://via.placeholder.com/300x400?text=Rasm+topilmadi';
                         e.target.className = "object-contain w-full h-full opacity-50";
                       }}
                     />
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <a 
-                        href={imageUrl} 
+                        href={getReceiptUrl(selectedPayment)} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="px-4 py-2 bg-white/90 rounded-lg text-sm font-medium text-gray-900 hover:bg-white transition-colors duration-200 transform hover:scale-105 shadow-sm"

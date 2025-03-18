@@ -142,10 +142,10 @@ function Shertifikatlar() {
 
   // Sertifikatlarni filtrlash
   const filteredCertificates = certificates.filter(certificate => {
-    const matchesSearch = certificate.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      certificate.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      certificate.instructor.toLowerCase().includes(searchQuery.toLowerCase());
-
+    const matchesSearch = certificate.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          certificate.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          certificate.instructor.toLowerCase().includes(searchQuery.toLowerCase());
+    
     return matchesSearch;
   });
 
@@ -473,9 +473,9 @@ function Shertifikatlar() {
   // Sertifikatni yuklab olish funksiyasini yangilash
   const handleDownloadCertificate = async () => {
     if (!certificateRef.current) return;
-
+    
     setIsDownloading(true);
-
+    
     try {
       // Animatsiya effektlarini o'chirish
       const originalClasses = certificateRef.current.className;
@@ -501,7 +501,7 @@ function Shertifikatlar() {
 
       // Animatsiya effektlarini qaytarish
       certificateRef.current.className = originalClasses;
-
+      
       // PDF yaratish
       const pdf = new jsPDF({
         orientation: 'landscape',
@@ -509,12 +509,12 @@ function Shertifikatlar() {
         format: 'a4',
         compress: true
       });
-
+      
       // PDF sifatini yaxshilash uchun sozlamalar
       const imgData = canvas.toDataURL('image/jpeg', 1.0);
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
-
+      
       // PDF metadatalarini qo'shish
       pdf.setProperties({
         title: `${selectedCertificate.title} Sertifikati`,
@@ -526,7 +526,7 @@ function Shertifikatlar() {
 
       // Rasmni PDF ga qo'shish
       pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-
+      
       // PDF ni yuklab olish
       pdf.save(`sertifikat_${selectedCertificate.title.replace(/\s+/g, '_')}_${generateCertificateNumber(selectedCertificate.id)}.pdf`);
 
@@ -586,7 +586,7 @@ function Shertifikatlar() {
               <p className="text-2xl font-bold text-gray-900">{certificates.length}</p>
             </div>
           </div>
-
+          
           <div className="bg-white rounded-2xl shadow-md p-6 flex items-center">
             <div className="bg-yellow-100 rounded-full p-4 mr-4">
               <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -596,13 +596,13 @@ function Shertifikatlar() {
             <div>
               <p className="text-gray-500 text-sm">O'rtacha ball</p>
               <p className="text-2xl font-bold text-gray-900">
-                {certificates.length > 0
-                  ? Math.round(certificates.reduce((acc, curr) => acc + curr.score, 0) / certificates.length)
+                {certificates.length > 0 
+                  ? Math.round(certificates.reduce((acc, curr) => acc + curr.score, 0) / certificates.length) 
                   : 0}
               </p>
             </div>
           </div>
-
+          
           <div className="bg-white rounded-2xl shadow-md p-6 flex items-center">
             <div className="bg-green-100 rounded-full p-4 mr-4">
               <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -648,8 +648,8 @@ function Shertifikatlar() {
           // Sertifikatlar ro'yxati
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredCertificates.map((certificate) => (
-              <div
-                key={certificate.id}
+              <div 
+                key={certificate.id} 
                 className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full border border-gray-100 transform hover:-translate-y-1 cursor-pointer group"
                 onClick={() => handleCertificateClick(certificate)}
               >
@@ -676,13 +676,13 @@ function Shertifikatlar() {
                     </div>
                   </div>
                 </div>
-
+                
                 <div className="p-6 flex-grow">
                   <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">
                     {certificate.title}
                   </h3>
                   <p className="text-gray-600 mb-4">{certificate.description}</p>
-
+                  
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center text-gray-600">
                       <svg className="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -690,21 +690,21 @@ function Shertifikatlar() {
                       </svg>
                       {certificate.instructor}
                     </div>
-
+                    
                     <div className="flex items-center text-gray-600">
                       <svg className="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                       {formatDate(certificate.date)}
                     </div>
-
+                    
                     <div className="flex items-center text-gray-600">
                       <svg className="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                       {certificate.duration}
                     </div>
-
+                    
                     <div className="flex items-center text-gray-600">
                       <svg className="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -713,7 +713,7 @@ function Shertifikatlar() {
                     </div>
                   </div>
                 </div>
-
+                
                 <div className="px-6 pb-6">
                   <button
                     className="w-full py-3 px-4 rounded-xl font-medium transition-all duration-300 flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white"
@@ -738,8 +738,8 @@ function Shertifikatlar() {
           marginRight: "200px",
         }} className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div
-              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity backdrop-blur-sm"
+            <div 
+              className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity backdrop-blur-sm" 
               aria-hidden="true"
               onClick={() => setShowModal(false)}
             ></div>
@@ -759,7 +759,7 @@ function Shertifikatlar() {
                   </svg>
                 </button>
               </div>
-
+              
               <div className="bg-gradient-to-br from-white to-indigo-50 p-6 sm:p-8">
                 <div className="flex flex-col md:flex-row gap-8">
                   <div className="md:w-1/2">
@@ -772,11 +772,11 @@ function Shertifikatlar() {
                       />
                     </div>
                   </div>
-
+                  
                   <div className="md:w-1/2">
                     <h2 className="text-2xl font-bold text-gray-900 mb-4">{selectedCertificate.title}</h2>
                     <p className="text-gray-600 mb-6">{selectedCertificate.description}</p>
-
+                    
                     <div className="grid grid-cols-2 gap-4 mb-6">
                       <div className="bg-gray-50 p-4 rounded-lg">
                         <p className="text-sm text-gray-500">O'qituvchi</p>
@@ -795,26 +795,26 @@ function Shertifikatlar() {
                         <p className="font-medium text-gray-900">{generateCertificateNumber(selectedCertificate.id)}</p>
                       </div>
                     </div>
-
+                    
                     <div className="bg-green-50 p-4 rounded-lg mb-6">
                       <div className="flex items-center justify-between">
                         <p className="text-sm text-gray-500">Umumiy ball</p>
                         <p className="font-bold text-green-700">{selectedCertificate.score}/100</p>
                       </div>
                       <div className="mt-2 bg-gray-200 rounded-full h-2.5">
-                        <div
-                          className="bg-green-600 h-2.5 rounded-full"
+                        <div 
+                          className="bg-green-600 h-2.5 rounded-full" 
                           style={{ width: `${selectedCertificate.score}%` }}
                         ></div>
                       </div>
                     </div>
-
+                    
                     <div className="mb-6">
                       <h3 className="text-lg font-medium text-gray-900 mb-3">O'zlashtirilgan ko'nikmalar</h3>
                       <div className="flex flex-wrap gap-2">
                         {selectedCertificate.skills.map((skill, index) => (
-                          <span
-                            key={index}
+                          <span 
+                            key={index} 
                             className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-sm font-medium"
                           >
                             {skill}
@@ -822,12 +822,12 @@ function Shertifikatlar() {
                         ))}
                       </div>
                     </div>
-
+                    
                     <div className="flex items-center mb-6">
                       <div className="mr-4">
-                        <img
-                          src={selectedCertificate.badge}
-                          alt="Badge"
+                        <img 
+                          src={selectedCertificate.badge} 
+                          alt="Badge" 
                           className="w-16 h-16 object-cover rounded-full border-2 border-indigo-500"
                           onError={(e) => {
                             e.target.onerror = null;
@@ -840,7 +840,7 @@ function Shertifikatlar() {
                         <p className="font-medium text-gray-900">{selectedCertificate.title} bo'yicha sertifikat</p>
                       </div>
                     </div>
-
+                    
                     <div className="flex flex-col sm:flex-row gap-4">
                       <button
                         className="flex-1 py-3 px-4 rounded-xl font-medium bg-indigo-600 hover:bg-indigo-700 text-white transition-all duration-300 flex items-center justify-center gap-2"
@@ -874,7 +874,7 @@ function Shertifikatlar() {
                         )}
                       </button>
                     </div>
-
+                    
                     <div className="mt-6 bg-blue-50 p-4 rounded-lg">
                       <div className="flex items-start">
                         <div className="flex-shrink-0">
@@ -892,7 +892,7 @@ function Shertifikatlar() {
                         </div>
                       </div>
                     </div>
-
+                    
                     <div className="mt-6 border-t border-gray-200 pt-6">
                       <h3 className="text-lg font-medium text-gray-900 mb-3">Kurs haqida qo'shimcha ma'lumot</h3>
                       <div className="grid grid-cols-2 gap-4">
@@ -964,7 +964,7 @@ function Shertifikatlar() {
           </div>
         </div>
       </div>
-
+      
       {/* Qo'shimcha ma'lumot */}
       <div className="max-w-7xl mx-auto mt-8 text-center">
         <p className="text-sm text-gray-500">

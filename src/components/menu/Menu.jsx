@@ -163,8 +163,8 @@ const adminMenuItems = [
     adminOnly: true,
     subItems: [
       { name: "Umumiy statistika", id: "general-stats" },
-      { name: "Premium statistika", id: "premium-stats" },
-      { name: "Faol foydalanuvchilar", id: "active-users" },
+      { name: "Premium statistika(300)", id: "premium-stats" },
+      { name: "Premium statistika(50)", id: "active-users" },
     ]
   },
   {

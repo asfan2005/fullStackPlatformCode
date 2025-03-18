@@ -306,3 +306,7 @@ export {default as ShaxsiyMentorlik} from "../premiumMenuItemItems/ShaxsiyMentor
 export {default as QoshimchaMateriallar} from "../premiumMenuItemItems/qoshimchaMateriallar/QoshimchaMateriallar";
 export {default as Shertifikatlar} from "../premiumMenuItemItems/Shertifikatlar/Shertifikatlar";
 export {default as PremiumAmaliyot} from "../premiumMenuItemItems/PremiumAmaliyot/PremiumAmaliyot";
+export {default as PremiumFoyda} from "../adminPage1/PremiumFoyda";
+export {default as UmumiyStatistika} from "../adminPage1/UmumiyStatistika";
+export {default as PremiumStatistika} from '../adminPage1/PremiumStatistika';
+export {default as PremiumStatistika50} from "../adminPage1/PremiumStatistika50";
