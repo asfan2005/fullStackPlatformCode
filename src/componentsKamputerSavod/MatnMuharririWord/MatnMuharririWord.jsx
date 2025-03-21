@@ -1,14 +1,54 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import wordProcessorData from './dataWordMatn'
 import wordRibbonData from './dataWordRibbon'
 import wordInsertData from './dataWordInsert'
-import { motion } from 'framer-motion'
+import wordVideoesData from './dataWordVideoes' // Video darslar import qilindi
+import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 
 function MatnMuharririWord() {
   const [activeSection, setActiveSection] = useState(null)
   const [hoveredIndex, setHoveredIndex] = useState(null)
+  const [activeVideoCategory, setActiveVideoCategory] = useState(1)
+  const [selectedVideo, setSelectedVideo] = useState(null)
+  const [searchTerm, setSearchTerm] = useState('')
+  const videoSectionRef = useRef(null)
   const navigate = useNavigate()
+
+  // Video kategoriyasiga qarab filtrlash
+  const getFilteredVideos = () => {
+    let filteredVideos = wordVideoesData.videos.filter(
+      video => video.categoryId === activeVideoCategory
+    )
+    
+    // Qidiruv so'zi bo'yicha filtrlash
+    if (searchTerm.trim() !== '') {
+      const searchLower = searchTerm.toLowerCase()
+      filteredVideos = filteredVideos.filter(
+        video => 
+          video.title.toLowerCase().includes(searchLower) || 
+          video.description.toLowerCase().includes(searchLower) ||
+          video.tags.some(tag => tag.toLowerCase().includes(searchLower))
+      )
+    }
+    
+    return filteredVideos
+  }
+
+  // Video bo'limiga o'tish
+  const scrollToVideoSection = () => {
+    videoSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  // Video modalini ochish
+  const openVideoModal = (video) => {
+    setSelectedVideo(video)
+  }
+
+  // Video modalini yopish
+  const closeVideoModal = () => {
+    setSelectedVideo(null)
+  }
 
   return (
     <div className="min-h-screen bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-indigo-200 via-purple-100 to-blue-100 py-12">
@@ -70,6 +110,19 @@ function MatnMuharririWord() {
             </p>
           </div>
         </motion.div>
+
+        {/* Quick Navigation - Video darslar bo'limiga o'tish tugmasi */}
+        <div className="flex justify-center mb-16">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={scrollToVideoSection}
+            className="px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-semibold shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-3"
+          >
+            <i className="fas fa-play-circle text-xl"></i>
+            Video Darslarni Ko'rish
+          </motion.button>
+        </div>
 
         {/* Enhanced Sections Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -177,6 +230,296 @@ function MatnMuharririWord() {
           ))}
         </div>
 
+        {/* Video Tutorials Section */}
+        <motion.div
+          ref={videoSectionRef}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-24 bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-xl rounded-3xl shadow-2xl p-12 border border-white/20"
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-500 to-indigo-600 bg-clip-text text-transparent mb-4">
+              {wordVideoesData.title} - Video Darslar
+            </h2>
+            <p className="text-xl text-gray-700 max-w-4xl mx-auto">
+              {wordVideoesData.description}
+            </p>
+          </div>
+
+          {/* Main Video */}
+          <div className="mb-16">
+            <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+              <iframe
+                className="w-full h-full"
+                src={wordVideoesData.mainVideoTutorial}
+                title="Main Video Tutorial"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+            <div className="mt-6 text-center">
+              <p className="text-lg text-blue-600 font-medium">
+                <i className="fas fa-info-circle mr-2"></i>
+                Word dasturining asosiy imkoniyatlari va funksiyalari bilan tanishish
+              </p>
+              <p className="text-gray-600 mt-2">
+                Oxirgi yangilanish: {wordVideoesData.lastUpdate} | Muallif: {wordVideoesData.author}
+              </p>
+            </div>
+          </div>
+
+          {/* Search & Categories Navigation */}
+          <div className="mb-12 space-y-6">
+            {/* Search Bar */}
+            <div className="bg-white/70 backdrop-blur-md p-4 rounded-xl shadow-md">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Video darsni qidirish..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full px-12 py-4 rounded-xl border border-blue-100 focus:border-blue-400 focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-300"
+                />
+                <i className="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-blue-500 text-lg"></i>
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <i className="fas fa-times"></i>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Categories Tabs */}
+            <div className="flex flex-wrap gap-4">
+              {wordVideoesData.categories.map((category) => (
+                <motion.button
+                  key={category.id}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setActiveVideoCategory(category.id)}
+                  className={`px-5 py-3 rounded-xl font-medium transition-all duration-300 flex items-center gap-2 ${
+                    activeVideoCategory === category.id
+                      ? "bg-blue-600 text-white shadow-lg"
+                      : "bg-white/70 text-gray-700 hover:bg-blue-50"
+                  }`}
+                >
+                  {category.id === 1 && <i className="fas fa-book-open"></i>}
+                  {category.id === 2 && <i className="fas fa-font"></i>}
+                  {category.id === 3 && <i className="fas fa-table"></i>}
+                  {category.id === 4 && <i className="fas fa-image"></i>}
+                  {category.id === 5 && <i className="fas fa-code"></i>}
+                  {category.title}
+                </motion.button>
+              ))}
+            </div>
+          </div>
+
+          {/* Active Category Info */}
+          <div className="mb-10 bg-blue-50/70 p-6 rounded-xl border border-blue-100">
+            <h3 className="text-2xl font-semibold text-blue-800 mb-2">
+              {wordVideoesData.categories.find(cat => cat.id === activeVideoCategory)?.title}
+            </h3>
+            <p className="text-gray-700">
+              {wordVideoesData.categories.find(cat => cat.id === activeVideoCategory)?.description}
+            </p>
+          </div>
+
+          {/* Video Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {getFilteredVideos().length > 0 ? (
+              getFilteredVideos().map((video) => (
+                <motion.div
+                  key={video.id}
+                  whileHover={{ y: -5 }}
+                  className="bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-gray-100"
+                >
+                  {/* Video Thumbnail with Play Button */}
+                  <div 
+                    className="relative cursor-pointer" 
+                    onClick={() => openVideoModal(video)}
+                  >
+                    <div className="aspect-video bg-gray-100 overflow-hidden relative">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <img 
+                          src={`https://img.youtube.com/vi/${video.videoUrl.split('/').pop()}/hqdefault.jpg`} 
+                          alt={video.title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.src = "https://via.placeholder.com/640x360?text=Video+Thumbnail";
+                          }}
+                        />
+                      </div>
+                      <div className="absolute inset-0 bg-black/30 flex items-center justify-center hover:bg-black/40 transition-all duration-300">
+                        <div className="bg-white/20 backdrop-blur-md p-5 rounded-full">
+                          <i className="fas fa-play text-white text-2xl"></i>
+                        </div>
+                      </div>
+                      {/* Duration Badge */}
+                      <div className="absolute bottom-3 right-3 bg-black/70 text-white px-2 py-1 rounded-md text-sm">
+                        {video.duration}
+                      </div>
+                      {/* Level Badge */}
+                      <div className="absolute top-3 left-3 bg-blue-600/90 text-white px-3 py-1 rounded-md text-sm font-medium">
+                        {video.level}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Video Info */}
+                  <div className="p-6">
+                    <h3 className="font-semibold text-xl text-gray-800 mb-2 line-clamp-2">
+                      {video.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4 line-clamp-3">
+                      {video.description}
+                    </p>
+                    
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {video.tags.slice(0, 3).map((tag, index) => (
+                        <span 
+                          key={index}
+                          className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                      {video.tags.length > 3 && (
+                        <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs">
+                          +{video.tags.length - 3}
+                        </span>
+                      )}
+                    </div>
+                    
+                    {/* Watch Button */}
+                    <button
+                      onClick={() => openVideoModal(video)}
+                      className="w-full py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg font-medium transition-all duration-300 hover:shadow-md flex items-center justify-center gap-2"
+                    >
+                      <i className="fas fa-play-circle"></i>
+                      Videoni ko'rish
+                    </button>
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              // No results message
+              <div className="col-span-full bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-lg text-center">
+                <i className="fas fa-search text-blue-500 text-5xl mb-4"></i>
+                <h3 className="text-2xl font-semibold text-gray-800 mb-4">Hech qanday video topilmadi</h3>
+                <p className="text-gray-600 mb-6">
+                  "{searchTerm}" so'rovi bo'yicha video darslar mavjud emas. Iltimos, boshqa kalit so'zlarni kiriting.
+                </p>
+                <button
+                  onClick={() => setSearchTerm('')}
+                  className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium transition-all duration-300 hover:bg-blue-700"
+                >
+                  Barcha videolarni ko'rsatish
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Popular Videos Section */}
+          <div className="mt-16">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="h-0.5 flex-grow bg-gradient-to-r from-blue-300 to-indigo-300"></div>
+              <h3 className="text-2xl font-bold text-gray-800 whitespace-nowrap">Eng mashxur videolar</h3>
+              <div className="h-0.5 flex-grow bg-gradient-to-r from-indigo-300 to-blue-300"></div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+              {wordVideoesData.popularVideos.map((videoId) => {
+                const video = wordVideoesData.videos.find((v) => v.id === videoId);
+                return (
+                  <motion.div
+                    key={video.id}
+                    whileHover={{ y: -5 }}
+                    className="bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg border border-gray-100"
+                  >
+                    {/* Video Thumbnail */}
+                    <div 
+                      className="relative cursor-pointer" 
+                      onClick={() => openVideoModal(video)}
+                    >
+                      <div className="aspect-video bg-gray-100 overflow-hidden relative">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <img 
+                            src={`https://img.youtube.com/vi/${video.videoUrl.split('/').pop()}/hqdefault.jpg`} 
+                            alt={video.title}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.src = "https://via.placeholder.com/640x360?text=Video+Thumbnail";
+                            }}
+                          />
+                        </div>
+                        <div className="absolute inset-0 bg-black/30 flex items-center justify-center hover:bg-black/40 transition-all duration-300">
+                          <div className="bg-white/20 backdrop-blur-md p-3 rounded-full">
+                            <i className="fas fa-play text-white"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Video Title */}
+                    <div className="p-4">
+                      <h3 className="font-medium text-gray-800 line-clamp-2">
+                        {video.title}
+                      </h3>
+                      <p className="text-sm text-gray-500 mt-1">
+                        {video.duration}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Recommended Courses */}
+          <div className="mt-16">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="h-0.5 flex-grow bg-gradient-to-r from-purple-300 to-pink-300"></div>
+              <h3 className="text-2xl font-bold text-gray-800 whitespace-nowrap">Tavsiya etilgan kurslar</h3>
+              <div className="h-0.5 flex-grow bg-gradient-to-r from-pink-300 to-purple-300"></div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {wordVideoesData.recommendedCourses.map((course) => (
+                <motion.a
+                  key={course.id}
+                  href={course.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.03 }}
+                  className="block bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl overflow-hidden shadow-lg text-white group"
+                >
+                  <div className="p-8">
+                    <h3 className="text-xl font-bold mb-4 group-hover:underline">
+                      {course.title}
+                    </h3>
+                    <p className="text-white/90 mb-6">
+                      {course.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm bg-white/20 px-3 py-1 rounded-full">
+                        Batafsil Ma'lumot
+                      </span>
+                      <i className="fas fa-arrow-right text-white/70 group-hover:translate-x-1 transition-transform duration-300"></i>
+                    </div>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
         {/* Word Ribbon Interface Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -230,7 +573,7 @@ function MatnMuharririWord() {
                             <ul className="space-y-1">
                               {tool.features.map((feature, i) => (
                                 <li key={i} className="text-sm text-gray-600 flex items-center gap-2">
-                                  <span className="text-blue-500">•</span>
+                                                                   <span className="text-blue-500">•</span>
                                   {typeof feature === 'string' ? feature : feature.description}
                                 </li>
                               ))}
@@ -782,6 +1125,118 @@ function MatnMuharririWord() {
             </div>
           </div>
         </motion.div>
+
+        {/* Video Modal */}
+        <AnimatePresence>
+          {selectedVideo && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+              onClick={closeVideoModal}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Modal Header */}
+                <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-5 relative">
+                  <button 
+                    onClick={closeVideoModal}
+                    className="absolute right-4 top-4 bg-white/20 w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
+                  >
+                    <i className="fas fa-times"></i>
+                  </button>
+                  <h3 className="text-xl font-bold pr-10">{selectedVideo.title}</h3>
+                  <div className="flex items-center gap-3 mt-2 text-white/80 text-sm">
+                    <span className="flex items-center gap-1">
+                      <i className="fas fa-clock"></i> {selectedVideo.duration}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <i className="fas fa-tag"></i> {selectedVideo.level}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Video Player */}
+                <div className="aspect-video bg-black w-full">
+                  <iframe
+                    className="w-full h-full"
+                    src={selectedVideo.videoUrl}
+                    title={selectedVideo.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+
+                {/* Video Details */}
+                <div className="p-6 overflow-y-auto">
+                  <h4 className="text-lg font-semibold text-gray-800 mb-3">Tavsif</h4>
+                  <p className="text-gray-700 mb-4">{selectedVideo.description}</p>
+                  
+                  {/* Tags */}
+                  <div className="mb-5">
+                    <h4 className="text-md font-semibold text-gray-800 mb-2">Teglar</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedVideo.tags.map((tag, index) => (
+                        <span 
+                          key={index}
+                          className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Related Category */}
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h4 className="text-md font-semibold text-gray-800 mb-2">Kategoriya</h4>
+                    <div className="flex items-center gap-2">
+                      <span className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium">
+                        {wordVideoesData.categories.find(cat => cat.id === selectedVideo.categoryId)?.title}
+                      </span>
+                      <button
+                        onClick={() => {
+                          setActiveVideoCategory(selectedVideo.categoryId);
+                          closeVideoModal();
+                        }}
+                        className="text-blue-600 text-sm hover:underline"
+                      >
+                        Shu kategoriyadagi boshqa videolar →
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Modal Footer */}
+                <div className="border-t border-gray-200 p-4 flex items-center justify-between bg-gray-50">
+                  <div className="flex gap-3">
+                    <button className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center gap-2 transition-colors">
+                      <i className="fas fa-share-alt"></i>
+                      <span>Ulashish</span>
+                    </button>
+                    <button className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg flex items-center gap-2 transition-colors">
+                      <i className="fas fa-bookmark"></i>
+                      <span>Saqlash</span>
+                    </button>
+                  </div>
+                  <button
+                    onClick={closeVideoModal}
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                  >
+                    Yopish
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   )
