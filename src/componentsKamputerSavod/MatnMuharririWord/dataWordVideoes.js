@@ -3,8 +3,8 @@ const wordVideoesData = {
     description: "Microsoft Word dasturi bo'yicha mukammal videodarslar to'plami. Boshlang'ich darajadan professional darajagacha bo'lgan to'liq o'quv kursi.",
     lastUpdate: "2024",
     author: "To'raqulov Asfandiyor Jaxongirovich",
-    mainImage: "https://images.unsplash.com/photo-1517842645767-c639042777db?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80",
-    mainVideoTutorial: "https://www.youtube.com/embed/Jw-xmPGMjrk",
+    mainImage: "https://i3.ytimg.com/vi/XQSiXXgKhsw/maxresdefault.jpg",
+    mainVideoTutorial: "https://www.youtube.com/embed/XQSiXXgKhsw",
     
     categories: [
       {
@@ -41,8 +41,8 @@ const wordVideoesData = {
         categoryId: 1,
         title: "Microsoft Word bilan tanishish",
         description: "Microsoft Word dasturining asosiy interfeysi, menyular va tugmalar bilan tanishish. Yangi hujjat yaratish va asosiy sozlamalar o'rnatish.",
-        videoUrl: "https://www.youtube.com/embed/Jw-xmPGMjrk",
-        thumbnailUrl: "https://img.youtube.com/vi/Jw-xmPGMjrk/hqdefault.jpg",
+        videoUrl: "https://www.youtube.com/embed/XQSiXXgKhsw",
+        thumbnailUrl: "https://img.youtube.com/vi/XQSiXXgKhsw/hqdefault.jpg",
         duration: "15:20",
         level: "Boshlang'ich",
         tags: ["asosiy", "boshlash", "interfeys", "tanishuv"]
@@ -63,8 +63,8 @@ const wordVideoesData = {
         categoryId: 1,
         title: "Word VBA dasturlash",
         description: "Microsoft Word dasturida VBA dasturlash va avtomatlashtirish bo'yicha chuqurlashtirilgan kurs.",
-        videoUrl: "https://www.youtube.com/embed/sMQUfmWNJU4",
-        thumbnailUrl: "https://img.youtube.com/vi/sMQUfmWNJU4/hqdefault.jpg",
+        videoUrl: "https://www.youtube.com/embed/aZcQc6nW0NI",
+        thumbnailUrl: "https://i3.ytimg.com/vi/aZcQc6nW0NI/maxresdefault.jpg",
         duration: "28:15",
         level: "Professional",
         tags: ["makros", "VBA", "avtomatlashtirish", "dasturlash"]
@@ -74,8 +74,8 @@ const wordVideoesData = {
         categoryId: 1,
         title: "Word dasturida dizayn qilish",
         description: "Professional hujjatlar, broshyuralar va marketingga oid materiallarni Word dasturida dizayn qilish.",
-        videoUrl: "https://www.youtube.com/embed/Pz0YRqBHSXM",
-        thumbnailUrl: "https://img.youtube.com/vi/Pz0YRqBHSXM/hqdefault.jpg",
+        videoUrl: "https://www.youtube.com/embed/yOhcSMAhISc",
+        thumbnailUrl: "https://i3.ytimg.com/vi/yOhcSMAhISc/maxresdefault.jpg",
         duration: "21:10",
         level: "O'rta",
         tags: ["dizayn", "hujjat", "broshyura", "marketing"]
@@ -85,8 +85,8 @@ const wordVideoesData = {
         categoryId: 1,
         title: "Akademik va ilmiy yozuv",
         description: "Ilmiy maqolalar, dissertatsiyalar va akademik hujjatlarni Word dasturida professional tayyorlash kursi.",
-        videoUrl: "https://www.youtube.com/embed/UYn_jtYY3_8",
-        thumbnailUrl: "https://img.youtube.com/vi/UYn_jtYY3_8/hqdefault.jpg",
+        videoUrl: "https://www.youtube.com/embed/NxGQJulpZjQ",
+        thumbnailUrl: "https://i3.ytimg.com/vi/NxGQJulpZjQ/maxresdefault.jpg",
         duration: "24:05",
         level: "Professional",
         tags: ["ilmiy", "maqola", "dissertatsiya", "akademik"]
@@ -96,32 +96,32 @@ const wordVideoesData = {
       {
         id: 6,
         categoryId: 2,
-        title: "Matn formatlash asoslari",
-        description: "Shrift turlari, o'lchamlari, rang va stillar bilan ishlash. Matnni qalin, kursiv va tagiga chizish kabi xususiyatlar.",
-        videoUrl: "https://www.youtube.com/embed/NmqOiUIKiPM",
-        thumbnailUrl: "https://img.youtube.com/vi/NmqOiUIKiPM/hqdefault.jpg",
+        title: "Microsoft Word - Matn formatlash",
+        description: "Microsoft Word dasturida matnlarni formatlash, shriftlar bilan ishlash va hujjat ko'rinishini sozlash.",
+        videoUrl: "https://www.youtube.com/embed/AUlyw_DlRS0",
+        thumbnailUrl: "https://i3.ytimg.com/vi/AUlyw_DlRS0/maxresdefault.jpg",
         duration: "17:30",
         level: "Boshlang'ich",
-        tags: ["formatting", "shrift", "stil", "qalin", "kursiv"]
+        tags: ["formatting", "shrift", "stil", "matn"]
       },
       {
         id: 7,
         categoryId: 2,
-        title: "Paragraf va sahifa formatlash",
-        description: "Paragraf chegaralari, interval, chiziqlar va sahifa joylashuvi. Qatorlar orasidagi masofani boshqarish va abzatslarni formatlash.",
-        videoUrl: "https://www.youtube.com/embed/1JuYQgpbrW0",
-        thumbnailUrl: "https://img.youtube.com/vi/1JuYQgpbrW0/hqdefault.jpg",
+        title: "Word - Paragraf va sahifa sozlamalari",
+        description: "Word dasturida paragraf va sahifa sozlamalarini o'rganish, professional hujjatlar yaratish.",
+        videoUrl: "https://www.youtube.com/embed/d5SXY0slSak",
+        thumbnailUrl: "https://i3.ytimg.com/vi/d5SXY0slSak/maxresdefault.jpg",
         duration: "16:40",
         level: "O'rta",
-        tags: ["paragraf", "sahifa", "interval", "joylashuv"]
+        tags: ["paragraf", "sahifa", "sozlama"]
       },
       {
         id: 8,
         categoryId: 2,
         title: "Hujjat stillarini yaratish va qo'llash",
         description: "Word'da stillar yaratish, tahrirlash va qo'llash. Mavjud stillarni moslashtirib olish va tez formatlash texnikalari.",
-        videoUrl: "https://www.youtube.com/embed/r6nFt9gGvlA",
-        thumbnailUrl: "https://img.youtube.com/vi/r6nFt9gGvlA/hqdefault.jpg",
+        videoUrl: "https://www.youtube.com/embed/E6enIebdupU",
+        thumbnailUrl: "https://i3.ytimg.com/vi/E6enIebdupU/maxresdefault.jpg",
         duration: "22:15",
         level: "O'rta",
         tags: ["stil", "formatlash", "shablon", "Style Gallery"]
@@ -131,8 +131,8 @@ const wordVideoesData = {
         categoryId: 2,
         title: "Mundarija va havola yaratish",
         description: "Avtomatik mundarija (Table of Contents) yaratish, havolalar va izohlar qo'shish bo'yicha videodars.",
-        videoUrl: "https://www.youtube.com/embed/aw2CImhONpw",
-        thumbnailUrl: "https://img.youtube.com/vi/aw2CImhONpw/hqdefault.jpg",
+        videoUrl: "https://www.youtube.com/embed/7_HDd2t56dw",
+        thumbnailUrl: "https://i3.ytimg.com/vi/7_HDd2t56dw/maxresdefault.jpg",
         duration: "19:25",
         level: "O'rta",
         tags: ["mundarija", "havola", "izoh", "TOC", "Navigation"]
@@ -142,8 +142,8 @@ const wordVideoesData = {
         categoryId: 2,
         title: "Sahifa raqamlari va kolontitullar",
         description: "Sahifa raqamlarini qo'shish, turli formatlar va joylashuvlar. Yuqori va pastki kolontitullar bilan ishlash.",
-        videoUrl: "https://www.youtube.com/embed/z7cKnGXDX5o",
-        thumbnailUrl: "https://img.youtube.com/vi/z7cKnGXDX5o/hqdefault.jpg",
+        videoUrl: "https://www.youtube.com/embed/d5SXY0slSak",
+        thumbnailUrl: "https://i3.ytimg.com/vi/d5SXY0slSak/maxresdefault.jpg",
         duration: "13:35",
         level: "O'rta",
         tags: ["sahifa raqami", "kolontitul", "header", "footer"]
@@ -153,24 +153,24 @@ const wordVideoesData = {
       {
         id: 11,
         categoryId: 3,
-        title: "Jadval yaratish va asosiy formatlash",
-        description: "Word dasturida jadvallar yaratish, ustun va qatorlar qo'shish, asosiy formatlash amaliyotlari.",
-        videoUrl: "https://www.youtube.com/embed/j8rLadOX0IY",
-        thumbnailUrl: "https://img.youtube.com/vi/j8rLadOX0IY/hqdefault.jpg",
+        title: "Word - Jadvallar bilan ishlash",
+        description: "Microsoft Word dasturida jadvallar yaratish va ular bilan ishlash bo'yicha to'liq kurs.",
+        videoUrl: "https://www.youtube.com/embed/vXFr_T8MZxE",
+        thumbnailUrl: "https://i3.ytimg.com/vi/vXFr_T8MZxE/maxresdefault.jpg",
         duration: "20:10",
         level: "O'rta",
-        tags: ["jadval", "yaratish", "ustun", "qator", "formatlash"]
+        tags: ["jadval", "table", "word"]
       },
       {
         id: 12,
         categoryId: 3,
-        title: "Jadval stillarini qo'llash",
-        description: "Jadvallarni professional ko'rinishga keltirish, stil va dizayn berish. Jadvallarning stillar galereyasi bilan ishlash.",
-        videoUrl: "https://www.youtube.com/embed/nkpx_HG-bX8",
-        thumbnailUrl: "https://img.youtube.com/vi/nkpx_HG-bX8/hqdefault.jpg",
+        title: "Word - Jadval stillarini qo'llash",
+        description: "Word jadvallarini professional ko'rinishga keltirish va stil berish usullari.",
+        videoUrl: "https://www.youtube.com/embed/YWA_bOTFAf0",
+        thumbnailUrl: "https://i3.ytimg.com/vi/YWA_bOTFAf0/maxresdefault.jpg",
         duration: "15:50",
         level: "O'rta",
-        tags: ["jadval", "stil", "dizayn", "formatlash"]
+        tags: ["jadval", "stil", "dizayn"]
       },
       {
         id: 13,
@@ -210,24 +210,24 @@ const wordVideoesData = {
       {
         id: 16,
         categoryId: 4,
-        title: "Rasmlarni qo'shish va formatlash",
-        description: "Word hujjatiga rasmlarni qo'shish, tahrirlash, o'lchamini o'zgartirish va formatlash usullari.",
-        videoUrl: "https://www.youtube.com/embed/AkXG3C_i0E0",
-        thumbnailUrl: "https://img.youtube.com/vi/AkXG3C_i0E0/hqdefault.jpg",
+        title: "Word - Rasmlar bilan ishlash",
+        description: "Microsoft Word dasturida rasmlar bilan ishlash, formatlash va joylash usullari.",
+        videoUrl: "https://www.youtube.com/embed/q1muqN5HE_g",
+        thumbnailUrl: "https://i3.ytimg.com/vi/q1muqN5HE_g/maxresdefault.jpg",
         duration: "16:45",
         level: "O'rta",
-        tags: ["rasm", "qo'shish", "formatlash", "tahrirlash"]
+        tags: ["rasm", "grafika", "formatlash"]
       },
       {
         id: 17,
         categoryId: 4,
-        title: "SmartArt diagrammalar",
-        description: "SmartArt yordamida diagrammalar, jarayonlar va tashkiliy tuzilmalarni yaratish va tahrirlash.",
-        videoUrl: "https://www.youtube.com/embed/MtYOiGoBmu0",
-        thumbnailUrl: "https://img.youtube.com/vi/MtYOiGoBmu0/hqdefault.jpg",
+        title: "Word - SmartArt va diagrammalar",
+        description: "Word dasturida SmartArt va diagrammalar yaratish, ularni tahrirlash usullari.",
+        videoUrl: "https://www.youtube.com/embed/kHh4dqRHp90",
+        thumbnailUrl: "https://i3.ytimg.com/vi/kHh4dqRHp90/maxresdefault.jpg",
         duration: "19:30",
         level: "O'rta",
-        tags: ["SmartArt", "diagram", "jarayon", "tuzilma"]
+        tags: ["SmartArt", "diagram", "grafika"]
       },
       {
         id: 18,
@@ -267,24 +267,24 @@ const wordVideoesData = {
       {
         id: 21,
         categoryId: 5,
-        title: "Makroslar yaratish va qo'llash",
-        description: "Word dasturida makroslar yaratish, yozish va avtomatlashtirish. VBA kodlar bilan ishlash asoslari.",
-        videoUrl: "https://www.youtube.com/embed/sMQUfmWNJU4",
-        thumbnailUrl: "https://img.youtube.com/vi/sMQUfmWNJU4/hqdefault.jpg",
+        title: "Word - Professional texnikalar",
+        description: "Microsoft Word dasturining professional darajadagi texnika va usullari.",
+        videoUrl: "https://www.youtube.com/embed/XcF-nLF6y_U",
+        thumbnailUrl: "https://i3.ytimg.com/vi/XcF-nLF6y_U/maxresdefault.jpg",
         duration: "28:15",
         level: "Professional",
-        tags: ["makros", "VBA", "avtomatlashtirish", "dasturlash"]
+        tags: ["pro", "texnika", "usul"]
       },
       {
         id: 22,
         categoryId: 5,
-        title: "Mail Merge (Massaviy xat jo'natish)",
-        description: "Bir xil formatdagi ko'plab hujjatlarni turli ma'lumotlar bilan avtomatik yaratish. Massaviy xatlar, konvertlar va sertifikatlar tayyorlash.",
-        videoUrl: "https://www.youtube.com/embed/kU_NeEsY5Rw",
-        thumbnailUrl: "https://img.youtube.com/vi/kU_NeEsY5Rw/hqdefault.jpg",
+        title: "Word - Mail Merge funksiyasi",
+        description: "Word dasturida Mail Merge funksiyasidan foydalanish va ommaviy hujjatlar yaratish.",
+        videoUrl: "https://www.youtube.com/embed/Z9X_Th1yuOE",
+        thumbnailUrl: "https://i3.ytimg.com/vi/Z9X_Th1yuOE/maxresdefault.jpg",
         duration: "24:30",
         level: "Professional",
-        tags: ["mail merge", "massaviy", "xat", "avtomatlashtirish"]
+        tags: ["mail merge", "ommaviy", "hujjat"]
       },
       {
         id: 23,
@@ -370,8 +370,8 @@ const wordVideoesData = {
         categoryId: 1,
         title: "Word 365 yangi xususiyatlari",
         description: "Microsoft Word 365 ning eng so'nggi imkoniyatlari va yangi xususiyatlari bilan tanishish. Cloud xususiyatlari va AI asosidagi vositalar.",
-        videoUrl: "https://www.youtube.com/embed/O0ry31R8Q4g",
-        thumbnailUrl: "https://img.youtube.com/vi/O0ry31R8Q4g/hqdefault.jpg",
+        videoUrl: "https://www.youtube.com/embed/ql5nxK1rBYg",
+        thumbnailUrl: "https://i3.ytimg.com/vi/ql5nxK1rBYg/maxresdefault.jpg",
         duration: "25:20",
         level: "O'rta",
         tags: ["Word 365", "yangiliklar", "cloud", "AI", "Editor"]
@@ -394,8 +394,8 @@ const wordVideoesData = {
         categoryId: 1,
         title: "Word dasturida effektiv ishlash sirlari",
         description: "Word dasturida ishlash samaradorligini oshirish bo'yicha eng yaxshi amaliyotlar va ko'p ishlatilmaydigan foydali xususiyatlar.",
-        videoUrl: "https://www.youtube.com/embed/v4pMY3-I7NY",
-        thumbnailUrl: "https://img.youtube.com/vi/v4pMY3-I7NY/hqdefault.jpg",
+        videoUrl: "https://www.youtube.com/embed/uSHUa2tljRs",
+        thumbnailUrl: "https://i3.ytimg.com/vi/uSHUa2tljRs/maxresdefault.jpg",
         duration: "23:15",
         level: "O'rta",
         tags: ["samaradorlik", "amaliyot", "sirlar", "maslahatlar"]
