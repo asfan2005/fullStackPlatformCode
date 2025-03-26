@@ -3,16 +3,99 @@ import Menu from "../menu/Menu";
 import Section from "../section/Section";
 import { ListBulletIcon, XMarkIcon, ChatBubbleLeftRightIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import FrontendPaymentSection from '../../kursTolovlar/frontEnd/FrontEndKurslar';
+import axios from "axios";
 
 function Main() {
   const [currentPage, setCurrentPage] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [chatMessages, setChatMessages] = useState([
-    { id: 1, text: "Assalomu alaykum! Qanday yordam bera olaman?", isAdmin: true, time: "09:30" },
-  ]);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
   const chatEndRef = useRef(null);
+
+  useEffect(() => {
+    setError(null);
+    
+    try {
+      const userData = localStorage.getItem('user');
+      if (userData) {
+        setUser(JSON.parse(userData));
+      }
+    } catch (err) {
+      console.error("Foydalanuvchi ma'lumotlarini yuklashda xatolik:", err);
+    }
+    
+    fetchUserMessages();
+  }, []);
+
+  const fetchUserMessages = async () => {
+    setIsLoading(true);
+    try {
+      const userData = localStorage.getItem('user');
+      const userId = userData ? JSON.parse(userData).id : 'guest';
+      
+      const response = await axios.get(`http://localhost:3000/api/messages/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      
+      if (response.data && Array.isArray(response.data)) {
+        if (response.data.length === 0) {
+          // Agar xabarlar bo'sh bo'lsa, dastlabki xabarni ko'rsatish
+          setChatMessages([
+            {
+              id: 1,
+              text: "Assalomu alaykum! CodeShef.uz web sitega xush kelibsiz! Sizga qanday yordam bera olaman?",
+              isAdmin: true,
+              time: new Date().toLocaleTimeString([], { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false 
+              })
+            }
+          ]);
+        } else {
+          setChatMessages(response.data);
+        }
+      } else {
+        // Agar response to'g'ri formatda bo'lmasa, dastlabki xabarni ko'rsatish
+        setChatMessages([
+          {
+            id: 1,
+            text: "Assalomu alaykum! CodeShef.uz web sitega xush kelibsiz! Sizga qanday yordam bera olaman?",
+            isAdmin: true,
+            time: new Date().toLocaleTimeString([], { 
+              hour: '2-digit', 
+              minute: '2-digit',
+              hour12: false 
+            })
+          }
+        ]);
+      }
+    } catch (err) {
+      console.error("Xabarlarni yuklashda xatolik:", err);
+      setError("Xabarlarni yuklashda xatolik yuz berdi.");
+      // Xatolik yuz berganda ham dastlabki xabarni ko'rsatish
+      setChatMessages([
+        {
+          id: 1,
+          text: "Assalomu alaykum! CodeShef.uz web sitega xush kelibsiz! Sizga qanday yordam bera olaman?",
+          isAdmin: true,
+          time: new Date().toLocaleTimeString([], { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            hour12: false 
+          })
+        }
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -20,25 +103,101 @@ function Main() {
 
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
+    if (!isChatOpen) {
+      fetchUserMessages();
+    }
   };
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (message.trim() === "") return;
-
-    // Add user message
+    
+    if (!message.trim()) return;
+    
+    const currentTime = new Date().toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false 
+    });
+    
+    const userData = localStorage.getItem('user');
+    const userId = userData ? JSON.parse(userData).id : 'guest';
+    
     const newUserMessage = {
-      id: chatMessages.length + 1,
-      text: message,
+      id: Date.now(),
+      text: message.trim(),
       isAdmin: false,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      time: currentTime,
+      userId: userId,
+      status: 'sending'
     };
     
-    setChatMessages([...chatMessages, newUserMessage]);
-    setMessage("");
+    try {
+      // UI ga xabarni qo'shish
+      setChatMessages(prevMessages => {
+        const messages = Array.isArray(prevMessages) ? prevMessages : [];
+        return [...messages, newUserMessage];
+      });
+      
+      setMessage("");
+      
+      // Xabarni serverga yuborish
+      const response = await axios({
+        method: 'POST',
+        url: 'http://localhost:3000/api/messages',
+        data: {
+          text: newUserMessage.text,
+          userId: userId,
+          isAdmin: false,
+          time: currentTime
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        timeout: 15000
+      });
+      
+      if (!response.data) {
+        throw new Error('Serverdan javob olinmadi');
+      }
+      
+      // Xabar statusini yangilash
+      setChatMessages(prevMessages => 
+        prevMessages.map(msg => 
+          msg.id === newUserMessage.id 
+            ? { ...msg, status: 'sent' } 
+            : msg
+        )
+      );
+      
+      // Admin javobini generatsiya qilish
+      setTimeout(() => {
+        generateAdminResponse(userId);
+      }, 1000);
+      
+    } catch (error) {
+      console.error("Xabar yuborishda xatolik:", error);
+      
+      setChatMessages(prevMessages => {
+        const errorMessage = {
+          id: Date.now(),
+          text: "Xabar yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
+          isAdmin: true,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          status: 'error'
+        };
+        
+        return prevMessages.map(msg => 
+          msg.id === newUserMessage.id 
+            ? { ...msg, status: 'error' } 
+            : msg
+        ).concat(errorMessage);
+      });
+    }
+  };
 
-    // Simulate admin response after a short delay
-    setTimeout(() => {
+  const generateAdminResponse = async (userId) => {
+    try {
       const responses = [
         "Savolingiz uchun rahmat! Tez orada javob beramiz.",
         "Bu haqida ko'proq ma'lumot berishingiz mumkinmi?",
@@ -48,24 +207,141 @@ function Main() {
       ];
       
       const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+      const adminResponseTime = new Date().toLocaleTimeString([], { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false 
+      });
       
       const adminResponse = {
-        id: chatMessages.length + 2,
+        id: Date.now(),
         text: randomResponse,
         isAdmin: true,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        time: adminResponseTime,
+        userId: userId,
+        status: 'sending'
       };
       
+      // UI ga admin javobini qo'shish
       setChatMessages(prevMessages => [...prevMessages, adminResponse]);
-    }, 1000);
+      
+      // Admin javobini serverga yuborish
+      const response = await axios({
+        method: 'POST',
+        url: 'http://localhost:3000/api/messages',
+        data: {
+          text: randomResponse,
+          userId: userId,
+          isAdmin: true,
+          time: adminResponseTime
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        timeout: 15000
+      });
+      
+      // Admin xabari statusini yangilash
+      setChatMessages(prevMessages => 
+        prevMessages.map(msg => 
+          msg.id === adminResponse.id 
+            ? { ...msg, status: 'sent' } 
+            : msg
+        )
+      );
+      
+    } catch (error) {
+      console.error("Admin javobini yuborishda xatolik:", error);
+      
+      setChatMessages(prevMessages => {
+        const errorMessage = {
+          id: Date.now(),
+          text: "Admin javobini yuborishda xatolik yuz berdi.",
+          isAdmin: true,
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          status: 'error'
+        };
+        return [...prevMessages, errorMessage];
+      });
+    }
   };
 
-  // Auto-scroll to the bottom of the chat when new messages arrive
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatMessages]);
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem('user');
+      setUser(null);
+      setChatMessages([
+        { id: 1, text: "Assalomu alaykum! Qanday yordam bera olaman?", isAdmin: true, time: "09:30" },
+      ]);
+    } catch (err) {
+      console.error("Tizimdan chiqishda xatolik:", err);
+    }
+  };
 
-  // Modify the renderContent function to handle unknown pages
+  const renderChatMessages = () => {
+    if (isLoading) {
+      return (
+        <div className="flex justify-center items-center h-full">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div>
+        </div>
+      );
+    }
+    
+    if (error) {
+      return (
+        <div className="text-center p-4 text-red-500">
+          <p>{error}</p>
+          <button 
+            onClick={fetchUserMessages} 
+            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          >
+            Qayta urinish
+          </button>
+        </div>
+      );
+    }
+    
+    if (!chatMessages || !Array.isArray(chatMessages) || chatMessages.length === 0) {
+      return (
+        <div className="flex justify-center items-center h-full text-gray-500">
+          <p>Hozircha xabarlar yo'q. Yangi xabar yuboring!</p>
+        </div>
+      );
+    }
+    
+    return chatMessages.map((msg) => (
+      <div
+        key={msg.id}
+        className={`mb-4 flex ${msg.isAdmin ? "justify-start" : "justify-end"}`}
+      >
+        {msg.isAdmin && (
+          <div className="h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-2 flex-shrink-0">
+            <span className="text-xs font-bold">A</span>
+          </div>
+        )}
+        <div
+          className={`rounded-lg px-4 py-2 max-w-[80%] shadow-sm ${
+            msg.isAdmin
+              ? "bg-white text-gray-800 rounded-tl-none"
+              : "bg-blue-600 text-white rounded-tr-none"
+          }`}
+        >
+          <p className="break-words">{msg.text}</p>
+          <span className={`text-xs block mt-1 ${msg.isAdmin ? "text-gray-500" : "text-blue-100"}`}>
+            {msg.time}
+          </span>
+        </div>
+      </div>
+    ));
+  };
+
+  useEffect(() => {
+    if (!isLoading && chatEndRef.current) {
+      chatEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [chatMessages, isLoading]);
+
   const renderContent = () => {
     switch (currentPage) {
       case 'home':
@@ -88,21 +364,18 @@ function Main() {
       case 'account-balance':
         return <PaymentContent />;
       default:
-        // Instead of returning HomeContent for unknown page, 
-        // let's return a proper "Page Not Found" component
         return <PageNotFoundContent />;
     }
   };
 
   return (
     <div className="relative flex h-[calc(100vh-5.5rem)]">
-      {/* Menu toggle icon for mobile view */}
       <button
         style={{
           position: "absolute",
           top: "10px",
           left: "90%",
-          zIndex: 50, // Equivalent of z-50 in Tailwind
+          zIndex: 50,
         }}
         className="md:hidden p-2 bg-gray-200 rounded-md"
         onClick={toggleMenu}
@@ -114,7 +387,6 @@ function Main() {
         )}
       </button>
 
-      {/* Menu component with conditional rendering */}
       <div
         className={`fixed md:static w-[75%] md:w-[20%] bg-gray-100 h-full z-40 transition-transform transform ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
@@ -127,14 +399,12 @@ function Main() {
         />
       </div>
 
-      {/* Section component - Adding key to force re-render when page changes */}
       <div className="flex-1 overflow-auto z-10">
         <Section currentPage={currentPage} key={currentPage}>
           {renderContent()}
         </Section>
       </div>
 
-      {/* Overlay for mobile menu */}
       {isMenuOpen && (
         <div
           className="fixed inset-0 bg-black opacity-50 z-30 md:hidden"
@@ -142,7 +412,6 @@ function Main() {
         ></div>
       )}
 
-      {/* Chat button - Updated z-index to 9999 */}
       <button
         onClick={toggleChat}
         className="fixed right-6 bottom-6 p-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg z-[9999] transition-all duration-300 transform hover:scale-110 flex items-center gap-2"
@@ -152,10 +421,8 @@ function Main() {
         <span className="text-sm font-medium hidden md:inline">Yordam</span>
       </button>
 
-      {/* Chat window - Updated z-index to 9999 and improved positioning */}
       {isChatOpen && (
         <div className="fixed right-6 bottom-20 w-full sm:w-96 bg-white rounded-lg shadow-2xl overflow-hidden z-[9999] border border-gray-200 flex flex-col max-h-[500px] animate-fadeIn">
-          {/* Chat header - Updated with gradient background */}
           <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-3 flex justify-between items-center">
             <div className="flex items-center">
               <div className="h-10 w-10 rounded-full bg-white text-blue-600 flex items-center justify-center mr-3 shadow-md">
@@ -163,7 +430,9 @@ function Main() {
               </div>
               <div>
                 <h3 className="font-bold">Yordam markazi</h3>
-                <p className="text-xs text-blue-100">Online • Tez javob beramiz</p>
+                <p className="text-xs text-blue-100">
+                  {user ? `${user.name || user.id || 'Foydalanuvchi'} • Online` : 'Online • Tez javob beramiz'}
+                </p>
               </div>
             </div>
             <button onClick={toggleChat} className="text-white hover:text-gray-200 transition-colors">
@@ -171,7 +440,6 @@ function Main() {
             </button>
           </div>
 
-          {/* Chat messages - Improved styling */}
           <div 
             className="p-4 flex-1 overflow-y-auto bg-gray-50" 
             style={{ 
@@ -181,48 +449,60 @@ function Main() {
               backgroundSize: "cover"
             }}
           >
-            {chatMessages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`mb-4 flex ${msg.isAdmin ? "justify-start" : "justify-end"}`}
-              >
-                {msg.isAdmin && (
-                  <div className="h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-2 flex-shrink-0">
-                    <span className="text-xs font-bold">A</span>
-                  </div>
-                )}
-                <div
-                  className={`rounded-lg px-4 py-2 max-w-[80%] shadow-sm ${
-                    msg.isAdmin
-                      ? "bg-white text-gray-800 rounded-tl-none"
-                      : "bg-blue-600 text-white rounded-tr-none"
-                  }`}
-                >
-                  <p className="break-words">{msg.text}</p>
-                  <span className={`text-xs block mt-1 ${msg.isAdmin ? "text-gray-500" : "text-blue-100"}`}>
-                    {msg.time}
-                  </span>
-                </div>
-              </div>
-            ))}
+            {renderChatMessages()}
             <div ref={chatEndRef} />
           </div>
 
-          {/* Chat input - Enhanced with emojis and styling */}
+          {!user && (
+            <div className="bg-yellow-50 border-t border-yellow-200 px-4 py-2">
+              <p className="text-sm text-yellow-700">
+                <span className="font-medium">Eslatma:</span> Xabar tarixini saqlash uchun tizimga kiring.
+                <button className="ml-2 text-blue-600 hover:underline">Kirish</button>
+              </p>
+            </div>
+          )}
+
           <form onSubmit={handleSendMessage} className="border-t border-gray-200 p-4 bg-white">
             <div className="flex flex-col">
               <div className="flex items-center mb-2">
                 <div className="flex space-x-2 text-gray-500">
-                  <button type="button" className="hover:text-blue-600 transition-colors" title="Jilmayish">
+                  <button 
+                    type="button" 
+                    className="hover:text-blue-600 transition-colors" 
+                    title="Jilmayish"
+                    onClick={() => setMessage(prev => prev + "😊")}
+                  >
                     😊
                   </button>
-                  <button type="button" className="hover:text-blue-600 transition-colors" title="Qo'llar">
+                  <button 
+                    type="button" 
+                    className="hover:text-blue-600 transition-colors" 
+                    title="Qo'llar"
+                    onClick={() => setMessage(prev => prev + "👍")}
+                  >
                     👍
                   </button>
-                  <button type="button" className="hover:text-blue-600 transition-colors" title="Rahmat">
+                  <button 
+                    type="button" 
+                    className="hover:text-blue-600 transition-colors" 
+                    title="Rahmat"
+                    onClick={() => setMessage(prev => prev + "🙏")}
+                  >
                     🙏
                   </button>
                 </div>
+                
+                {user && (
+                  <div className="ml-auto">
+                    <button 
+                      type="button" 
+                      onClick={handleLogout} 
+                      className="text-xs text-gray-500 hover:text-red-500"
+                    >
+                      Chiqish
+                    </button>
+                  </div>
+                )}
               </div>
               <div className="flex">
                 <input
@@ -252,7 +532,6 @@ function Main() {
   );
 }
 
-// Home content
 const HomeContent = () => (
   <Section title="Bosh sahifa" subtitle="O'zbekistondagi eng yaxshi dasturlash platformasiga xush kelibsiz!">
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -283,7 +562,6 @@ const HomeContent = () => (
   </Section>
 );
 
-// Frontend content
 const FrontendContent = () => (
   <Section title="Frontend dasturlash" subtitle="Web saytlar yaratish uchun frontend texnologiyalari">
     <div className="bg-white p-6 rounded-lg shadow-md">
@@ -293,7 +571,6 @@ const FrontendContent = () => (
   </Section>
 );
 
-// Backend content
 const BackendContent = () => (
   <Section title="Backend dasturlash" subtitle="Server tomonidagi dasturlash va ma'lumotlar bazasi">
     <div className="bg-white p-6 rounded-lg shadow-md">
@@ -303,7 +580,6 @@ const BackendContent = () => (
   </Section>
 );
 
-// Mobile content
 const MobileContent = () => (
   <Section title="Mobile dasturlash" subtitle="iOS va Android uchun mobil ilovalar yaratish">
     <div className="bg-white p-6 rounded-lg shadow-md">
@@ -313,7 +589,6 @@ const MobileContent = () => (
   </Section>
 );
 
-// Computer literacy content
 const ComputerLiteracyContent = () => (
   <Section title="Kompyuter savodxonligi" subtitle="Kompyuter va dasturlash asoslari">
     <div className="bg-white p-6 rounded-lg shadow-md">
@@ -323,7 +598,6 @@ const ComputerLiteracyContent = () => (
   </Section>
 );
 
-// Practice content
 const PracticeContent = () => (
   <Section title="Amaliyot" subtitle="Amaliy loyihalar va mashqlar">
     <div className="bg-white p-6 rounded-lg shadow-md">
@@ -333,7 +607,6 @@ const PracticeContent = () => (
   </Section>
 );
 
-// Codes content
 const CodesContent = () => (
   <Section title="Kodlar" subtitle="Tayyor kod namunalari va snippetlar">
     <div className="bg-white p-6 rounded-lg shadow-md">
@@ -343,7 +616,6 @@ const CodesContent = () => (
   </Section>
 );
 
-// Payment content
 const PaymentContent = () => (
   <Section title="To'lovlar" subtitle="Kurslar va xizmatlar uchun to'lovlar">
     <div>
@@ -352,7 +624,6 @@ const PaymentContent = () => (
   </Section>
 );
 
-// Add a Page Not Found component
 const PageNotFoundContent = () => (
   <div className="flex flex-col items-center justify-center h-full text-center p-6">
     <div className="bg-white p-8 rounded-lg shadow-lg max-w-xl">
@@ -371,7 +642,6 @@ const PageNotFoundContent = () => (
   </div>
 );
 
-// Add CSS animations at the end of the file
 const style = document.createElement('style');
 style.textContent = `
   @keyframes fadeIn {
