@@ -448,54 +448,81 @@ function PaymentPage({ plan, onClose }) {
         setIsSubmitting(true);
 
         try {
-            const newTransactionId = Math.random().toString(36).substr(2, 9);
+            // Validatsiya
+            if (!formData.fullName?.trim()) {
+                throw new Error("Iltimos, to'liq ismingizni kiriting");
+            }
+            if (!formData.telegramUsername?.trim()) {
+                throw new Error("Iltimos, Telegram username kiriting");
+            }
+            if (!formData.phoneNumber?.trim()) {
+                throw new Error("Iltimos, telefon raqamingizni kiriting");
+            }
+            if (!formData.image) {
+                throw new Error("Iltimos, to'lov chekini yuklang");
+            }
+
+            // FormData obyekti yaratish
             const formDataToSend = new FormData();
             
-            if (formData.image) {
-                formDataToSend.append('receipt', formData.image);
-            }
+            // Rasm faylini qo'shish
+            formDataToSend.append('receipt', formData.image);
             
-            formDataToSend.append('transactionId', newTransactionId);
-            formDataToSend.append('timestamp', new Date().toISOString());
-            formDataToSend.append('status', 'pending');
-            
-            // Telefon raqamini to'g'ri formatda yuborish
-            const paymentDataObj = {
-                fullName: formData.fullName,
-                telegramUsername: formData.telegramUsername,
-                phoneNumber: formData.phoneNumber, // Bu endi +998 bilan keladi
-                cardNumber: formData.cardNumber,
-                cardOwner: formData.cardOwner,
-                planName: formData.planName,
-                planPrice: formData.planPrice,
-                paymentDate: new Date().toISOString()
+            // To'lov ma'lumotlarini tayyorlash
+            const paymentData = {
+                transactionId: `tx-${Date.now()}`,
+                fullName: formData.fullName.trim(),
+                telegramUsername: formData.telegramUsername.trim().replace('@', ''),
+                phoneNumber: formData.phoneNumber.trim(),
+                cardNumber: formData.cardNumber.trim(),
+                cardOwner: formData.cardOwner.trim(),
+                planName: formData.planName || "Premium",
+                planPrice: formData.planPrice || "50,000 so'm",
+                status: "pending"
             };
             
-            formDataToSend.append('paymentData', JSON.stringify(paymentDataObj));
-            
-            const response = await axios.post(
-                'http://localhost:3000/api/payments/with-receipt',
-                formDataToSend,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-            );
-            
+            // JSON ma'lumotlarini qo'shish
+            formDataToSend.append('paymentData', JSON.stringify(paymentData));
+
+            // Log - yuborilayotgan ma'lumotlar
+            console.log('Yuborilayotgan ma\'lumotlar:', paymentData);
+            console.log('Rasm fayli:', formData.image.name, 'hajmi:', formData.image.size);
+
+            // Serverga yuborish
+            const response = await axios({
+                method: 'POST',
+                url: 'http://localhost:3000/api/payments/with-receipt',
+                data: formDataToSend,
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                timeout: 30000
+            });
+
+            console.log('Server javobi:', response.data);
+
             if (response.data.success) {
                 setShowSuccessModal(true);
+                showNotification({
+                    type: 'success',
+                    title: 'Muvaffaqiyatli',
+                    message: 'To\'lov muvaffaqiyatli yuborildi'
+                });
                 resetForm();
-                // To'lov yuborilgandan keyin statusni tekshirish
                 await checkPaymentStatus();
             }
-            
+
         } catch (error) {
             console.error("TO'LOV XATOSI:", error);
-            let errorMessage = "To'lov jarayonida xatolik yuz berdi.";
+            
+            // Xatolik xabarini ko'rsatish
+            let errorMessage = "To'lov jarayonida xatolik yuz berdi";
             
             if (error.response) {
+                console.log('Server xatolik ma\'lumotlari:', error.response.data);
                 errorMessage = error.response.data.message || errorMessage;
+            } else if (error.message) {
+                errorMessage = error.message;
             }
             
             showNotification({
@@ -851,9 +878,9 @@ function PaymentPage({ plan, onClose }) {
                                     >
                                         {isSubmitting ? (
                                             <div className="flex items-center justify-center space-x-3">
-                                                <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                                <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+                                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                 </svg>
                                                 <span>To'lov amalga oshirilmoqda...</span>
                                             </div>

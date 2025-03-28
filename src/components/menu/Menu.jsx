@@ -409,6 +409,19 @@ function Menu({ setCurrentPage, currentPage, closeMenu }) {
     return `${baseStyles} ${activeStyles} ${!isActive ? hoverStyles : ""}`;
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    const cardNumber = e.target.cardNumber.value.replace(/\s/g, '');
+    
+    if (!/^8600\d{12}$/.test(cardNumber)) {
+      alert("Noto'g'ri karta raqami. Karta raqami 8600 bilan boshlanishi va 16 ta raqamdan iborat bo'lishi kerak");
+      return;
+    }
+    
+    // To'lovni yuborish...
+  };
+
   return (
     <nav className="bg-white text-gray-800 h-full py-4 px-3 shadow-lg overflow-y-auto border-r border-gray-200">
       <div className="space-y-2">

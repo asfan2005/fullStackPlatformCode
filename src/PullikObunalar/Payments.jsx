@@ -33,7 +33,33 @@ export default function AdminPaymentsPanel() {
       }
       
       const data = await response.json();
-      setPayments(data.payments || []);
+      
+      // Ma'lumotlarni to'g'ri formatlash va qo'shimcha maydonlar qo'shish
+      const formattedPayments = (data.payments || []).map(payment => {
+        // Sana formatini o'zgartirish
+        const paymentDate = new Date(payment.payment_date);
+        const formattedDate = paymentDate.toLocaleString('uz-UZ');
+        
+        // Rasm URL manzilini yaratish
+        let receiptImageUrl = null;
+        
+        // receipt_filename mavjud bo'lsa, undan foydalanish
+        if (payment.receipt_filename) {
+          receiptImageUrl = `http://localhost:3000/uploads/receipts/${payment.receipt_filename}`;
+        }
+        // Eski tizim uchun receipt_image_filename ham tekshirish
+        else if (payment.receipt_image_filename) {
+          receiptImageUrl = `http://localhost:3000/uploads/receipts/${payment.receipt_image_filename}`;
+        }
+        
+        return {
+          ...payment,
+          formattedDate,
+          receiptImageUrl
+        };
+      });
+      
+      setPayments(formattedPayments);
       setLoading(false);
     } catch (err) {
       setError(err.message);
@@ -67,24 +93,79 @@ export default function AdminPaymentsPanel() {
 
   const handleStatusChange = async (paymentId, newStatus) => {
     try {
-        const response = await axios.put(
-            `http://localhost:3000/api/payments/status/${paymentId}`,
-            { status: newStatus }
-        );
+      console.log(`To'lov ID ${paymentId} ni ${newStatus} holatiga o'zgartirish...`);
+      
+      // To'lov holatini o'zgartirish uchun so'rov yuborish
+      const response = await axios({
+        method: 'PUT',
+        url: `http://localhost:3000/api/payments/status/${paymentId}`,
+        data: { status: newStatus },
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        // So'rovni o'z vaqtida yakunlash uchun timeout qo'shish
+        timeout: 15000
+      });
+      
+      console.log('Serverdan qaytgan javob:', response.data);
 
-        if (response.data.success) {
-            // To'lovlar ro'yxatini yangilash
-            setPayments(payments.map(payment => 
-                payment.id === paymentId 
-                    ? { ...payment, status: newStatus }
-                    : payment
-            ));
-            
-            toast.success("To'lov holati muvaffaqiyatli yangilandi");
+      // Agar so'rov muvaffaqiyatli bo'lsa
+      if (response.data.success) {
+        // UI ni yangilash
+        setPayments(prevPayments => 
+          prevPayments.map(payment => 
+            payment.id === paymentId 
+              ? { ...payment, status: newStatus }
+              : payment
+          )
+        );
+        
+        // Agar modal ochiq va tanlangan to'lov o'zgartirilayotgan bo'lsa, modal ma'lumotlarini ham yangilash
+        if (showModal && selectedPayment && selectedPayment.id === paymentId) {
+          setSelectedPayment(prevPayment => ({
+            ...prevPayment,
+            status: newStatus
+          }));
         }
+        
+        // Muvaffaqiyatli xabar ko'rsatish
+        toast.success("To'lov holati muvaffaqiyatli yangilandi", {
+          duration: 3000
+        });
+      } else {
+        // Backend xato qaytarganda
+        throw new Error(response.data.message || "To'lov holatini yangilashda xatolik");
+      }
     } catch (error) {
-        console.error("Status yangilashda xatolik:", error);
-        toast.error("To'lov holatini yangilashda xatolik yuz berdi");
+      console.error("Status yangilashda xatolik:", error);
+      
+      // Xatolik turi va ma'lumoti bo'yicha xabar ko'rsatish
+      let errorMessage = "To'lov holatini yangilashda xatolik yuz berdi";
+      
+      if (error.response) {
+        // Server javob qaytargan, lekin muvaffaqiyatsiz (4xx, 5xx)
+        console.error('Server javobi:', error.response.data);
+        errorMessage = error.response.data?.message || `Server xatoligi: ${error.response.status}`;
+        
+        // Ma'lumotlar bazasi cheklovi haqida xatolik kelganda
+        if (error.response.data?.error && error.response.data.error.includes('check constraint')) {
+          errorMessage = `To'lov statusini o'zgartirib bo'lmadi. Ma'lumotlar bazasi cheklovi buzildi.`;
+        }
+      } else if (error.request) {
+        // So'rov yuborilgan, lekin javob olinmagan
+        errorMessage = "Serverdan javob olinmadi. Internetni tekshiring";
+      } else {
+        // So'rov yaratishda muammo
+        errorMessage = error.message || "Noma'lum xatolik";
+      }
+      
+      // Xatolik haqida xabar ko'rsatish
+      toast.error(errorMessage, {
+        duration: 5000
+      });
+      
+      // Foydalanuvchiga ko'proq ma'lumot berish uchun console.log
+      console.log('To\'liq xatolik:', error);
     }
   };
 
@@ -96,65 +177,83 @@ export default function AdminPaymentsPanel() {
     try {
       setSendingConfirmation(true);
       
-      // Tasdiqlash xabarini yuborish
-      const response = await fetch(`http://localhost:3000/api/payments/confirm/${selectedPayment.id}`, {
+      console.log(`To'lov #${selectedPayment.id} uchun tasdiqlash xabari yuborilmoqda...`);
+      
+      // Tasdiqlash xabarini yuborish uchun so'rov
+      const response = await axios({
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({ 
+        url: `http://localhost:3000/api/payments/confirm/${selectedPayment.id}`,
+        data: { 
           message: confirmationMessage,
           telegramUsername: selectedPayment.telegram_username,
-          status: 'completed',
-          updatedAt: new Date().toISOString()
-        })
+          status: 'completed'  // Backend buni 'success' ga moslashtiradi
+        },
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        timeout: 15000
       });
       
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Tasdiqlash xabarini yuborishda xatolik');
+      console.log('Serverdan qaytgan javob:', response.data);
+      
+      // Agar so'rov muvaffaqiyatli bo'lsa
+      if (response.data.success) {
+        setConfirmationSuccess(true);
+        
+        // To'lovlar ro'yxatini yangilash
+        setPayments(prevPayments => 
+          prevPayments.map(payment => {
+            if (payment.id === selectedPayment.id) {
+              return { ...payment, status: 'completed' };
+            }
+            return payment;
+          })
+        );
+        
+        // Tanlangan to'lovni yangilash
+        setSelectedPayment(prevPayment => ({
+          ...prevPayment,
+          status: 'completed'
+        }));
+        
+        // Muvaffaqiyatli xabar ko'rsatish
+        toast.success('Tasdiqlash xabari muvaffaqiyatli yuborildi', {
+          duration: 3000
+        });
+        
+        // Ozgina kechikib modalni yopish
+        setTimeout(() => {
+          handleCloseModal();
+        }, 2000);
+      } else {
+        // Backend xato qaytarganda
+        throw new Error(response.data.message || 'Tasdiqlash xabarini yuborishda xatolik');
       }
-      
-      setConfirmationSuccess(true);
-      
-      // To'lovlar ro'yxatini yangilash
-      const updatedPayments = payments.map(payment => {
-        if (payment.id === selectedPayment.id) {
-          return { ...payment, status: 'completed' };
-        }
-        return payment;
-      });
-      
-      setPayments(updatedPayments);
-      
-      // Muvaffaqiyatli xabar ko'rsatish
-      showNotification({
-        title: 'Muvaffaqiyatli',
-        message: 'Tasdiqlash xabari yuborildi',
-        type: 'success'
-      });
-
-      // Foydalanuvchiga xabar yuborish
-      await sendUserNotification({
-        telegramUsername: selectedPayment.telegram_username,
-        message: confirmationMessage
-      });
-      
-      setTimeout(() => {
-        handleCloseModal();
-      }, 2000);
-      
-    } catch (err) {
-      console.error('Tasdiqlash xabarini yuborishda xatolik:', err);
+    } catch (error) {
+      console.error('Tasdiqlash xabarini yuborishda xatolik:', error);
       setConfirmationSuccess(false);
       
-      showNotification({
-        title: 'Xatolik',
-        message: err.message || 'Tasdiqlash xabarini yuborishda xatolik yuz berdi',
-        type: 'error'
-      });
+      // Xatolik turi va ma'lumoti bo'yicha xabar ko'rsatish
+      let errorMessage = 'Tasdiqlash xabarini yuborishda xatolik yuz berdi';
       
+      if (error.response) {
+        console.error('Server javobi:', error.response.data);
+        errorMessage = error.response.data?.message || `Server xatoligi: ${error.response.status}`;
+        
+        // Ma'lumotlar bazasi cheklovi haqida xatolik kelganda
+        if (error.response.data?.error && error.response.data.error.includes('check constraint')) {
+          errorMessage = `To'lov statusini o'zgartirib bo'lmadi. Ma'lumotlar bazasi cheklovi buzildi.`;
+        }
+      } else if (error.request) {
+        errorMessage = "Serverdan javob olinmadi. Internetni tekshiring";
+      } else {
+        errorMessage = error.message || "Noma'lum xatolik";
+      }
+      
+      // Xatolik haqida xabar ko'rsatish
+      toast.error(errorMessage, {
+        duration: 5000
+      });
     } finally {
       setSendingConfirmation(false);
     }
@@ -194,37 +293,40 @@ export default function AdminPaymentsPanel() {
 
   // Receipt Image qismini yangilaymiz
   const renderReceiptImage = (payment) => {
-    if (!payment.receipt_image_filename) {
-        return (
-            <div className="border rounded-lg p-8 text-center text-gray-500">
-                Chek mavjud emas
-            </div>
-        );
+    // Rasm URL manzilini olish
+    const imageUrl = payment.receiptImageUrl || 
+                     (payment.receipt_filename && `http://localhost:3000/uploads/receipts/${payment.receipt_filename}`) || 
+                     (payment.receipt_image_filename && `http://localhost:3000/uploads/receipts/${payment.receipt_image_filename}`);
+    
+    if (!imageUrl) {
+      return (
+        <div className="border rounded-lg p-8 text-center text-gray-500">
+          Chek mavjud emas
+        </div>
+      );
     }
 
-    // Backend URL ni to'g'ri shakllantirish
-    const imageUrl = `http://localhost:3000/api/payments/receipt/${payment.receipt_image_filename}`;
-
     return (
-        <div className="flex justify-center border rounded-lg overflow-hidden">
-            <div className="relative w-full h-96">
-                <img
-                    src={imageUrl}
-                    alt="To'lov cheki"
-                    className="object-contain w-full h-full"
-                    onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = '/placeholder-image.jpg';
-                        e.target.className = "object-contain w-full h-full opacity-50";
-                        const errorMessage = document.createElement('div');
-                        errorMessage.className = 'absolute inset-0 flex items-center justify-center text-red-500';
-                        errorMessage.textContent = 'Rasmni yuklashda xatolik yuz berdi';
-                        e.target.parentNode.appendChild(errorMessage);
-                    }}
-                    loading="lazy"
-                />
-            </div>
+      <div className="flex justify-center border rounded-lg overflow-hidden">
+        <div className="relative w-full h-96">
+          <img
+            src={imageUrl}
+            alt="To'lov cheki"
+            className="object-contain w-full h-full"
+            onError={(e) => {
+              e.target.onerror = null;
+              console.error('Rasm yuklashda xatolik:', imageUrl);
+              e.target.src = '/placeholder-image.jpg';
+              e.target.className = "object-contain w-full h-full opacity-50";
+              const errorMessage = document.createElement('div');
+              errorMessage.className = 'absolute inset-0 flex items-center justify-center text-red-500';
+              errorMessage.textContent = 'Rasmni yuklashda xatolik yuz berdi';
+              e.target.parentNode.appendChild(errorMessage);
+            }}
+            loading="lazy"
+          />
         </div>
+      </div>
     );
   };
 
@@ -312,7 +414,7 @@ export default function AdminPaymentsPanel() {
                   {/* Amallar */}
                   <div className="flex items-center justify-end gap-3">
                     {/* Chek mavjudligi indikatori */}
-                    {payment.receipt_image_filename ? (
+                    {payment.receiptImageUrl ? (
                       <div className="flex items-center space-x-2 bg-green-50 px-3 py-1 rounded-full">
                         <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                         <span className="text-xs text-green-700">Chek mavjud</span>
@@ -419,9 +521,10 @@ export default function AdminPaymentsPanel() {
   const renderModal = () => {
     if (!showModal || !selectedPayment) return null;
 
-    const imageUrl = selectedPayment.receipt_image_filename 
-      ? `http://localhost:3000/api/payments/receipt/${selectedPayment.receipt_image_filename}`
-      : null;
+    // Rasm URL manzilini olish
+    const imageUrl = selectedPayment.receiptImageUrl || 
+                     (selectedPayment.receipt_filename && `http://localhost:3000/uploads/receipts/${selectedPayment.receipt_filename}`) || 
+                     (selectedPayment.receipt_image_filename && `http://localhost:3000/uploads/receipts/${selectedPayment.receipt_image_filename}`);
 
     return (
       <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-2 sm:p-4 backdrop-blur-sm overflow-y-auto">
@@ -523,11 +626,17 @@ export default function AdminPaymentsPanel() {
                       alt="To'lov cheki"
                       className="w-full h-full object-contain"
                       loading="lazy"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        console.error('Rasm yuklashda xatolik:', imageUrl);
+                        e.target.src = '/placeholder-image.jpg';
+                        e.target.className = "w-full h-full object-contain opacity-50";
+                      }}
                     />
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <button className="px-4 py-2 bg-white/90 rounded-lg text-sm font-medium text-gray-900 hover:bg-white transition-colors duration-200 transform hover:scale-105">
+                      <a href={imageUrl} target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-white/90 rounded-lg text-sm font-medium text-gray-900 hover:bg-white transition-colors duration-200 transform hover:scale-105">
                         Kattalashtirish
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
