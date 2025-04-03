@@ -44,6 +44,7 @@ const menuItems = [
   { name: "Kompyuter savodxonligi", icon: ComputerDesktopIcon, id: "computer-literacy", requiresAuth: true },
   { name: "Amaliyot", icon: BeakerIcon, id: "practice", requiresAuth: true },
   { name: "Kodlar", icon: CodeBracketIcon, id: "codes", requiresAuth: true },
+  { name: "AI Help", icon: ChatBubbleLeftRightIcon, id: "ai-help", requiresAuth: false },
 ];
 
 // Enhanced payment menu items with detailed options

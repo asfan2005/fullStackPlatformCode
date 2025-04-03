@@ -39,7 +39,8 @@ import {
   BlutliTexnologiyalar,
   Profile,
   PaymentPage,
-  PaymentPage1
+  PaymentPage1,
+  AiHelp
 } from "./components/index.js";
 import Setting from "./adminPage/Setting.jsx";
 

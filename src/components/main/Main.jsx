@@ -4,6 +4,8 @@ import Section from "../section/Section";
 import { ListBulletIcon, XMarkIcon, ChatBubbleLeftRightIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import FrontendPaymentSection from '../../kursTolovlar/frontEnd/FrontEndKurslar';
 import axios from "axios";
+import { toast } from "react-hot-toast";
+import { format } from "date-fns";
 
 function Main() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -33,67 +35,214 @@ function Main() {
 
   const fetchUserMessages = async () => {
     setIsLoading(true);
+    setError(null);
+    
     try {
       const userData = localStorage.getItem('user');
-      const userId = userData ? JSON.parse(userData).id : 'guest';
+      if (!userData) {
+        throw new Error('Foydalanuvchi ma\'lumotlari topilmadi');
+      }
+
+      const user = JSON.parse(userData);
       
-      const response = await axios.get(`http://localhost:3000/api/messages/${userId}`, {
+      // Faqat shu foydalanuvchiga tegishli xabarlarni so'rash
+      // userId parametrini URL query sifatida yuborish
+      const response = await axios.get(`http://localhost:3000/api/messages?userId=${user.id}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
       
-      if (response.data && Array.isArray(response.data)) {
-        if (response.data.length === 0) {
-          // Agar xabarlar bo'sh bo'lsa, dastlabki xabarni ko'rsatish
-          setChatMessages([
-            {
-              id: 1,
-              text: "Assalomu alaykum! CodeShef.uz web sitega xush kelibsiz! Sizga qanday yordam bera olaman?",
-              isAdmin: true,
-              time: new Date().toLocaleTimeString([], { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                hour12: false 
-              })
-            }
-          ]);
-        } else {
-          setChatMessages(response.data);
-        }
-      } else {
-        // Agar response to'g'ri formatda bo'lmasa, dastlabki xabarni ko'rsatish
-        setChatMessages([
-          {
-            id: 1,
-            text: "Assalomu alaykum! CodeShef.uz web sitega xush kelibsiz! Sizga qanday yordam bera olaman?",
-            isAdmin: true,
-            time: new Date().toLocaleTimeString([], { 
-              hour: '2-digit', 
-              minute: '2-digit',
-              hour12: false 
-            })
-          }
-        ]);
-      }
-    } catch (err) {
-      console.error("Xabarlarni yuklashda xatolik:", err);
-      setError("Xabarlarni yuklashda xatolik yuz berdi.");
-      // Xatolik yuz berganda ham dastlabki xabarni ko'rsatish
-      setChatMessages([
-        {
-          id: 1,
-          text: "Assalomu alaykum! CodeShef.uz web sitega xush kelibsiz! Sizga qanday yordam bera olaman?",
-          isAdmin: true,
-          time: new Date().toLocaleTimeString([], { 
+      if (response.data.success && Array.isArray(response.data.messages)) {
+        // Xabarlarni vaqt bo'yicha tartiblash
+        const sortedMessages = response.data.messages.sort((a, b) => 
+          new Date(a.createdAt) - new Date(b.createdAt)
+        );
+
+        // Faqat hozirgi foydalanuvchiga tegishli xabarlarni filterlaymiz
+        const userMessages = sortedMessages.filter(message => 
+          message.userId === user.id || 
+          (message.isAdmin && message.recipientUserId === user.id)
+        );
+
+        const formattedMessages = userMessages.map(message => ({
+          ...message,
+          formattedTime: new Date(message.time).toLocaleTimeString([], { 
             hour: '2-digit', 
             minute: '2-digit',
             hour12: false 
-          })
+          }),
+          formattedDate: format(new Date(message.createdAt), "d-MMM yyyy HH:mm"),
+          status: 'sent'
+        }));
+        
+        setChatMessages(formattedMessages);
+        
+        // Xabarlar bo'sh bo'lsa salomlashish xabarini ko'rsatish
+        if (formattedMessages.length === 0) {
+          addWelcomeMessage(user);
         }
-      ]);
+      } else {
+        // Agar xabarlar bo'sh bo'lsa yoki xatolik bo'lsa
+        addWelcomeMessage(user);
+      }
+    } catch (err) {
+      console.error('Xabarlarni yuklashda xatolik:', err);
+      
+      try {
+        // Xatolik bo'lganida ham foydalanuvchiga xabar ko'rsatish
+        const userData = localStorage.getItem('user');
+        const user = userData ? JSON.parse(userData) : { id: 'guest' };
+        addWelcomeMessage(user);
+      } catch (e) {
+        console.error('Foydalanuvchi ma\'lumotlarini yuklashda xatolik:', e);
+        // Barcha xatoliklar uchun ham salomlashish xabarini ko'rsatish
+        addWelcomeMessage({ id: 'guest' });
+      }
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Salomlashish xabarini qo'shish uchun alohida funksiya
+  const addWelcomeMessage = (user) => {
+    const welcomeMessage = {
+      id: Date.now(),
+      text: `Assalomu alaykum ${user.name || 'mehmon'}! CodeShef.uz web sitega xush kelibsiz! Sizga qanday yordam bera olaman?`,
+      isAdmin: true,
+      userId: user.id,
+      time: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      formattedTime: new Date().toLocaleTimeString([], { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false 
+      }),
+      formattedDate: format(new Date(), "d-MMM yyyy HH:mm"),
+      status: 'sent',
+      hasReply: false,
+      reply: null
+    };
+    setChatMessages([welcomeMessage]);
+  };
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    
+    if (!message.trim()) return;
+    
+    const userData = localStorage.getItem('user');
+    if (!userData) {
+      toast.error("Xabar yuborish uchun tizimga kiring");
+      return;
+    }
+
+    const user = JSON.parse(userData);
+    const messageId = Date.now();
+    const currentTime = new Date();
+    const newMessage = {
+      id: messageId,
+      text: message.trim(),
+      userId: user.id,
+      isAdmin: false,
+      time: currentTime.toISOString(),
+      createdAt: currentTime.toISOString(),
+      formattedTime: currentTime.toLocaleTimeString([], { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false 
+      }),
+      formattedDate: format(currentTime, "d-MMM yyyy HH:mm"),
+      status: 'sending',
+      hasReply: false,
+      reply: null
+    };
+    
+    // Xabarni UI ga qo'shish
+    setChatMessages(prev => [...prev, newMessage]);
+    setMessage("");
+    
+    try {
+      // Xabarni serverga yuborish
+      const response = await axios.post('http://localhost:3000/api/messages', {
+        text: newMessage.text,
+        userId: user.id,
+        isAdmin: false
+      }, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (response.data.success) {
+        // Xabar muvaffaqiyatli yuborildi
+        setChatMessages(prev => 
+          prev.map(msg => 
+            msg.id === messageId 
+              ? { 
+                  ...response.data.data, 
+                  formattedTime: newMessage.formattedTime,
+                  formattedDate: newMessage.formattedDate,
+                  status: 'sent' 
+                }
+              : msg
+          )
+        );
+        
+        // Avtomatik javob yuborish
+        setTimeout(() => {
+          const autoResponses = [
+            "Xabaringiz qabul qilindi! Admin tez orada sizga javob beradi.",
+            "Savolingiz uchun rahmat! Tez orada javob beramiz.",
+            "Xabaringiz muvaffaqiyatli yuborildi. Iltimos, javobni kuting.",
+            "Administratorlarimiz xabaringizni ko'rib chiqishadi va tez orada javob berishadi."
+          ];
+          
+          const randomResponse = autoResponses[Math.floor(Math.random() * autoResponses.length)];
+          const responseTime = new Date();
+          
+          const autoReply = {
+            id: Date.now(),
+            text: randomResponse,
+            userId: user.id,
+            recipientUserId: user.id,
+            isAdmin: true,
+            time: responseTime.toISOString(),
+            createdAt: responseTime.toISOString(),
+            formattedTime: responseTime.toLocaleTimeString([], { 
+              hour: '2-digit', 
+              minute: '2-digit',
+              hour12: false 
+            }),
+            formattedDate: format(responseTime, "d-MMM yyyy HH:mm"),
+            status: 'sent',
+            hasReply: false,
+            reply: null
+          };
+          
+          setChatMessages(prev => [...prev, autoReply]);
+          
+          // Avtomatik javobdan keyin scroll pastga
+          if (chatEndRef.current) {
+            chatEndRef.current.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 1000);
+      } else {
+        throw new Error(response.data.message || 'Xabar yuborishda xatolik');
+      }
+    } catch (error) {
+      console.error("Xabar yuborishda xatolik:", error);
+      toast.error("Xabar yuborishda xatolik yuz berdi");
+      
+      // Xabar statusini xato qilish
+      setChatMessages(prev => 
+        prev.map(msg => 
+          msg.id === messageId 
+            ? { ...msg, status: 'error' }
+            : msg
+        )
+      );
     }
   };
 
@@ -105,94 +254,6 @@ function Main() {
     setIsChatOpen(!isChatOpen);
     if (!isChatOpen) {
       fetchUserMessages();
-    }
-  };
-
-  const handleSendMessage = async (e) => {
-    e.preventDefault();
-    
-    if (!message.trim()) return;
-    
-    const currentTime = new Date().toLocaleTimeString([], { 
-      hour: '2-digit', 
-      minute: '2-digit',
-      hour12: false 
-    });
-    
-    const userData = localStorage.getItem('user');
-    const userId = userData ? JSON.parse(userData).id : 'guest';
-    
-    const newUserMessage = {
-      id: Date.now(),
-      text: message.trim(),
-      isAdmin: false,
-      time: currentTime,
-      userId: userId,
-      status: 'sending'
-    };
-    
-    try {
-      // UI ga xabarni qo'shish
-      setChatMessages(prevMessages => {
-        const messages = Array.isArray(prevMessages) ? prevMessages : [];
-        return [...messages, newUserMessage];
-      });
-      
-      setMessage("");
-      
-      // Xabarni serverga yuborish
-      const response = await axios({
-        method: 'POST',
-        url: 'http://localhost:3000/api/messages',
-        data: {
-          text: newUserMessage.text,
-          userId: userId,
-          isAdmin: false,
-          time: currentTime
-        },
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        timeout: 15000
-      });
-      
-      if (!response.data) {
-        throw new Error('Serverdan javob olinmadi');
-      }
-      
-      // Xabar statusini yangilash
-      setChatMessages(prevMessages => 
-        prevMessages.map(msg => 
-          msg.id === newUserMessage.id 
-            ? { ...msg, status: 'sent' } 
-            : msg
-        )
-      );
-      
-      // Admin javobini generatsiya qilish
-      setTimeout(() => {
-        generateAdminResponse(userId);
-      }, 1000);
-      
-    } catch (error) {
-      console.error("Xabar yuborishda xatolik:", error);
-      
-      setChatMessages(prevMessages => {
-        const errorMessage = {
-          id: Date.now(),
-          text: "Xabar yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
-          isAdmin: true,
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          status: 'error'
-        };
-        
-        return prevMessages.map(msg => 
-          msg.id === newUserMessage.id 
-            ? { ...msg, status: 'error' } 
-            : msg
-        ).concat(errorMessage);
-      });
     }
   };
 
@@ -279,22 +340,210 @@ function Main() {
     }
   };
 
+  // Admin xabarlarini yuborish uchun funksiya
+  const handleAdminReply = async (messageId, replyText) => {
+    try {
+      const userData = localStorage.getItem('user');
+      if (!userData) {
+        throw new Error('Admin ma\'lumotlari topilmadi');
+      }
+
+      const user = JSON.parse(userData);
+      
+      // Qaysi xabarga javob berilayotganini topish
+      const originalMessage = chatMessages.find(msg => msg.id === messageId);
+      if (!originalMessage) {
+        throw new Error('Asl xabar topilmadi');
+      }
+
+      const adminResponse = {
+        id: Date.now(),
+        text: replyText,
+        isAdmin: true,
+        userId: user.id,
+        recipientUserId: originalMessage.userId, // Javob kimga yuborilayotganini saqlash
+        time: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        formattedTime: new Date().toLocaleTimeString([], { 
+          hour: '2-digit', 
+          minute: '2-digit',
+          hour12: false 
+        }),
+        formattedDate: format(new Date(), "d-MMM yyyy HH:mm"),
+        status: 'sending',
+        replyToMessageId: messageId
+      };
+
+      // UI ga admin javobini qo'shish
+      setChatMessages(prevMessages => [...prevMessages, adminResponse]);
+
+      // Admin javobini serverga yuborish
+      const response = await axios.post('http://localhost:3000/api/messages/reply', {
+        text: replyText,
+        userId: user.id,
+        messageId: messageId,
+        recipientUserId: originalMessage.userId // Javob kimga yuborilayotgani
+      }, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (response.data.success) {
+        // Admin xabari statusini yangilash
+        setChatMessages(prevMessages => 
+          prevMessages.map(msg => 
+            msg.id === adminResponse.id 
+              ? { ...msg, status: 'sent' } 
+              : msg
+          )
+        );
+        
+        // Xabarlar ro'yxatini yangilash
+        setTimeout(() => {
+          fetchUserMessages();
+        }, 500);
+      } else {
+        throw new Error(response.data.message || 'Javob yuborishda xatolik');
+      }
+    } catch (error) {
+      console.error("Admin javobini yuborishda xatolik:", error);
+      toast.error("Javob yuborishda xatolik yuz berdi");
+      
+      // Xatolik bo'lsa, javob statusini xato qilish
+      setChatMessages(prevMessages => 
+        prevMessages.map(msg => 
+          msg.id === adminResponse?.id 
+            ? { ...msg, status: 'error' } 
+            : msg
+        )
+      );
+    }
+  };
+
+  // MessageItem komponentini yaxshilash
+  const MessageItem = ({ msg, onReply }) => {
+    const [isReplying, setIsReplying] = useState(false);
+    const [replyText, setReplyText] = useState('');
+
+    // Javob yuborish funksiyasi
+    const handleReplySubmit = (e) => {
+      e.preventDefault();
+      if (replyText.trim()) {
+        onReply(msg.id, replyText.trim());
+        setReplyText('');
+        setIsReplying(false);
+      }
+    };
+
+    // Xabar statusiga qarab indikator ko'rsatish
+    const renderStatus = () => {
+      if (msg.status === 'sending') {
+        return <span className="text-blue-300 text-xs ml-2">• Yuborilmoqda</span>;
+      } else if (msg.status === 'error') {
+        return <span className="text-red-500 text-xs ml-2">• Xatolik</span>;
+      }
+      return null;
+    };
+
+    return (
+      <div className={`mb-4 flex ${msg.isAdmin ? "justify-start" : "justify-end"}`}>
+        {msg.isAdmin ? (
+          <div className="h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-2 flex-shrink-0">
+            <span className="text-xs font-bold">A</span>
+          </div>
+        ) : (
+          <div className="h-8 w-8 rounded-full bg-blue-600 text-white flex items-center justify-center ml-2 flex-shrink-0 order-2">
+            <span className="text-xs font-bold">S</span>
+          </div>
+        )}
+        
+        <div className={`rounded-lg px-4 py-2 max-w-[80%] ${
+          msg.isAdmin
+            ? "bg-white text-gray-800 rounded-tl-none shadow-md"
+            : "bg-blue-600 text-white rounded-tr-none order-1 shadow-md"
+        }`}>
+          <p className="break-words">{msg.text}</p>
+          <div className={`text-xs mt-1 flex items-center justify-between gap-2 ${
+            msg.isAdmin ? "text-gray-500" : "text-blue-100"
+          }`}>
+            <div className="flex items-center">
+              <span>{msg.formattedTime}</span>
+              {renderStatus()}
+            </div>
+            
+            {!msg.isAdmin && user?.isAdmin && !msg.hasReply && (
+              <button 
+                onClick={() => setIsReplying(!isReplying)}
+                className="text-xs text-blue-200 hover:text-white"
+              >
+                Javob berish
+              </button>
+            )}
+          </div>
+
+          {isReplying && (
+            <form onSubmit={handleReplySubmit} className="mt-2">
+              <input
+                type="text"
+                value={replyText}
+                onChange={(e) => setReplyText(e.target.value)}
+                placeholder="Javobingizni yozing..."
+                className="w-full px-2 py-1 text-sm text-gray-800 border rounded"
+              />
+              <div className="flex justify-end gap-2 mt-1">
+                <button
+                  type="button"
+                  onClick={() => setIsReplying(false)}
+                  className="text-xs text-gray-500 hover:text-gray-700"
+                >
+                  Bekor qilish
+                </button>
+                <button
+                  type="submit"
+                  className="text-xs text-blue-600 hover:text-blue-800"
+                  disabled={!replyText.trim()}
+                >
+                  Yuborish
+                </button>
+              </div>
+            </form>
+          )}
+
+          {msg.reply && (
+            <div className="mt-3 pl-4 border-l-2 border-green-200">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-sm font-medium text-green-600">Admin javobi</span>
+                <span className="text-xs text-gray-500">
+                  {format(new Date(msg.reply.createdAt), "HH:mm")}
+                </span>
+              </div>
+              <p className="text-gray-600 text-sm">{msg.reply.text}</p>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  // renderChatMessages funksiyasini yangilash
   const renderChatMessages = () => {
     if (isLoading) {
       return (
         <div className="flex justify-center items-center h-full">
           <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div>
+          <p className="ml-3 text-gray-500">Xabarlar yuklanmoqda...</p>
         </div>
       );
     }
     
     if (error) {
       return (
-        <div className="text-center p-4 text-red-500">
-          <p>{error}</p>
+        <div className="text-center p-4">
+          <div className="text-red-500 mb-2">{error}</div>
           <button 
             onClick={fetchUserMessages} 
-            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
           >
             Qayta urinish
           </button>
@@ -302,37 +551,26 @@ function Main() {
       );
     }
     
-    if (!chatMessages || !Array.isArray(chatMessages) || chatMessages.length === 0) {
+    if (!chatMessages || chatMessages.length === 0) {
       return (
-        <div className="flex justify-center items-center h-full text-gray-500">
-          <p>Hozircha xabarlar yo'q. Yangi xabar yuboring!</p>
+        <div className="flex flex-col justify-center items-center h-full text-center">
+          <div className="text-gray-400 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <p>Hozircha xabarlar yo'q</p>
+          </div>
+          <p className="text-gray-500 text-sm">Yangi xabar yuboring!</p>
         </div>
       );
     }
     
     return chatMessages.map((msg) => (
-      <div
-        key={msg.id}
-        className={`mb-4 flex ${msg.isAdmin ? "justify-start" : "justify-end"}`}
-      >
-        {msg.isAdmin && (
-          <div className="h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-2 flex-shrink-0">
-            <span className="text-xs font-bold">A</span>
-          </div>
-        )}
-        <div
-          className={`rounded-lg px-4 py-2 max-w-[80%] shadow-sm ${
-            msg.isAdmin
-              ? "bg-white text-gray-800 rounded-tl-none"
-              : "bg-blue-600 text-white rounded-tr-none"
-          }`}
-        >
-          <p className="break-words">{msg.text}</p>
-          <span className={`text-xs block mt-1 ${msg.isAdmin ? "text-gray-500" : "text-blue-100"}`}>
-            {msg.time}
-          </span>
-        </div>
-      </div>
+      <MessageItem 
+        key={msg.id} 
+        msg={msg} 
+        onReply={handleAdminReply}
+      />
     ));
   };
 
@@ -515,14 +753,14 @@ function Main() {
                 <button
                   type="submit"
                   className="bg-blue-600 text-white rounded-r-lg px-4 py-2 hover:bg-blue-700 transition-colors flex items-center disabled:bg-blue-400 disabled:cursor-not-allowed"
-                  disabled={!message.trim()}
+                  disabled={!message.trim() || isLoading}
                 >
                   <PaperAirplaneIcon className="h-5 w-5 rotate-90 -mr-1" />
                   <span className="ml-1 hidden md:inline">Yuborish</span>
                 </button>
               </div>
               <div className="text-xs text-gray-500 mt-2 text-center">
-                <span>Ishchi soatlar: 9:00 - 18:00, Dushanba-Juma</span>
+                <span>Ishchi soatlar: 9:00 - 18:00, Dushanba-Yakshanba</span>
               </div>
             </div>
           </form>

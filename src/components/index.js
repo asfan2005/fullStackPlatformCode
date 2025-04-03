@@ -310,3 +310,5 @@ export {default as PremiumFoyda} from "../adminPage1/PremiumFoyda";
 export {default as UmumiyStatistika} from "../adminPage1/UmumiyStatistika";
 export {default as PremiumStatistika} from '../adminPage1/PremiumStatistika';
 export {default as PremiumStatistika50} from "../adminPage1/PremiumStatistika50";
+export {default as AllMessages} from "../messages/AllMessages";
+export {default as AiHelp} from "../aiHelp/AiHelp";
