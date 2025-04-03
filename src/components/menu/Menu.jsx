@@ -348,7 +348,7 @@ function Menu({ setCurrentPage, currentPage, closeMenu, isMenuOpen }) {
 
   // Get styles for menu items based on various states
   const getMenuItemStyles = (id, isActive, requiresAuth, isPremiumItem = false, isAdminItem = false) => {
-    const baseStyles = "flex items-center w-full p-4 rounded-lg transition-all duration-200 transform mb-2";
+    const baseStyles = "flex items-center w-full p-5 rounded-lg transition-all duration-200 transform mb-3";
     
     // Agar autentifikatsiya talab qilinsa va foydalanuvchi tizimga kirmagan bo'lsa
     if (requiresAuth && !isAuthenticated) {
@@ -431,12 +431,12 @@ function Menu({ setCurrentPage, currentPage, closeMenu, isMenuOpen }) {
     <div className="relative">
       {/* Main Menu Container */}
       <div className={`fixed top-[120px] left-0 h-full z-40 transform transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-        <nav className="bg-white text-gray-800 h-full w-96 py-6 px-5 shadow-xl overflow-y-auto border-r border-gray-200 rounded-tr-2xl rounded-br-2xl">
+        <nav className="bg-white text-gray-800 h-full w-96 py-6 px-6 shadow-xl overflow-y-auto border-r border-gray-200 rounded-tr-2xl rounded-br-2xl">
           {/* Header with logo and close button */}
           <div className="flex justify-between items-center mb-6 px-2 pb-4 border-b border-gray-100">
             <div className="flex items-center">
-              <HomeIcon className="h-7 w-7 text-blue-600 mr-3" />
-              <span className="text-lg font-bold text-blue-700 uppercase tracking-wider">
+              <HomeIcon className="h-8 w-8 text-blue-600 mr-3" />
+              <span className="text-xl font-bold text-blue-700 uppercase tracking-wider">
                 Infinity-School
               </span>
             </div>
@@ -468,14 +468,14 @@ function Menu({ setCurrentPage, currentPage, closeMenu, isMenuOpen }) {
                     : "hover:bg-gray-100 hover:scale-[1.01] bg-blue-50"
               }`}
             >
-              <div className="flex items-center justify-center mr-3 w-8 h-8">
+              <div className="flex items-center justify-center mr-3 w-10 h-10">
                 <HomeIcon
-                  className={`h-6 w-6 ${
+                  className={`h-7 w-7 ${
                     currentPage === "home" ? "text-white" : "text-blue-600"
                   }`}
                 />
               </div>
-              <span className="flex-1 font-medium text-sm whitespace-normal">
+              <span className="flex-1 font-medium text-base whitespace-normal">
                 Bosh sahifa
               </span>
             </button>
@@ -486,8 +486,8 @@ function Menu({ setCurrentPage, currentPage, closeMenu, isMenuOpen }) {
             {/* To'lovlar bo'limi - faqat autentifikatsiya qilingan foydalanuvchilar uchun */}
             {isAuthenticated ? (
               <>
-                <div className="my-4 border-t border-gray-300"></div>
-                <div className="py-2 px-3 bg-green-50 rounded-lg mb-2 border border-green-200">
+                <div className="my-6 border-t border-gray-300"></div>
+                <div className="py-3 px-4 bg-green-50 rounded-lg mb-3 border border-green-200">
                   <div className="flex items-center mb-2">
                     <BanknotesIcon className="h-5 w-5 text-green-600 mr-2" />
                     <span className="text-sm font-semibold text-green-700 uppercase tracking-wider">

@@ -622,13 +622,13 @@ function Main() {
   };
 
   return (
-    <div className="relative flex h-[calc(100vh-7rem)] top-[30px]">
+    <div className="relative flex h-[calc(100vh-6.5rem)] overflow-hidden">
       {/* Fixed Menu Button - with responsive positioning */}
       {!isMenuOpen && (
         <button
           onClick={toggleMenu}
           
-          className="fixed md:top-[60px] top-[120px] md:left-4 right-[30px] z-50 p-2 rounded-lg transition-all duration-200"
+          className="fixed md:top-[60px] top-[90px] md:left-4 right-[30px] z-50 p-2 rounded-lg transition-all duration-200"
         >
           <ListBulletIcon className="h-6 w-6 text-gray-600" />
         </button>
@@ -643,7 +643,10 @@ function Main() {
         />
       </div>
 
-      <div 
+      <div  
+      style={{
+        marginTop:"30px"
+      }}
         className={`flex-1 overflow-auto z-10 transition-all duration-300 ${
           isMenuOpen ? 'ml-0 md:ml-96' : 'ml-0'
         }`}
