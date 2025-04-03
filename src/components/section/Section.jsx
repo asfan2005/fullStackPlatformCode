@@ -180,7 +180,7 @@ function Section({ currentPage }) {
           )
       default:
         return (
-          <div className="flex items-center justify-center min-h-full p-8">
+          <div  className="flex items-center justify-center min-h-[200px] p-8">
             <div className="w-full max-w-2xl bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-2xl overflow-hidden">
               <div className="relative">
                 {/* Top wave decoration */}

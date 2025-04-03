@@ -143,7 +143,7 @@ function Header() {
     <>
       {/* Test rejim xabari - yangilangan dizayn */}
       {showTestBanner && (
-        <div className="bg-gradient-to-r from-green-500 to-green-600 text-white py-2 text-center fixed w-full z-[60] shadow-md">
+        <div className="bg-gradient-to-r from-green-500 to-green-600 text-white py-2 text-center fixed w-full z-[0] shadow-md">
           <div className="flex items-center justify-center">
             <div className="animate-pulse mr-2">⚡</div>
             <span className="font-medium tracking-wide">Web Site Beta rejimda ishlamoqda</span>
@@ -154,7 +154,7 @@ function Header() {
 
       <header className={`bg-white shadow-md fixed w-full ${showTestBanner ? 'top-10' : 'top-0'} z-50 transition-all duration-300`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4 md:py-6">
+          <div className="flex justify-between items-center h-[80px]">
             <div className="flex-shrink-0">
               <Link to="/" className="flex items-center space-x-2">
                 <svg
@@ -173,7 +173,7 @@ function Header() {
                   />
                   <path d="M20 18L26 32H14L20 18Z" fill="white" />
                 </svg>
-                <span className="ml-2 text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
+                <span className="ml-2 text-base sm:text-lg md:text-xl font-bold text-gray-900">
                   {isMobile ? "FS" : "FullStack Platform Practice"}
                 </span>
               </Link>
@@ -302,7 +302,7 @@ function Header() {
       </header>
       
       {/* Header va kontentlar orasidagi bo'shliq */}
-      <div className={`${showTestBanner ? 'h-28' : 'h-16'} md:${showTestBanner ? 'h-28' : 'h-20'} transition-all duration-300`}></div>
+      <div className={`${showTestBanner ? 'h-[80px]' : 'h-[80px]'} transition-all duration-300`}></div>
       
       {/* Custom AuthModal component with controlled state */}
       {isAuthModalOpen && (

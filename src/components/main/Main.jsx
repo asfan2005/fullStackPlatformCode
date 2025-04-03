@@ -9,7 +9,7 @@ import { format } from "date-fns";
 
 function Main() {
   const [currentPage, setCurrentPage] = useState("home");
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(true);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
@@ -17,6 +17,7 @@ function Main() {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const chatEndRef = useRef(null);
+  const menuRef = useRef(null);
 
   useEffect(() => {
     setError(null);
@@ -108,7 +109,7 @@ function Main() {
   const addWelcomeMessage = (user) => {
     const welcomeMessage = {
       id: Date.now(),
-      text: `Assalomu alaykum ${user.name || 'mehmon'}! CodeShef.uz web sitega xush kelibsiz! Sizga qanday yordam bera olaman?`,
+      text: `Assalomu alaykum ${user.name || 'mehmon'}! Infinity-School web sitega xush kelibsiz! Sizga qanday yordam bera olaman?`,
       isAdmin: true,
       userId: user.id,
       time: new Date().toISOString(),
@@ -249,6 +250,20 @@ function Main() {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  // Handle clicking outside menu to close it (on mobile)
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target) && window.innerWidth < 768) {
+        setIsMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
 
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
@@ -607,48 +622,36 @@ function Main() {
   };
 
   return (
-    <div className="relative flex h-[calc(100vh-5.5rem)]">
-      <button
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "90%",
-          zIndex: 50,
-        }}
-        className="md:hidden p-2 bg-gray-200 rounded-md"
-        onClick={toggleMenu}
-      >
-        {isMenuOpen ? (
-          <XMarkIcon className="h-6 w-6 text-gray-800" />
-        ) : (
-          <ListBulletIcon className="h-6 w-6 text-gray-800" />
-        )}
-      </button>
+    <div className="relative flex h-[calc(100vh-7rem)] top-[30px]">
+      {/* Fixed Menu Button - with responsive positioning */}
+      {!isMenuOpen && (
+        <button
+          onClick={toggleMenu}
+          
+          className="fixed md:top-[60px] top-[120px] md:left-4 right-[30px] z-50 p-2 rounded-lg transition-all duration-200"
+        >
+          <ListBulletIcon className="h-6 w-6 text-gray-600" />
+        </button>
+      )}
 
-      <div
-        className={`fixed md:static w-[75%] md:w-[20%] bg-gray-100 h-full z-40 transition-transform transform ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-        }`}
-      >
+      <div ref={menuRef}>
         <Menu
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
           closeMenu={toggleMenu}
+          isMenuOpen={isMenuOpen}
         />
       </div>
 
-      <div className="flex-1 overflow-auto z-10">
+      <div 
+        className={`flex-1 overflow-auto z-10 transition-all duration-300 ${
+          isMenuOpen ? 'ml-0 md:ml-96' : 'ml-0'
+        }`}
+      >
         <Section currentPage={currentPage} key={currentPage}>
           {renderContent()}
         </Section>
       </div>
-
-      {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black opacity-50 z-30 md:hidden"
-          onClick={toggleMenu}
-        ></div>
-      )}
 
       <button
         onClick={toggleChat}
