@@ -3,6 +3,7 @@ import Menu from "../menu/Menu";
 import Section from "../section/Section";
 import { ListBulletIcon, XMarkIcon, ChatBubbleLeftRightIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import FrontendPaymentSection from '../../kursTolovlar/frontEnd/FrontEndKurslar';
+import AiHelp from "../../aiHelp/AiHelp";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { format } from "date-fns";
@@ -611,6 +612,8 @@ function Main() {
         return <PracticeContent />;
       case 'codes':
         return <CodesContent />;
+      case 'ai-help':
+        return <AiHelp />;
       case 'payment-management':
       case 'course-payments':
       case 'payment-methods':

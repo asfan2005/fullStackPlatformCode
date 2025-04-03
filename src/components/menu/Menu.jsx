@@ -35,18 +35,24 @@ import {
   ArrowPathIcon,
   DocumentDuplicateIcon,
   Bars3Icon,
-  XMarkIcon
+  XMarkIcon,
+  CpuChipIcon,
+  LockClosedIcon,
+  ArrowRightOnRectangleIcon,
+  UserCircleIcon,
+  CogIcon,
+  PowerIcon
 } from "@heroicons/react/24/outline";
 
 const menuItems = [
-  { name: "Bosh sahifa", icon: HomeIcon, id: "home", requiresAuth: false },
-  { name: "Frontend", icon: CodeBracketIcon, id: "frontend", requiresAuth: true },
-  { name: "Backend", icon: CommandLineIcon, id: "backend", requiresAuth: true },
-  { name: "Mobile", icon: DevicePhoneMobileIcon, id: "mobile", requiresAuth: true },
-  { name: "Kompyuter savodxonligi", icon: ComputerDesktopIcon, id: "computer-literacy", requiresAuth: true },
-  { name: "Amaliyot", icon: BeakerIcon, id: "practice", requiresAuth: true },
-  { name: "Kodlar", icon: CodeBracketIcon, id: "codes", requiresAuth: true },
-  { name: "AI Help", icon: ChatBubbleLeftRightIcon, id: "ai-help", requiresAuth: false },
+  { id: "home", name: "Bosh sahifa", icon: HomeIcon, requiresAuth: false, isActive: true },
+  { id: "frontend", name: "Frontend", icon: DocumentTextIcon, requiresAuth: false },
+  { id: "backend", name: "Backend", icon: ComputerDesktopIcon, requiresAuth: false },
+  { id: "mobile", name: "Mobile", icon: DevicePhoneMobileIcon, requiresAuth: false },
+  { id: "computer-literacy", name: "Kompyuter savodxonligi", icon: CpuChipIcon, requiresAuth: false },
+  { id: "practice", name: "Amaliyot", icon: BookOpenIcon, requiresAuth: false },
+  { id: "codes", name: "Kodlar", icon: CodeBracketIcon, requiresAuth: false },
+  { id: "ai-help", name: "AI Yordamchi", icon: ChatBubbleLeftRightIcon, requiresAuth: false },
 ];
 
 // Enhanced payment menu items with detailed options
