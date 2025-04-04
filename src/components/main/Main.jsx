@@ -59,6 +59,10 @@ function Main() {
     }
     
     setCurrentPage(page);
+    // Close menu when navigating from home to any other page
+    if (page !== 'home') {
+      setIsMenuOpen(false);
+    }
   };
 
   const fetchUserMessages = async () => {
@@ -100,7 +104,18 @@ function Main() {
             minute: '2-digit',
             hour12: false 
           }),
-          formattedDate: format(new Date(message.createdAt), "d-MMM yyyy HH:mm"),
+          formattedDate: (() => {
+            try {
+              const messageDate = new Date(message.createdAt);
+              if (!isNaN(messageDate.getTime())) {
+                return format(messageDate, "d-MMM yyyy HH:mm");
+              }
+              return new Date().toLocaleString();
+            } catch (error) {
+              console.error("Date formatting error:", error);
+              return new Date().toLocaleString();
+            }
+          })(),
           status: 'sent'
         }));
         
@@ -378,7 +393,7 @@ function Main() {
           minute: '2-digit',
           hour12: false 
         }),
-        formattedDate: format(new Date(), "d-MMM yyyy HH:mm"),
+        formattedDate: format(new Date(), "d-MMM yyyy HH:mm"), // Current date is always valid
         status: 'sending',
         replyToMessageId: messageId
       };
@@ -477,7 +492,22 @@ function Main() {
             <div className="flex items-center">
               {renderStatus()}
               <span className={`text-xs ${msg.isAdmin ? "text-gray-500" : "text-blue-100"}`}>
-                {format(new Date(msg.time || msg.createdAt || Date.now()), "HH:mm")}
+                {(() => {
+                  // Verify we have a valid date before formatting
+                  try {
+                    const dateValue = msg.time || msg.createdAt || Date.now();
+                    const date = new Date(dateValue);
+                    // Check if date is valid
+                    if (!isNaN(date.getTime())) {
+                      return format(date, "HH:mm");
+                    }
+                    // Fallback if date is invalid
+                    return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+                  } catch (err) {
+                    console.error("Date formatting error:", err);
+                    return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+                  }
+                })()}
               </span>
             </div>
           </div>
@@ -528,7 +558,21 @@ function Main() {
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-xs font-medium text-green-600">Admin javobi</span>
                 <span className="text-xs text-gray-500">
-                  {format(new Date(msg.reply.createdAt), "HH:mm")}
+                  {(() => {
+                    // Verify we have a valid date before formatting
+                    try {
+                      const replyDate = new Date(msg.reply.createdAt);
+                      // Check if date is valid
+                      if (!isNaN(replyDate.getTime())) {
+                        return format(replyDate, "HH:mm");
+                      }
+                      // Fallback if date is invalid
+                      return "";
+                    } catch (err) {
+                      console.error("Reply date formatting error:", err);
+                      return "";
+                    }
+                  })()}
                 </span>
               </div>
               <p className="text-gray-700 text-xs sm:text-sm">{msg.reply.text}</p>
@@ -633,16 +677,15 @@ function Main() {
 
   return (
     <div className="relative flex h-[calc(100vh-6.5rem)] overflow-hidden">
-      {/* Fixed Menu Button - with responsive positioning */}
-      {!isMenuOpen && (
-        <button
-          onClick={toggleMenu}
-          
-          className="fixed md:top-[60px] top-[90px] md:left-4 right-[30px] z-50 p-2 rounded-lg transition-all duration-200"
-        >
-          <ListBulletIcon className="h-6 w-6 text-gray-600" />
-        </button>
-      )}
+      {/* Fixed Menu Button - make it always visible when menu is closed */}
+      <button
+        onClick={toggleMenu}
+        className={`fixed md:top-[60px] top-[90px] md:left-4 left-[30px] z-50 p-2 rounded-lg transition-all duration-200 ${
+          isMenuOpen ? 'hidden' : 'block'
+        }`}
+      >
+        <ListBulletIcon className="h-6 w-6 text-gray-600" />
+      </button>
 
       <div ref={menuRef}>
         <Menu
