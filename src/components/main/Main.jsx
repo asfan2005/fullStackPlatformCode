@@ -15,11 +15,11 @@ function Main() {
   const [message, setMessage] = useState("");
   const [chatMessages, setChatMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSending, setIsSending] = useState(false);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const chatEndRef = useRef(null);
   const menuRef = useRef(null);
-  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     setError(null);
@@ -35,6 +35,31 @@ function Main() {
     
     fetchUserMessages();
   }, []);
+
+  // Redirect to home if trying to access protected route
+  useEffect(() => {
+    const protectedPages = ['frontend', 'backend', 'mobile', 'computer-literacy', 'practice', 'codes', 'ai-help', 'payment-management', 'course-payments', 'payment-methods', 'account-balance'];
+    
+    // Check if current page is protected and user is not authenticated
+    if (protectedPages.includes(currentPage) && !user) {
+      // Redirect to home page
+      setCurrentPage('home');
+      // Show toast message
+      toast.error("Bu bo'limga kirish uchun tizimga kirishingiz kerak");
+    }
+  }, [currentPage, user]);
+
+  // Handle page change with authentication check
+  const setPageWithAuthCheck = (page) => {
+    const protectedPages = ['frontend', 'backend', 'mobile', 'computer-literacy', 'practice', 'codes', 'ai-help', 'payment-management', 'course-payments', 'payment-methods', 'account-balance'];
+    
+    if (protectedPages.includes(page) && !user) {
+      toast.error("Bu bo'limga kirish uchun tizimga kirishingiz kerak");
+      return;
+    }
+    
+    setCurrentPage(page);
+  };
 
   const fetchUserMessages = async () => {
     setIsLoading(true);
@@ -621,7 +646,7 @@ function Main() {
 
       <div ref={menuRef}>
         <Menu
-          setCurrentPage={setCurrentPage}
+          setCurrentPage={setPageWithAuthCheck}
           currentPage={currentPage}
           closeMenu={toggleMenu}
           isMenuOpen={isMenuOpen}

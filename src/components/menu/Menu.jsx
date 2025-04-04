@@ -43,16 +43,17 @@ import {
   CogIcon,
   PowerIcon
 } from "@heroicons/react/24/outline";
+import { toast } from "react-hot-toast";
 
 const menuItems = [
   { id: "home", name: "Bosh sahifa", icon: HomeIcon, requiresAuth: false, isActive: true },
-  { id: "frontend", name: "Frontend", icon: DocumentTextIcon, requiresAuth: false },
-  { id: "backend", name: "Backend", icon: ComputerDesktopIcon, requiresAuth: false },
-  { id: "mobile", name: "Mobile", icon: DevicePhoneMobileIcon, requiresAuth: false },
-  { id: "computer-literacy", name: "Kompyuter savodxonligi", icon: CpuChipIcon, requiresAuth: false },
-  { id: "practice", name: "Amaliyot", icon: BookOpenIcon, requiresAuth: false },
-  { id: "codes", name: "Kodlar", icon: CodeBracketIcon, requiresAuth: false },
-  { id: "ai-help", name: "AI Yordamchi", icon: ChatBubbleLeftRightIcon, requiresAuth: false },
+  { id: "frontend", name: "Frontend", icon: DocumentTextIcon, requiresAuth: true },
+  { id: "backend", name: "Backend", icon: ComputerDesktopIcon, requiresAuth: true },
+  { id: "mobile", name: "Mobile", icon: DevicePhoneMobileIcon, requiresAuth: true },
+  { id: "computer-literacy", name: "Kompyuter savodxonligi", icon: CpuChipIcon, requiresAuth: true },
+  { id: "practice", name: "Amaliyot", icon: BookOpenIcon, requiresAuth: true },
+  { id: "codes", name: "Kodlar", icon: CodeBracketIcon, requiresAuth: true },
+  { id: "ai-help", name: "AI Yordamchi", icon: ChatBubbleLeftRightIcon, requiresAuth: true },
 ];
 
 // Enhanced payment menu items with detailed options
@@ -258,32 +259,44 @@ function Menu({ setCurrentPage, currentPage, closeMenu, isMenuOpen }) {
     "account-balance"
   ]);
 
+  // Check authentication status on component mount and localStorage changes
   useEffect(() => {
     const checkAuth = () => {
-      const user = localStorage.getItem('user');
-      if (user) {
-        const userData = JSON.parse(user);
-        setIsAuthenticated(true);
-        if (userData.email === 'asfan.coder@gmail.com') {
-          setIsAdmin(true);
+      try {
+        const user = localStorage.getItem('user');
+        setIsAuthenticated(!!user);
+        if (user) {
+          const userData = JSON.parse(user);
+          if (userData.email === 'asfan.coder@gmail.com') {
+            setIsAdmin(true);
+          }
+          if (userData.isPremium) {
+            setIsPremium(true);
+          }
+        } else {
+          setIsAdmin(false);
+          setIsPremium(false);
         }
-        if (userData.isPremium) {
-          setIsPremium(true);
-        }
-      } else {
+      } catch (error) {
+        console.error("Foydalanuvchi ma'lumotlarini tekshirishda xatolik:", error);
         setIsAuthenticated(false);
         setIsAdmin(false);
         setIsPremium(false);
       }
     };
-
+    
+    // Check auth on component mount
     checkAuth();
-    window.addEventListener('storage', checkAuth);
-    window.addEventListener('auth-change', checkAuth);
-
+    
+    // Listen for localStorage changes
+    const handleStorageChange = () => {
+      checkAuth();
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
     return () => {
-      window.removeEventListener('storage', checkAuth);
-      window.removeEventListener('auth-change', checkAuth);
+      window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
 
@@ -328,29 +341,62 @@ function Menu({ setCurrentPage, currentPage, closeMenu, isMenuOpen }) {
   );
 
   // Menu elementlarini render qilish
-  const renderMenuItem = (item) => (
-    <button
-      key={item.id}
-      onClick={() => handleMenuClick(item.id, item.requiresAuth)}
-      onMouseEnter={() => setHoveredItem(item.id)}
-      onMouseLeave={() => setHoveredItem(null)}
-      className={getMenuItemStyles(item.id, currentPage === item.id, item.requiresAuth)}
-      disabled={item.requiresAuth && !isAuthenticated}
-    >
-      <div className="flex items-center justify-center mr-3 w-8 h-8">
-        <item.icon
-          className={`h-6 w-6 ${
-            currentPage === item.id ? "text-white" : 
-            item.requiresAuth && !isAuthenticated ? "text-gray-400" : "text-gray-600"
-          }`}
-        />
+  const renderMenuItem = (item) => {
+    const isItemActive = currentPage === item.id;
+    
+    // Apply base styles and conditional styles
+    const menuItemClasses = getMenuItemStyles(
+      item.id,
+      isItemActive,
+      item.requiresAuth,
+      isPremiumItems.includes(item.id),
+      isAdminItems.includes(item.id)
+    );
+    
+    return (
+      <div key={item.id} className="relative">
+        <button
+          onClick={() => item.requiresAuth && !isAuthenticated 
+            ? toast.error("Bu bo'limga kirish uchun tizimga kirishingiz kerak") 
+            : handleMenuClick(item.id, item.requiresAuth)}
+          onMouseEnter={() => setHoveredItem(item.id)}
+          onMouseLeave={() => setHoveredItem(null)}
+          className={menuItemClasses}
+          disabled={item.requiresAuth && !isAuthenticated}
+        >
+          <div className="flex items-center justify-center mr-3 w-10 h-10">
+            {React.createElement(item.icon, {
+              className: `h-7 w-7 ${
+                isItemActive ? "text-white" : "text-gray-700"
+              }`
+            })}
+          </div>
+          <span className="flex-1 font-medium text-base whitespace-normal">
+            {item.name}
+          </span>
+          
+          {/* Show lock icon for auth required items when not authenticated */}
+          {item.requiresAuth && !isAuthenticated && (
+            <LockClosedIcon className="h-4 w-4 text-gray-400" />
+          )}
+          
+          {/* Show premium star for premium items */}
+          {isPremiumItems.includes(item.id) && isAuthenticated && (
+            <span className="ml-1">
+              <StarIcon className="h-4 w-4 text-yellow-500" />
+            </span>
+          )}
+          
+          {/* Show admin shield for admin items */}
+          {isAdminItems.includes(item.id) && isAuthenticated && (
+            <span className="ml-1">
+              <ShieldCheckIcon className="h-4 w-4 text-blue-500" />
+            </span>
+          )}
+        </button>
       </div>
-      <span className="flex-1 font-medium text-sm whitespace-normal">
-        {item.name}
-      </span>
-      {item.requiresAuth && !isAuthenticated && <LockIcon />}
-    </button>
-  );
+    );
+  };
 
   // Get styles for menu items based on various states
   const getMenuItemStyles = (id, isActive, requiresAuth, isPremiumItem = false, isAdminItem = false) => {
@@ -433,6 +479,20 @@ function Menu({ setCurrentPage, currentPage, closeMenu, isMenuOpen }) {
     // To'lovni yuborish...
   };
 
+  // Function to handle menu item click with auth check
+  const handleMenuItemClick = (item) => {
+    if (item.requiresAuth && !isAuthenticated) {
+      // Show login prompt or message
+      toast.error("Bu bo'limga kirish uchun tizimga kirishingiz kerak");
+      return;
+    }
+    
+    setCurrentPage(item.id);
+    if (window.innerWidth < 768) {
+      closeMenu();
+    }
+  };
+
   return (
     <div className="relative">
       {/* Main Menu Container */}
@@ -463,7 +523,7 @@ function Menu({ setCurrentPage, currentPage, closeMenu, isMenuOpen }) {
             {/* Special styling for Home menu item - Make it more visible */}
             <button
               key="home"
-              onClick={() => handleMenuClick("home", false)}
+              onClick={() => handleMenuItemClick({ id: "home", requiresAuth: false })}
               onMouseEnter={() => setHoveredItem("home")}
               onMouseLeave={() => setHoveredItem(null)}
               className={`flex items-center w-full p-3 rounded-lg transition-all duration-200 transform ${
@@ -487,7 +547,42 @@ function Menu({ setCurrentPage, currentPage, closeMenu, isMenuOpen }) {
             </button>
 
             {/* Render other menu items except home */}
-            {menuItems.slice(1).map(renderMenuItem)}
+            {menuItems.slice(1).map((item) => {
+              const isItemActive = currentPage === item.id;
+              const menuItemClasses = getMenuItemStyles(
+                item.id,
+                isItemActive,
+                item.requiresAuth
+              );
+              
+              return (
+                <div key={item.id} className="relative">
+                  <button
+                    onClick={() => handleMenuItemClick(item)}
+                    onMouseEnter={() => setHoveredItem(item.id)}
+                    onMouseLeave={() => setHoveredItem(null)}
+                    className={menuItemClasses}
+                    disabled={item.requiresAuth && !isAuthenticated}
+                  >
+                    <div className="flex items-center justify-center mr-3 w-10 h-10">
+                      {React.createElement(item.icon, {
+                        className: `h-7 w-7 ${
+                          isItemActive ? "text-white" : "text-gray-700"
+                        }`
+                      })}
+                    </div>
+                    <span className="flex-1 font-medium text-base whitespace-normal">
+                      {item.name}
+                    </span>
+                    
+                    {/* Show lock icon for auth required items when not authenticated */}
+                    {item.requiresAuth && !isAuthenticated && (
+                      <LockClosedIcon className="h-4 w-4 text-gray-400" />
+                    )}
+                  </button>
+                </div>
+              );
+            })}
 
             {/* To'lovlar bo'limi - faqat autentifikatsiya qilingan foydalanuvchilar uchun */}
             {isAuthenticated ? (
