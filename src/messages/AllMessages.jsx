@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 
 // API_BASE_URL ni yuqorida e'lon qilamiz
-const API_BASE_URL = 'http://localhost:3000/api/messages';
+const API_BASE_URL = 'http://api.infinity-school.uz/api/messages';
 
 function AllMessages() {
   const [messages, setMessages] = useState([]);
