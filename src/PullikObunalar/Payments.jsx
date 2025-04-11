@@ -26,16 +26,31 @@ export default function AdminPaymentsPanel() {
   const fetchPayments = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3000/api/payments/all');
+      setError(null);
+      
+      const response = await fetch('https://api.infinity-school.uz/api/payments/all', {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
       
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       const data = await response.json();
       
+      // Check if data exists and has payments
+      if (!data || !data.payments || data.payments.length === 0) {
+        console.log("Bazada to'lovlar mavjud emas");
+        setPayments([]);
+        setLoading(false);
+        return;
+      }
+      
       // Ma'lumotlarni to'g'ri formatlash va qo'shimcha maydonlar qo'shish
-      const formattedPayments = (data.payments || []).map(payment => {
+      const formattedPayments = data.payments.map(payment => {
         // Sana formatini o'zgartirish
         const paymentDate = new Date(payment.payment_date);
         const formattedDate = paymentDate.toLocaleString('uz-UZ');
@@ -45,11 +60,11 @@ export default function AdminPaymentsPanel() {
         
         // receipt_filename mavjud bo'lsa, undan foydalanish
         if (payment.receipt_filename) {
-          receiptImageUrl = `http://localhost:3000/uploads/receipts/${payment.receipt_filename}`;
+          receiptImageUrl = `https://api.infinity-school.uz/uploads/receipts/${payment.receipt_filename}`;
         }
         // Eski tizim uchun receipt_image_filename ham tekshirish
         else if (payment.receipt_image_filename) {
-          receiptImageUrl = `http://localhost:3000/uploads/receipts/${payment.receipt_image_filename}`;
+          receiptImageUrl = `https://api.infinity-school.uz/uploads/receipts/${payment.receipt_image_filename}`;
         }
         
         return {
@@ -59,9 +74,11 @@ export default function AdminPaymentsPanel() {
         };
       });
       
+      console.log("Yuklangan to'lovlar soni:", formattedPayments.length);
       setPayments(formattedPayments);
       setLoading(false);
     } catch (err) {
+      console.error("To'lovlarni yuklashda xatolik:", err);
       setError(err.message);
       setLoading(false);
     }
@@ -98,12 +115,12 @@ export default function AdminPaymentsPanel() {
       // To'lov holatini o'zgartirish uchun so'rov yuborish
       const response = await axios({
         method: 'PUT',
-        url: `http://localhost:3000/api/payments/status/${paymentId}`,
+        url: `https://api.infinity-school.uz/api/payments/status/${paymentId}`,
         data: { status: newStatus },
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        // So'rovni o'z vaqtida yakunlash uchun timeout qo'shish
         timeout: 15000
       });
       
@@ -182,13 +199,14 @@ export default function AdminPaymentsPanel() {
       // Tasdiqlash xabarini yuborish uchun so'rov
       const response = await axios({
         method: 'POST',
-        url: `http://localhost:3000/api/payments/confirm/${selectedPayment.id}`,
+        url: `https://api.infinity-school.uz/api/payments/confirm/${selectedPayment.id}`,
         data: { 
           message: confirmationMessage,
           telegramUsername: selectedPayment.telegram_username,
-          status: 'completed'  // Backend buni 'success' ga moslashtiradi
+          status: 'completed'
         },
         headers: { 
+          'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         timeout: 15000
@@ -295,8 +313,8 @@ export default function AdminPaymentsPanel() {
   const renderReceiptImage = (payment) => {
     // Rasm URL manzilini olish
     const imageUrl = payment.receiptImageUrl || 
-                     (payment.receipt_filename && `http://localhost:3000/uploads/receipts/${payment.receipt_filename}`) || 
-                     (payment.receipt_image_filename && `http://localhost:3000/uploads/receipts/${payment.receipt_image_filename}`);
+                     (payment.receipt_filename && `https://api.infinity-school.uz/uploads/receipts/${payment.receipt_filename}`) || 
+                     (payment.receipt_image_filename && `https://api.infinity-school.uz/uploads/receipts/${payment.receipt_image_filename}`);
     
     if (!imageUrl) {
       return (
@@ -523,8 +541,8 @@ export default function AdminPaymentsPanel() {
 
     // Rasm URL manzilini olish
     const imageUrl = selectedPayment.receiptImageUrl || 
-                     (selectedPayment.receipt_filename && `http://localhost:3000/uploads/receipts/${selectedPayment.receipt_filename}`) || 
-                     (selectedPayment.receipt_image_filename && `http://localhost:3000/uploads/receipts/${selectedPayment.receipt_image_filename}`);
+                     (selectedPayment.receipt_filename && `https://api.infinity-school.uz/uploads/receipts/${selectedPayment.receipt_filename}`) || 
+                     (selectedPayment.receipt_image_filename && `https://api.infinity-school.uz/uploads/receipts/${selectedPayment.receipt_image_filename}`);
 
     return (
       <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-2 sm:p-4 backdrop-blur-sm overflow-y-auto">
@@ -799,9 +817,10 @@ export default function AdminPaymentsPanel() {
   // Foydalanuvchiga xabar yuborish uchun helper funksiya
   const sendUserNotification = async ({ telegramUsername, message }) => {
     try {
-      const response = await fetch('http://localhost:3000/api/notifications/send', {
+      const response = await fetch('https://api.infinity-school.uz/api/notifications/send', {
         method: 'POST',
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -811,7 +830,7 @@ export default function AdminPaymentsPanel() {
       });
 
       if (!response.ok) {
-        throw new Error('Xabar yuborishda xatolik');
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       return true;
@@ -821,22 +840,20 @@ export default function AdminPaymentsPanel() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
+  // Loading state ko'rsatish uchun komponent
+  const LoadingSpinner = () => (
+    <div className="flex justify-center items-center h-64">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+  );
 
-  if (error) {
-    return (
-      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
-        <strong className="font-bold">Error!</strong>
-        <span className="block sm:inline"> {error}</span>
-      </div>
-    );
-  }
+  // Empty state ko'rsatish uchun komponent
+  const EmptyState = () => (
+    <div className="text-center py-12">
+      <div className="text-gray-500 text-lg mb-4">To'lovlar mavjud emas</div>
+      <p className="text-gray-400">Hozircha bazada to'lovlar qo'shilmagan</p>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -848,8 +865,21 @@ export default function AdminPaymentsPanel() {
           </p>
         </div>
 
-        {renderTable()}
-        {renderModal()}
+        {loading ? (
+          <LoadingSpinner />
+        ) : error ? (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong className="font-bold">Xatolik!</strong>
+            <span className="block sm:inline"> {error}</span>
+          </div>
+        ) : payments.length === 0 ? (
+          <EmptyState />
+        ) : (
+          <>
+            {renderTable()}
+            {renderModal()}
+          </>
+        )}
       </div>
     </div>
   );

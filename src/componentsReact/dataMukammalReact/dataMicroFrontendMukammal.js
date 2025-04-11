@@ -15,7 +15,7 @@ module.exports = {
         historyApiFallback: true,
     },
     output: {
-        publicPath: 'http://localhost:3000/',
+        publicPath: 'https://infinity-school.uz/',
     },
     module: {
         rules: [

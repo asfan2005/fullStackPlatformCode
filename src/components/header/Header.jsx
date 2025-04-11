@@ -56,7 +56,7 @@ function Header() {
 
   const fetchUserData = async (userId, token) => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/users/${userId}`, {
+      const response = await axios.get(`https://api.infinity-school.uz/api/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

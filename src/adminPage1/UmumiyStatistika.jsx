@@ -17,7 +17,7 @@ function UmumiyStatistika() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3000/api/users');
+        const response = await fetch('https://api.infinity-school.uz/api/users');
         
         if (!response.ok) {
           throw new Error(`Server responded with status: ${response.status}`);

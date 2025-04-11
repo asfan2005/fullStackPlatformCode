@@ -51,7 +51,7 @@ Rahmat!`;
   const fetchPayments = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:3000/api/payment-page/all');
+      const response = await axios.get('https://api.infinity-school.uz/api/payment-page/all');
       
       if (response.data.success && response.data.data.payments) {
         setPayments(response.data.data.payments);
@@ -107,7 +107,7 @@ Rahmat!`;
       setProcessingPayment(true);
       
       const response = await axios.put(
-        `http://localhost:3000/api/payment-page/status/${paymentId}`,
+        `https://api.infinity-school.uz/api/payment-page/status/${paymentId}`,
         { status: newStatus }
       );
 
@@ -148,7 +148,7 @@ Rahmat!`;
       
       // Send confirmation message to user
       const response = await axios.post(
-        `http://localhost:3000/api/notifications/send`,
+        `https://api.infinity-school.uz/api/notifications/send`,
         {
           telegramUsername: selectedPayment.telegram_username,
           message: confirmationMessage,
@@ -273,7 +273,7 @@ Rahmat!`;
   // Kvitansiya rasmini ko'rsatish uchun URL ni to'g'rilash
   const getReceiptUrl = (payment) => {
     if (!payment.receipt_url) return null;
-    return `http://localhost:3000${payment.receipt_url}`;
+    return `https://api.infinity-school.uz${payment.receipt_url}`;
   };
 
   // Render payment table
@@ -512,7 +512,7 @@ Rahmat!`;
     if (!showModal || !selectedPayment) return null;
 
     const imageUrl = selectedPayment.receipt_url 
-      ? `http://localhost:3000${selectedPayment.receipt_url}`
+      ? `https://api.infinity-school.uz${selectedPayment.receipt_url}`
       : null;
       
     const timeRemaining = calculateTimeRemaining(selectedPayment.course_start_date);

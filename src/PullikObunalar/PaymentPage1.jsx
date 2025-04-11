@@ -481,7 +481,7 @@ function PaymentPage1({ plan, onClose }) {
                 return;
             }
 
-            const response = await axios.get('http://localhost:3000/api/payment-page/all');
+            const response = await axios.get('https://api.infinity-school.uz/api/payment-page/all');
             
             if (response.data && response.data.payments && response.data.payments.length > 0) {
                 // Filter payments by user's phone number
@@ -621,7 +621,7 @@ function PaymentPage1({ plan, onClose }) {
             
             // Send payment data to server
             const response = await axios.post(
-                'http://localhost:3000/api/payment-page/create',
+                'https://api.infinity-school.uz/api/payment-page/create',
                 formDataToSend,
                 {
                     headers: {

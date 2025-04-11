@@ -16,7 +16,7 @@ function PremiumStatistika50() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3000/api/payments/all');
+        const response = await fetch('https://api.infinity-school.uz/api/payments/all');
         if (!response.ok) {
           throw new Error('Server error');
         }
@@ -312,7 +312,7 @@ function PremiumStatistika50() {
                       <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                         {payment.receipt_image_url && (
                           <a 
-                            href={`http://localhost:3000${payment.receipt_image_url}`} 
+                            href={`https://api.infinity-school.uz${payment.receipt_image_url}`} 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="inline-flex items-center text-indigo-600 hover:text-indigo-900"
@@ -348,13 +348,13 @@ function PremiumStatistika50() {
                   <div key={payment.id} className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
                     <div className="relative pb-[56.25%]">
                       <a 
-                        href={`http://localhost:3000${payment.receipt_image_url}`} 
+                        href={`https://api.infinity-school.uz${payment.receipt_image_url}`} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="block"
                       >
                         <img
-                          src={`http://localhost:3000${payment.receipt_image_url}`}
+                          src={`https://api.infinity-school.uz${payment.receipt_image_url}`}
                           alt={`${payment.full_name} tomonidan to'lov kvitansiyasi`}
                           className="absolute inset-0 h-full w-full object-cover"
                           onError={(e) => {

@@ -79,7 +79,7 @@ function Main() {
       
       // Faqat shu foydalanuvchiga tegishli xabarlarni so'rash
       // userId parametrini URL query sifatida yuborish
-      const response = await axios.get(`http://localhost:3000/api/messages?userId=${user.id}`, {
+      const response = await axios.get(`https://api.infinity-school.uz/api/messages?userId=${user.id}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -207,7 +207,7 @@ function Main() {
       // Xabarni serverga yuborish
       const response = await axios({
         method: 'POST',
-        url: 'http://localhost:3000/api/messages',
+        url: 'https://api.infinity-school.uz/api/messages',
         data: {
           text: newMessage.text,
           userId: user?.id || 'anonymous',
@@ -313,7 +313,7 @@ function Main() {
       // Admin javobini serverga yuborish
       const response = await axios({
         method: 'POST',
-        url: 'http://localhost:3000/api/messages',
+        url: 'https://api.infinity-school.uz/api/messages',
         data: {
           text: randomResponse,
           userId: userId,
@@ -402,7 +402,7 @@ function Main() {
       setChatMessages(prevMessages => [...prevMessages, adminResponse]);
 
       // Admin javobini serverga yuborish
-      const response = await axios.post('http://localhost:3000/api/messages/reply', {
+      const response = await axios.post('https://api.infinity-school.uz/api/messages/reply', {
         text: replyText,
         userId: user.id,
         messageId: messageId,

@@ -253,7 +253,7 @@ function PaymentPage({ plan, onClose }) {
                 return;
             }
 
-            const response = await axios.get('http://localhost:3000/api/payments/all');
+            const response = await axios.get('https://api.infinity-school.uz/api/payments/all');
             
             if (response.data.success && response.data.payments.length > 0) {
                 // Foydalanuvchining telefon raqami bo'yicha to'lovlarni filtrlash
@@ -491,7 +491,7 @@ function PaymentPage({ plan, onClose }) {
             // Serverga yuborish
             const response = await axios({
                 method: 'POST',
-                url: 'http://localhost:3000/api/payments/with-receipt',
+                url: 'https://api.infinity-school.uz/api/payments/with-receipt',
                 data: formDataToSend,
                 headers: {
                     'Content-Type': 'multipart/form-data'

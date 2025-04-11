@@ -22,7 +22,7 @@ const PremiumFoyda = () => {
     const fetchPremiumUsers = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3000/api/payment-page/all');
+        const response = await fetch('https://api.infinity-school.uz/api/payment-page/all');
         
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);

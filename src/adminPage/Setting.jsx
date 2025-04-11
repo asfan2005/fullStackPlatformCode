@@ -42,7 +42,7 @@ function Settings() {
           throw new Error("Foydalanuvchi ma'lumotlari topilmadi");
         }
 
-        const response = await axios.get(`http://localhost:3000/api/users/email/${localUser.email}`);
+        const response = await axios.get(`http://infinity-school.uz/api/users/email/${localUser.email}`);
         
         if (response.data) {
           setUserData(response.data);
@@ -100,7 +100,7 @@ function Settings() {
 
     try {
       const localUser = JSON.parse(localStorage.getItem('user'));
-      const response = await axios.put(`http://localhost:3000/api/users/settings/${localUser.id}`, settingsForm);
+      const response = await axios.put(`http://infinity-school.uz/api/users/settings/${localUser.id}`, settingsForm);
 
       if (response.data.success) {
         // Update local storage with new settings

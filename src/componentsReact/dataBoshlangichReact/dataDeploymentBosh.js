@@ -58,7 +58,7 @@ module.exports = override(
                         description: "Environment o'zgaruvchilarini sozlash va xavfsizlik",
                         example: `
 // .env.development
-REACT_APP_API_URL=http://localhost:3000
+REACT_APP_API_URL=https://infinity-school.uz/
 REACT_APP_ENV=development
 REACT_APP_FEATURE_FLAGS={"newUI":true,"beta":false}
 

@@ -32,7 +32,7 @@ const UsersAdminPanel = () => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3000/api/users');
+        const response = await fetch('https://api.infinity-school.uz/api/users');
         
         if (!response.ok) {
           throw new Error(`Error: ${response.status}`);
@@ -68,7 +68,7 @@ const UsersAdminPanel = () => {
   // Delete function
   const deleteUser = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+      const response = await fetch(`https://api.infinity-school.uz/api/users/${userId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -109,7 +109,7 @@ const UsersAdminPanel = () => {
   // Edit function
   const updateUser = async (userId, userData) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+      const response = await fetch(`https://api.infinity-school.uz/api/users/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

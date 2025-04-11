@@ -18,7 +18,7 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // API URL - backend manzili
-  const API_URL = 'http://localhost:3000/api/users';
+  const API_URL = 'https://api.infinity-school.uz/api/users';
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -158,7 +158,7 @@ const AuthModal = ({ onClose, onLoginSuccess }) => {
 
   const handleSocialLogin = (provider) => {
     try {
-      window.location.href = `http://localhost:3000/auth/${provider}`;
+      window.location.href = `https://api.infinity-school.uz/auth/${provider}`;
     } catch (error) {
       console.error(`${provider} login error:`, error);
       setMessage({

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { toast } from 'react-hot-toast';
 
 function Shertifikatlar() {
   const [certificates, setCertificates] = useState([]);
@@ -109,35 +110,64 @@ function Shertifikatlar() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/users');
-        // Foydalanuvchi ID=1 bo'lgan ma'lumotlarni olish
-        const user = response.data.find(user => user.id === 1);
-        if (user) {
-          setUserData(user);
+        // LocalStorage dan foydalanuvchi ma'lumotlarini olish
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          const user = JSON.parse(storedUser);
+          
+          // API dan foydalanuvchi ma'lumotlarini yangilash
+          try {
+            const response = await axios.get('http://api.infinity-school.uz/api/users');
+            const users = response.data;
+            const currentUser = users.find(u => u.id === user.id);
+            
+            if (currentUser) {
+              // Foydalanuvchi ma'lumotlarini yangilash
+              setUserData({
+                id: currentUser.id,
+                fullname: currentUser.fullname,
+                codename: currentUser.codename,
+                email: currentUser.email,
+                phone: currentUser.phone,
+                created_at: currentUser.created_at,
+                updated_at: currentUser.updated_at
+              });
+
+              // Foydalanuvchining sertifikatlarini olish
+              try {
+                const certResponse = await axios.get(`http://api.infinity-school.uz/api/certificates?userId=${currentUser.id}`);
+                if (certResponse.data) {
+                  setCertificates(certResponse.data);
+                }
+              } catch (error) {
+                console.error('Sertifikatlarni olishda xatolik:', error);
+                // Xatolik yuz berganda test ma'lumotlarini ishlatish
+                setCertificates(certificatesData);
+              }
+            } else {
+              // Foydalanuvchi topilmadi
+              toast.error('Foydalanuvchi ma\'lumotlari topilmadi');
+              window.location.href = '/login';
+            }
+          } catch (error) {
+            console.error('API dan foydalanuvchi ma\'lumotlarini olishda xatolik:', error);
+            // Xatolik yuz berganda localStorage dagi ma'lumotlarni ishlatish
+            setUserData(user);
+          }
+        } else {
+          // Agar foydalanuvchi ma'lumotlari topilmasa, login sahifasiga yo'naltirish
+          window.location.href = '/login';
         }
       } catch (error) {
         console.error('Foydalanuvchi ma\'lumotlarini olishda xatolik:', error);
-        // Xatolik yuz berganda test ma'lumotlarini ishlatish
-        setUserData({
-          id: 1,
-          fullname: "Foydalanuvchi Ism Familiya",
-          email: "foydalanuvchi@example.com"
-        });
+        // Xatolik yuz berganda login sahifasiga yo'naltirish
+        window.location.href = '/login';
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchUserData();
-  }, []);
-
-  // Sertifikatlarni yuklash simulyatsiyasi
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      // Faqat tugatilgan kurslar uchun sertifikatlar
-      setCertificates(certificatesData);
-      setIsLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
   }, []);
 
   // Sertifikatlarni filtrlash
@@ -203,7 +233,8 @@ function Shertifikatlar() {
 
   // Sertifikat raqamini generatsiya qilish
   const generateCertificateNumber = (id) => {
-    return `2027-${id.toString().padStart(4, '0')}`;
+    if (!userData) return `0000-${id.toString().padStart(4, '0')}`;
+    return `${userData.id}-${id.toString().padStart(4, '0')}`;
   };
 
   // Sertifikat dizaynini yangilash
@@ -472,7 +503,7 @@ function Shertifikatlar() {
 
   // Sertifikatni yuklab olish funksiyasini yangilash
   const handleDownloadCertificate = async () => {
-    if (!certificateRef.current) return;
+    if (!certificateRef.current || !userData) return;
     
     setIsDownloading(true);
     
@@ -483,14 +514,13 @@ function Shertifikatlar() {
 
       // Sertifikat elementini rasmga aylantirish
       const canvas = await html2canvas(certificateRef.current, {
-        scale: 4, // Yuqori sifatli rasm uchun
+        scale: 4,
         logging: false,
         useCORS: true,
         allowTaint: true,
         backgroundColor: null,
         imageTimeout: 0,
         onclone: (clonedDoc) => {
-          // Klonlangan elementda animatsiyalarni o'chirish
           const clonedElement = clonedDoc.querySelector('#certificate-clone');
           if (clonedElement) {
             clonedElement.style.animation = 'none';
@@ -528,20 +558,21 @@ function Shertifikatlar() {
       pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
       
       // PDF ni yuklab olish
-      pdf.save(`sertifikat_${selectedCertificate.title.replace(/\s+/g, '_')}_${generateCertificateNumber(selectedCertificate.id)}.pdf`);
+      const fileName = `sertifikat_${userData.fullname.replace(/\s+/g, '_')}_${selectedCertificate.title.replace(/\s+/g, '_')}_${generateCertificateNumber(selectedCertificate.id)}.pdf`;
+      pdf.save(fileName);
 
       // Muvaffaqiyatli yuklab olish xabari
-      alert('Sertifikat muvaffaqiyatli yuklab olindi!');
+      toast.success('Sertifikat muvaffaqiyatli yuklab olindi!');
     } catch (error) {
       console.error('Sertifikatni yuklab olishda xatolik:', error);
-      alert('Sertifikatni yuklab olishda xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.');
+      toast.error('Sertifikatni yuklab olishda xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.');
     } finally {
       setIsDownloading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Sarlavha */}
       <div className="max-w-7xl mx-auto text-center mb-12">
         <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">
@@ -551,6 +582,33 @@ function Shertifikatlar() {
           O'quv platformasida erishgan yutuqlaringiz va sertifikatlaringizni ko'ring
         </p>
       </div>
+
+      {/* Foydalanuvchi ma'lumotlari */}
+      {userData && (
+        <div className="max-w-7xl mx-auto mb-8">
+          <div className="bg-white rounded-2xl shadow-md p-6">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div className="h-16 w-16 rounded-full bg-indigo-100 flex items-center justify-center">
+                  <span className="text-2xl font-bold text-indigo-600">
+                    {userData.fullname.charAt(0)}
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">{userData.fullname}</h3>
+                  <p className="text-gray-500">{userData.email}</p>
+                  <p className="text-gray-500">{userData.phone}</p>
+                  <p className="text-sm text-gray-400 mt-1">@{userData.codename}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-500">Sertifikatlar soni:</span>
+                <span className="text-lg font-semibold text-indigo-600">{certificates.length}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Qidiruv */}
       <div className="max-w-7xl mx-auto mb-12">
@@ -567,53 +625,6 @@ function Shertifikatlar() {
               <svg className="absolute left-4 top-3.5 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Statistika */}
-      <div className="max-w-7xl mx-auto mb-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-2xl shadow-md p-6 flex items-center">
-            <div className="bg-indigo-100 rounded-full p-4 mr-4">
-              <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">Tugatilgan kurslar</p>
-              <p className="text-2xl font-bold text-gray-900">{certificates.length}</p>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-2xl shadow-md p-6 flex items-center">
-            <div className="bg-yellow-100 rounded-full p-4 mr-4">
-              <svg className="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">O'rtacha ball</p>
-              <p className="text-2xl font-bold text-gray-900">
-                {certificates.length > 0 
-                  ? Math.round(certificates.reduce((acc, curr) => acc + curr.score, 0) / certificates.length) 
-                  : 0}
-              </p>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-2xl shadow-md p-6 flex items-center">
-            <div className="bg-green-100 rounded-full p-4 mr-4">
-              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-gray-500 text-sm">Foydalanuvchi</p>
-              <p className="text-xl font-bold text-gray-900">
-                {userData ? userData.email : "Yuklanmoqda..."}
-              </p>
             </div>
           </div>
         </div>
@@ -732,11 +743,7 @@ function Shertifikatlar() {
 
       {/* Sertifikat ma'lumotlari modali */}
       {showModal && selectedCertificate && (
-        <div style={{
-          marginTop: "120px",
-          marginLeft: "400px",
-          marginRight: "200px",
-        }} className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
           <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div 
               className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity backdrop-blur-sm" 
@@ -746,7 +753,13 @@ function Shertifikatlar() {
 
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-            <div className="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+            <div 
+              className="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full"
+              style={{ 
+                marginLeft: '150px',
+                marginTop: '50px'
+              }}
+            >
               <div className="absolute top-0 right-0 pt-4 pr-4">
                 <button
                   type="button"
@@ -874,46 +887,6 @@ function Shertifikatlar() {
                         )}
                       </button>
                     </div>
-                    
-                    <div className="mt-6 bg-blue-50 p-4 rounded-lg">
-                      <div className="flex items-start">
-                        <div className="flex-shrink-0">
-                          <svg className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                        </div>
-                        <div className="ml-3">
-                          <h3 className="text-sm font-medium text-blue-800">Sertifikat haqida</h3>
-                          <div className="mt-2 text-sm text-blue-700">
-                            <p>
-                              Ushbu sertifikat {selectedCertificate.title} kursini muvaffaqiyatli tugatganingizni tasdiqlovchi rasmiy hujjat hisoblanadi. Sertifikat raqami: {generateCertificateNumber(selectedCertificate.id)}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-6 border-t border-gray-200 pt-6">
-                      <h3 className="text-lg font-medium text-gray-900 mb-3">Kurs haqida qo'shimcha ma'lumot</h3>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-gray-50 p-3 rounded-lg">
-                          <p className="text-sm text-gray-500">Platforma</p>
-                          <p className="font-medium text-gray-900">{selectedCertificate.platform || "Online"}</p>
-                        </div>
-                        <div className="bg-gray-50 p-3 rounded-lg">
-                          <p className="text-sm text-gray-500">Daraja</p>
-                          <p className="font-medium text-gray-900">{selectedCertificate.level || "Professional"}</p>
-                        </div>
-                        <div className="bg-gray-50 p-3 rounded-lg">
-                          <p className="text-sm text-gray-500">Kategoriya</p>
-                          <p className="font-medium text-gray-900">{selectedCertificate.category === "dasturlash" ? "Dasturlash" : selectedCertificate.category === "dizayn" ? "Dizayn" : selectedCertificate.category}</p>
-                        </div>
-                        <div className="bg-gray-50 p-3 rounded-lg">
-                          <p className="text-sm text-gray-500">Sertifikat berilgan</p>
-                          <p className="font-medium text-gray-900">{formatDate(selectedCertificate.date)}</p>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -921,56 +894,6 @@ function Shertifikatlar() {
           </div>
         </div>
       )}
-
-      {/* Dekorativ elementlar */}
-      <div className="max-w-7xl mx-auto relative h-full overflow-hidden mt-16">
-        <div className="absolute -bottom-16 -left-16 w-64 h-64 bg-indigo-100 rounded-full opacity-30 blur-3xl"></div>
-        <div className="absolute -bottom-8 right-32 w-48 h-48 bg-purple-100 rounded-full opacity-40 blur-2xl"></div>
-        <div className="absolute bottom-4 right-4 w-6 h-6 bg-yellow-400 rounded-full animate-pulse"></div>
-        <div className="absolute bottom-12 left-1/2 w-4 h-4 bg-indigo-500 rounded-full animate-bounce"></div>
-      </div>
-
-      {/* Footer */}
-      <div className="max-w-7xl mx-auto mt-16 border-t border-gray-200 pt-8 pb-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-500 text-sm">
-            © {new Date().getFullYear()} O'quv Platformasi. Barcha huquqlar himoyalangan.
-          </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="text-gray-400 hover:text-indigo-600 transition-colors">
-              <span className="sr-only">Facebook</span>
-              <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
-              </svg>
-            </a>
-            <a href="#" className="text-gray-400 hover:text-indigo-600 transition-colors">
-              <span className="sr-only">Instagram</span>
-              <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.218-1.791-.465-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.857.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858-.466-.466-.466-.182-.8-.398-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858-.466-.466-.466-.182-.8-.398-1.15-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" clipRule="evenodd" />
-              </svg>
-            </a>
-            <a href="#" className="text-gray-400 hover:text-indigo-600 transition-colors">
-              <span className="sr-only">Twitter</span>
-              <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-              </svg>
-            </a>
-            <a href="#" className="text-gray-400 hover:text-indigo-600 transition-colors">
-              <span className="sr-only">Telegram</span>
-              <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.306.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.9.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-      
-      {/* Qo'shimcha ma'lumot */}
-      <div className="max-w-7xl mx-auto mt-8 text-center">
-        <p className="text-sm text-gray-500">
-          Sertifikatlar haqida qo'shimcha ma'lumot olish uchun <a href="#" className="text-indigo-600 hover:text-indigo-800">biz bilan bog'laning</a>.
-        </p>
-      </div>
     </div>
   );
 }

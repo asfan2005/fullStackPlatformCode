@@ -192,7 +192,7 @@ const PaymentModal = ({
         formData.append('receipt', file);
 
         // Upload image to server
-        const response = await fetch('http://localhost:3000/api/payment-modal/upload-receipt', {
+        const response = await fetch('https://api.infinity-school.uz/api/payment-modal/upload-receipt', {
           method: 'POST',
           body: formData
         });
@@ -265,7 +265,7 @@ const PaymentModal = ({
       formDataObj.append('paymentData', JSON.stringify(paymentData));
 
       // Send data to backend
-      const response = await fetch('http://localhost:3000/api/payment-modal/create', {
+      const response = await fetch('https://api.infinity-school.uz/api/payment-modal/create', {
         method: 'POST',
         body: formDataObj
       });

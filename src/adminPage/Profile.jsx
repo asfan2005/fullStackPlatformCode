@@ -31,11 +31,13 @@ function Profile() {
           throw new Error("Foydalanuvchi ma'lumotlari topilmadi");
         }
 
-        // Email bo'yicha API dan to'liq ma'lumotlarni olish
-        const response = await axios.get(`http://localhost:3000/api/users/email/${localUser.email}`);
+        // API dan to'liq ma'lumotlarni olish
+        const response = await axios.get('http://api.infinity-school.uz/api/users');
+        const users = response.data;
+        const currentUser = users.find(user => user.email === localUser.email);
         
-        if (response.data) {
-          setUserData(response.data);
+        if (currentUser) {
+          setUserData(currentUser);
         } else {
           throw new Error("Foydalanuvchi ma'lumotlari topilmadi");
         }
@@ -80,7 +82,7 @@ function Profile() {
     setSecurityLoading(true);
     try {
       const localUser = JSON.parse(localStorage.getItem('user'));
-      const response = await axios.put(`http://localhost:3000/api/users/password/${localUser.id}`, {
+      const response = await axios.put(`https://api.infinity-school.uz/api/users/password/${localUser.id}`, {
         currentPassword: securityForm.currentPassword,
         newPassword: securityForm.newPassword
       });
@@ -194,19 +196,19 @@ function Profile() {
               <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full bg-white p-2 sm:p-3 shadow-2xl mb-4 md:mb-0 md:mr-8">
                 <div className="w-full h-full rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 flex items-center justify-center shadow-inner">
                   <span className="text-2xl sm:text-3xl md:text-4xl text-white font-bold">
-                    {userData.fullname?.charAt(0).toUpperCase() || '?'}
+                    {userData?.fullname?.charAt(0).toUpperCase() || '?'}
                   </span>
                 </div>
               </div>
               
               {/* Profile Title */}
               <div className="text-center md:text-left flex-1">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">{userData.fullname || 'Foydalanuvchi'}</h1>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">{userData?.fullname || 'Foydalanuvchi'}</h1>
                 <div className="mb-4 inline-flex items-center justify-center px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs sm:text-sm font-medium">
-                  {userData.codename || 'Kod nomi mavjud emas'}
+                  {userData?.codename || 'Kod nomi mavjud emas'}
                 </div>
                 <p className="text-sm sm:text-base text-gray-600">
-                  ID: <span className="font-semibold text-gray-800">{userData.id}</span>
+                  ID: <span className="font-semibold text-gray-800">{userData?.id}</span>
                 </p>
               </div>
               
@@ -214,7 +216,7 @@ function Profile() {
               <div className="hidden md:flex space-x-4 mt-6 md:mt-0">
                 <div className="flex flex-col items-center justify-center rounded-lg bg-blue-50 px-4 sm:px-6 py-3 sm:py-4 shadow-sm">
                   <span className="text-blue-600 font-bold text-lg sm:text-xl">
-                    {userData.created_at ? new Date(userData.created_at).toLocaleDateString('uz-UZ', { month: 'short', year: 'numeric' }) : '-'}
+                    {userData?.created_at ? new Date(userData.created_at).toLocaleDateString('uz-UZ', { month: 'short', year: 'numeric' }) : '-'}
                   </span>
                   <span className="text-gray-500 text-xs sm:text-sm">Ro'yxatdan o'tgan</span>
                 </div>
@@ -280,7 +282,7 @@ function Profile() {
                             </svg>
                           </div>
                         </div>
-                        <p className="text-lg text-gray-900 font-medium">{userData.fullname || 'Kiritilmagan'}</p>
+                        <p className="text-lg text-gray-900 font-medium">{userData?.fullname || 'Kiritilmagan'}</p>
                       </div>
                       
                       <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-5 shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-50">
@@ -292,7 +294,7 @@ function Profile() {
                             </svg>
                           </div>
                         </div>
-                        <p className="text-lg text-gray-900 font-medium">{userData.codename || 'Kiritilmagan'}</p>
+                        <p className="text-lg text-gray-900 font-medium">{userData?.codename || 'Kiritilmagan'}</p>
                       </div>
                     </div>
                       
@@ -306,7 +308,7 @@ function Profile() {
                             </svg>
                           </div>
                         </div>
-                        <p className="text-lg text-gray-900 font-medium break-all">{userData.email || 'Kiritilmagan'}</p>
+                        <p className="text-lg text-gray-900 font-medium break-all">{userData?.email || 'Kiritilmagan'}</p>
                       </div>
                       
                       <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-5 shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-50">
@@ -318,7 +320,7 @@ function Profile() {
                             </svg>
                           </div>
                         </div>
-                        <p className="text-lg text-gray-900 font-medium">{userData.phone || 'Kiritilmagan'}</p>
+                        <p className="text-lg text-gray-900 font-medium">{userData?.phone || 'Kiritilmagan'}</p>
                       </div>
                     </div>
                   </div>
@@ -346,7 +348,7 @@ function Profile() {
                         </div>
                       </div>
                       <p className="text-lg text-gray-900 font-medium">
-                        {userData.created_at ? new Date(userData.created_at).toLocaleDateString('uz-UZ', {
+                        {userData?.created_at ? new Date(userData.created_at).toLocaleDateString('uz-UZ', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
@@ -366,7 +368,7 @@ function Profile() {
                         </div>
                       </div>
                       <p className="text-lg text-gray-900 font-medium">
-                        {userData.updated_at ? new Date(userData.updated_at).toLocaleDateString('uz-UZ', {
+                        {userData?.updated_at ? new Date(userData.updated_at).toLocaleDateString('uz-UZ', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',

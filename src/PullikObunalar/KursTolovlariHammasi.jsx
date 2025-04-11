@@ -55,7 +55,7 @@ function KursTolovlariHammasi() {
       
       console.log('Fetching payments with params:', Object.fromEntries(params.entries()));
       
-      const response = await axios.get(`http://localhost:3000/api/payment-modal/all?${params}`, {
+      const response = await axios.get(`https://api.infinity-school.uz/api/payment-modal/all?${params}`, {
         timeout: 10000, // 10 second timeout
         headers: {
           'Accept': 'application/json',
@@ -173,7 +173,7 @@ function KursTolovlariHammasi() {
       setSendingUpdate(true);
       
       const response = await axios.put(
-        `http://localhost:3000/api/payment-modal/status/${transactionId}`,
+        `https://api.infinity-school.uz/api/payment-modal/status/${transactionId}`,
         { 
           status: newStatus,
           adminComment: adminComment || undefined
@@ -279,7 +279,7 @@ function KursTolovlariHammasi() {
   // Export to CSV
   const exportToCSV = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/payment-modal/export', {
+      const response = await axios.get('https://api.infinity-school.uz/api/payment-modal/export', {
         responseType: 'blob'
       });
       
@@ -315,7 +315,7 @@ function KursTolovlariHammasi() {
       if (dateRange.endDate) params.append('endDate', dateRange.endDate);
       if (searchTerm) params.append('search', searchTerm);
       
-      const response = await axios.get(`http://localhost:3000/api/payment-modal/all?${params}`);
+      const response = await axios.get(`https://api.infinity-school.uz/api/payment-modal/all?${params}`);
       const paymentsData = response.data.data || [];
       
       // Prepare data for Excel
@@ -841,7 +841,7 @@ function KursTolovlariHammasi() {
     if (!showModal || !selectedPayment) return null;
 
     const imageUrl = selectedPayment.file_name 
-      ? `http://localhost:3000/api/payment-modal/receipt/${selectedPayment.file_name}`
+      ? `https://api.infinity-school.uz/api/payment-modal/receipt/${selectedPayment.file_name}`
       : null;
 
     return (
